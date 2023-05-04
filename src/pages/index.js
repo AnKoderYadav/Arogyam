@@ -1,118 +1,235 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import React, { useState } from "react";
+import axios from "axios";
+import Users from "@/models/userModel";
+import dbConnect from "@/dbconnect";
+import Posts from "@/models/postModel";
+import Consultations from "@/models/consultModel";
+import MainLayout from "@/layouts/MainLayout";
+import OfferBox from "@/components/OfferBox";
+import CurrentPost from "@/components/CurrentPost";
+import TrendingBox from "@/components/TrendingBox";
+import { getSession, useSession } from "next-auth/react";
+import { useFormik } from "formik";
+import { BsSortDown, BsSortDownAlt } from "react-icons/bs";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
-const inter = Inter({ subsets: ['latin'] })
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
 
-export default function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+  if (!session?.user) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+  dbConnect().catch((error) => console.log(error));
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+  //current user
+  let res = await Users.findById(session.user.id);
+  const user = JSON.parse(JSON.stringify(res));
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+  //all posts by current user
+  res = await Posts.find({ patientId: user._id }).sort({
+    updatedAt: -1,
+  });
+  const posts = res.map((doc) => {
+    const post = JSON.parse(JSON.stringify(doc));
+    return post;
+  });
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
+  let consultations = [];
+  // all consultation offers on current post
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+  if (posts[0]) {
+    res = await Consultations.find({
+      postId: posts[0]._id,
+    })
+      .populate("doctorRefId")
+      .sort({
+        updatedAt: -1,
+      });
+
+    consultations = res.map((doc) => {
+      const consultation = JSON.parse(JSON.stringify(doc));
+      return consultation;
+    });
+  }
+
+  return {
+    props: { user, posts, consultations },
+  };
 }
+
+const Home = ({ user, posts, consultations }) => {
+  const [image, setImage] = useState(null);
+  const [sorted, setSorted] = useState(true);
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
+
+  const onSubmit = async (values, error) => {
+    const body = new FormData();
+    body.append("file", image);
+    body.append("id", user._id);
+
+    console.log(image.name);
+
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body,
+    });
+
+    const { description, severity } = values;
+    const res = await axios.post("/api/user/post", {
+      patientId: user._id,
+      description,
+      severity,
+      image: `/uploads/${user._id + image.name}`,
+    });
+
+    if (res.status === 200) {
+      toast.success(res.data.msg, toastOptions);
+      refreshData();
+    } else {
+      toast.error(res.data.msg, toastOptions);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      description: "",
+      severity: "Low",
+    },
+    onSubmit,
+  });
+  return (
+    <>
+      <MainLayout user={user}>
+        <div className="w-full h-full flex justify-around items-start overflow-x-hidden p-5 gap-8 text-lightMode-txt dark:text-darkMode-txt bg-lightMode-background dark:bg-darkMode-background">
+          <div className="w-full flex flex-col gap-5 p-5 pt-0">
+            {posts[0] && !posts[0].solved ? (
+              <>
+                <CurrentPost
+                  post={posts[0]}
+                  refreshData={refreshData}
+                  user={user}
+                />
+                <div className="w-full flex gap-4 justify-between px-4 items-center ">
+                  <div className=" text-xl font-bold tracking-tight leading-tight flex flex-row items-center gap-4">
+                    Sort By
+                    <span
+                      className="cursor-pointer font-bold"
+                      onClick={() => {
+                        setSorted(!sorted);
+                        consultations.reverse();
+                      }}
+                    >
+                      {sorted ? <BsSortDownAlt /> : <BsSortDown />}
+                    </span>
+                  </div>
+                  <div className=" text-xl font-bold tracking-tight leading-tight">
+                    {consultations.length + " "}offers
+                  </div>
+                </div>
+
+                <div className="w-full flex flex-row flex-wrap justify-evenly">
+                  {consultations.map((consultation) => {
+                    return (
+                      <OfferBox
+                        consultation={consultation}
+                        key={consultation._id}
+                      />
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <div className="w-full flex items-center flex-col text-lightMode-txt dark:text-darkMode-txt bg-lightMode-component dark:bg-darkMode-component shadow-md p-4 gap-5 rounded-lg">
+                <div className="flex content-center items-center w-full">
+                  <div className="w-full flex flex-row content-center items-center">
+                    <img
+                      className="w-[3rem] h-[3rem] rounded-full"
+                      src={user.profile}
+                      alt="img"
+                    />
+                    <span className="ml-4 text-2xl font-bold">
+                      {user.fullname}
+                    </span>
+                  </div>
+                </div>
+                <form
+                  className="w-full flex flex-col gap-2 text-sm items-center"
+                  onSubmit={formik.handleSubmit}
+                >
+                  <textarea
+                    rows="8"
+                    placeholder="Please, describe your health"
+                    className="bg-transparent w-full focus:outline-none border border-stone-400 rounded-md p-4"
+                    {...formik.getFieldProps("description")}
+                  />
+
+                  <div className="w-full flex justify-between items-center px-2 gap-2">
+                    <input
+                      type="file"
+                      className="w-48"
+                      onChange={(e) => {
+                        setImage(e.target.files[0]);
+                      }}
+                    />
+
+                    <span className="flex justify-center items-center gap-3">
+                      <label
+                        className="block uppercase tracking-wide text-xs font-semibold"
+                        htmlFor="grid-state"
+                      >
+                        Severity
+                      </label>
+                      <select
+                        className="appearance-none p-2 block border-[1px] border-stone-500 bg-neutral-200 dark:bg-darkMode-componentHead rounded leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+                        id="grid-state"
+                        {...formik.getFieldProps("severity")}
+                      >
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                      </select>
+                    </span>
+
+                    <button
+                      className="font-medium bg-lightMode-btn dark:bg-darkMode-btn hover:bg-cyan-600 disabled:text-black/40 disabled:bg-white/75 disabled:cursor-not-allowed text-white rounded-md px-12 p-2"
+                      type="submit"
+                      disabled={!formik.values.description.trim()}
+                    >
+                      Post
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
+          <div className="flex sticky top-0" id="Trending">
+            <TrendingBox key={1} />
+          </div>
+        </div>
+      </MainLayout>
+      <ToastContainer />
+    </>
+  );
+};
+
+export default Home;
