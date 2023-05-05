@@ -85,26 +85,26 @@ const Home = ({ user, posts, consultations }) => {
   const onSubmit = async (values, error) => {
     const body = new FormData();
     body.append("file", image);
-    body.append("id", user._id);
-
-    console.log(image.name);
+    const newFilename = `${Date.now()}_${image.name}`;
+    body.append("newFilename", newFilename);
 
     const response = await fetch("/api/upload", {
       method: "POST",
       body,
     });
+    console.log(response);
 
     const { description, severity } = values;
     const res = await axios.post("/api/user/post", {
       patientId: user._id,
       description,
       severity,
-      image: `/uploads/${user._id + image.name}`,
+      image: `https://storage.googleapis.com/arogyam-storage-bucket/${newFilename}`,
     });
 
     if (res.status === 200) {
       toast.success(res.data.msg, toastOptions);
-      refreshData();
+      setTimeout(refreshData, 4000);
     } else {
       toast.error(res.data.msg, toastOptions);
     }
@@ -119,7 +119,7 @@ const Home = ({ user, posts, consultations }) => {
   });
   return (
     <>
-      <MainLayout user={user}>
+      <MainLayout>
         <div className="w-full h-full flex justify-around items-start overflow-x-hidden p-5 gap-8 text-lightMode-txt dark:text-darkMode-txt bg-lightMode-background dark:bg-darkMode-background">
           <div className="w-full flex flex-col gap-5 p-5 pt-0">
             {posts[0] && !posts[0].solved ? (

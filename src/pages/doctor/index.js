@@ -47,7 +47,7 @@ export async function getServerSideProps({ req }) {
 const Home = ({ doctor, posts }) => {
   return (
     <>
-      <MainLayout user={doctor.doctorId}>
+      <MainLayout>
         <div className="w-full h-full flex justify-center gap-8 md:p-8 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
           <div
             id="doctorProfileBox"

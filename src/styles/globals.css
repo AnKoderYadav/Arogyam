@@ -75,9 +75,8 @@ input::file-selector-button {
   border-radius: 3px;
 }
 
-@layer components{
-  #inputIcons{
+@layer components {
+  #inputIcons {
     @apply flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 rounded-xl dark:hover:bg-neutral-700;
-
   }
 }

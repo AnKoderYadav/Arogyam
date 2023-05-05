@@ -38,6 +38,9 @@ const Navbar = ({ isDoctor }) => {
                 <Link href={basePath}>Home</Link>
               </li>
               <li className="md:px-2 md:py-2 dark:text-white dark:hover:text-slate-400 hover:text-white">
+                <Link href="/feed">Feed</Link>
+              </li>
+              <li className="md:px-2 md:py-2 dark:text-white dark:hover:text-slate-400 hover:text-white">
                 <Link href={`${basePath}profile`}>Profile</Link>
               </li>
               {isDoctor ? (

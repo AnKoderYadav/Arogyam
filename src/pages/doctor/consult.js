@@ -60,7 +60,7 @@ const Consult = ({ doctor, consultations }) => {
   };
   const [openId, setOpenId] = useState("");
   return (
-    <MainLayout user={doctor.doctorId}>
+    <MainLayout>
       <div className="h-full flex flex-wrap overflow-y-scroll scrollbar-thin p-8 gap-8 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt justify-center">
         {consultations.map((consultation) => {
           const handleRevoke = async () => {

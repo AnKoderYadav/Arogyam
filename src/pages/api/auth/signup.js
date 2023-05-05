@@ -13,7 +13,6 @@ export default async function handler(req, res) {
     if (emailCheck)
       return res.json({ msg: "Email already used", status: false });
 
-    const use = await userModel;
     const hashedPassword = await hash(password, 10);
     const user = await Users.create({
       fullname,

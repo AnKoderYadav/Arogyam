@@ -74,10 +74,11 @@ const Profile = ({ user }) => {
 
   const onSubmit = async (values, error) => {
     if (handleValidation()) {
+      const newFilename = `${Date.now()}_${image.name}`;
       if (image !== "") {
         const body = new FormData();
         body.append("file", image);
-        body.append("id", doctor._id);
+        body.append("newFilename", newFilename);
 
         const response = await fetch("/api/upload", {
           method: "POST",
@@ -93,7 +94,9 @@ const Profile = ({ user }) => {
         gender,
         contact,
         profile:
-          image !== "" ? `/uploads/${user._id + image.name}` : user.profile,
+          image !== ""
+            ? `https://storage.googleapis.com/arogyam-storage-bucket/${newFilename}`
+            : user.profile,
       });
 
       if (res.status === 200) toast.info(res.data.msg, toastOptions);
@@ -114,7 +117,7 @@ const Profile = ({ user }) => {
 
   return (
     <>
-      <MainLayout user={user}>
+      <MainLayout>
         <div className=" h-full bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row  items-start p-5 justify-center font-sans text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
           <div className="flex flex-col mt-8 w-[20rem] m-4">
             <div className=" p-5 mb-0 bg-lightMode-componentHead pl-5  rounded-t-md pb-1 w-auto  dark:bg-darkMode-componentHead">

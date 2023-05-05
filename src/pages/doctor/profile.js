@@ -45,7 +45,7 @@ const DocProfile = ({ doctor }) => {
 
   return (
     <>
-      <MainLayout user={doctor}>
+      <MainLayout>
         <div className="bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row items-start p-5 justify-center font-sans h-full text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
           <div className="flex flex-col mt-8 w-[20rem] m-4">
             <div className=" p-5 mb-0 bg-lightMode-componentHead pl-5  rounded-t-md pb-1 w-auto  dark:bg-darkMode-componentHead">
