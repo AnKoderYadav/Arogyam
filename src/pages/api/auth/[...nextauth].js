@@ -40,6 +40,7 @@ export const authOptions = {
         session.user.isDoctor = token._doc.isDoctor;
         session.user.name = token._doc.fullname;
         session.user.email = token._doc.email;
+        session.user.profile = token._doc.profile;
       }
       return { ...session };
     },

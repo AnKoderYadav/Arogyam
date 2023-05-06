@@ -4,9 +4,17 @@ import FeedPosts from "@/models/feedModel";
 export default async function handler(req, res) {
   dbConnect().catch((error) => res.json({ error: "Connection Failed" }));
 
+  const { content, name, profile } = req.body;
+
   if (req.method === "PUT") {
-    const data = await FeedPosts.findByIdAndUpdate(req.query.feedPostId, {
-      $push: { comments: req.body.comment },
+    const data = await FeedPosts.findByIdAndUpdate(req.query.id, {
+      $push: {
+        comments: {
+          name,
+          profile,
+          content,
+        },
+      },
     });
 
     if (!data) {

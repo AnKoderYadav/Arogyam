@@ -21,13 +21,14 @@ const MoreInfo = ({ doctor }) => {
   };
 
   const onSubmit = async (values, err) => {
-    const { qualification, experience, linkedin, twitter } = values;
+    const { qualification, experience, linkedin, twitter, timeSlot } = values;
 
     const res = await axios.post(`/api/user/doctor/${doctor._id}`, {
       qualification,
       experience,
       linkedin,
       twitter,
+      timeSlot,
     });
 
     if (res.status === 200) toast.success(res.data.msg, toastOptions);
@@ -40,6 +41,7 @@ const MoreInfo = ({ doctor }) => {
       experience: "",
       linkedin: "",
       twitter: "",
+      timeSlot: "",
     },
     onSubmit,
   });
@@ -109,6 +111,24 @@ const MoreInfo = ({ doctor }) => {
             type="text"
             placeholder="Experience"
             {...formik.getFieldProps("experience")}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap -mx-3 ">
+        <div className="w-full px-3">
+          <label
+            className="block uppercase tracking-wide text-xs font-semibold mb-2"
+            htmlFor="grid-timeSlot"
+          >
+            Time Slot
+          </label>
+          <input
+            className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+            id="grid-password"
+            type="text"
+            placeholder="Time Slot"
+            {...formik.getFieldProps("timeSlot")}
           />
         </div>
       </div>

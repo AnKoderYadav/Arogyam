@@ -65,6 +65,9 @@ const OfferBox = ({ consultation }) => {
           <li className="font-thin font-sans">
             Twitter - {consultation.doctorRefId.twitter}
           </li>
+          <li className="font-thin font-sans">
+            Working Hours - {consultation.doctorRefId.timeSlot}
+          </li>
         </ul>
         <div className="flex justify-center items-center">
           <form

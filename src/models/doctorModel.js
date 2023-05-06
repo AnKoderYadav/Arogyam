@@ -29,6 +29,9 @@ const DoctorSchema = new Schema({
     type: Number,
     default: 0,
   },
+  timeSlot: {
+    type: String,
+  },
 });
 
 const Doctors = models?.Doctor || model("Doctor", DoctorSchema);

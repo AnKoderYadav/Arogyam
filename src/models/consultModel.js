@@ -25,12 +25,6 @@ const ConsultationSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    timeSlot: {
-      type: {
-        startTime: String,
-        endTime: String,
-      },
-    },
   },
   {
     timestamps: true,

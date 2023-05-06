@@ -23,14 +23,13 @@ const ConsultBox = ({ post, doctor }) => {
 
   const onSubmit = async (values, err) => {
     if (handleValidation()) {
-      const { fee, startTime, endTime } = values;
+      const { fee } = values;
 
       const res = await axios.post("/api/user/doctor/consultation", {
         postId: post._id,
         doctorName: doctor.doctorId.fullname,
         doctorRefId: doctor._id,
         fee,
-        timeSlot: { startTime, endTime },
       });
 
       if (res.status === 200) toast.success(res.data.msg, toastOptions);
@@ -40,8 +39,6 @@ const ConsultBox = ({ post, doctor }) => {
   const formik = useFormik({
     initialValues: {
       fee: 0,
-      startTime: "",
-      endTime: "",
     },
     onSubmit,
   });
@@ -67,7 +64,7 @@ const ConsultBox = ({ post, doctor }) => {
           />
         </div>
 
-        <div className="w-full">
+        {/* <div className="w-full">
           <label
             className="block uppercase tracking-wide  text-xs font-semibold mb-2"
             htmlFor="grid-password"
@@ -95,7 +92,7 @@ const ConsultBox = ({ post, doctor }) => {
             type="text"
             {...formik.getFieldProps("endTime")}
           />
-        </div>
+        </div> */}
 
         <div className="flex flex-row mx-7 p-5 justify-center">
           <button

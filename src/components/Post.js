@@ -1,7 +1,52 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import { useSession } from "next-auth/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Post = ({ pdata }) => {
+  const { data: session } = useSession();
   const [show, setShow] = useState(true);
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
+
+  const onSubmit = async (values, error) => {
+    const { content } = values;
+    const res = await axios.put(`/api/user/comment/${pdata._id}`, {
+      name: session?.user.name,
+      profile: session?.user.profile,
+      content,
+    });
+
+    if (res.status === 200) {
+      toast.success(res.data.msg, toastOptions);
+      setTimeout(refreshData, 4000);
+    } else {
+      toast.error(res.data.msg, toastOptions);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      content: "",
+    },
+    onSubmit,
+  });
+
   return (
     <div className="flex flex-col">
       <div className="p-5 bg-lightMode-component dark:bg-darkMode-component mt-5 rounded-t-2xl shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">
@@ -9,7 +54,7 @@ const Post = ({ pdata }) => {
           <div className="flex items-center space-x-2">
             <Image
               className="rounded-full"
-              src={pdata.userId.profile}
+              src={pdata?.userId.profile}
               width={40}
               height={40}
             />
@@ -57,14 +102,21 @@ const Post = ({ pdata }) => {
               width={30}
               height={30}
             />
-            <form action="" className="flex flex-1 ">
+            <form
+              action=""
+              className="flex flex-1 "
+              onSubmit={formik.handleSubmit}
+            >
               <input
                 type="text"
                 className="rounded-full h-8 bg-gray-100 dark:bg-neutral-800  flex flex-grow px-5 focus:outline-none "
                 placeholder="Write a comment.."
+                {...formik.getFieldProps("content")}
               />
+              <button type="submit">
+                <img src="/send.svg" className="cursor-pointer" alt="" />
+              </button>
             </form>
-            <img src="/send.svg" className="cursor-pointer" alt="" />
           </div>
         )}
       </div>

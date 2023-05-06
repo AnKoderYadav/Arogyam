@@ -107,14 +107,6 @@ const Feed = ({ user, posts }) => {
               setImage(e.target.files[0]);
             }}
           />
-          <button
-            id="inputIcons"
-            type="submit"
-            className="flex flex-row gap-2 items-center "
-          >
-            <img src="/Submit.svg" alt="" className="" />
-            Submit
-          </button>
         </div>
       </div>
       <div id="Post" className="mb-52">
