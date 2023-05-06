@@ -5,12 +5,25 @@ import { useSession } from "next-auth/react";
 
 const CurrentPost = ({ user, post, refreshData }) => {
   const { data: session } = useSession();
-
+  // console.log(post.createdAt);
   const handleDelete = async () => {
     const res = await axios.delete(`/api/user/post/delete/${post._id}`);
     console.log(res);
     refreshData();
   };
+  const elapsedTime = Date.now() - new Date(post.createdAt).getTime();
+  const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
+  const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
+  const days = Math.floor(elapsedTime / 1000 / 60 / 60 / 24);
+
+  let timeString = '';
+  if (days > 0) {
+    timeString = `${days} day${days > 1 ? 's' : ''} ago`;
+  } else if (hours > 0) {
+    timeString = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  } else {
+    timeString = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  }
 
   return (
     <>
@@ -23,6 +36,7 @@ const CurrentPost = ({ user, post, refreshData }) => {
               alt="img"
             />
             <span className="ml-4 text-2xl font-bold">{user.fullname}</span>
+            <span className="ml-4 text-sm">{timeString}</span>
           </div>
           <span
             className="text-center text-3xl hover:text-red-600 cursor-pointer"

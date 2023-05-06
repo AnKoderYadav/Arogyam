@@ -66,6 +66,7 @@ export async function getServerSideProps({ req }) {
 }
 
 const Home = ({ user, posts, consultations }) => {
+  
   const [image, setImage] = useState(null);
   const [sorted, setSorted] = useState(true);
   const router = useRouter();

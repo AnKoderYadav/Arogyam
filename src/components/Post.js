@@ -11,6 +11,20 @@ const Post = ({ pdata }) => {
   const { data: session } = useSession();
   const [show, setShow] = useState(true);
   const router = useRouter();
+  // console.log(pdata.createdAt);
+  const elapsedTime = Date.now() - new Date(pdata.createdAt).getTime();
+  const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
+  const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
+  const days = Math.floor(elapsedTime / 1000 / 60 / 60 / 24);
+
+  let timeString = '';
+  if (days > 0) {
+    timeString = `${days} day${days > 1 ? 's' : ''} ago`;
+  } else if (hours > 0) {
+    timeString = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  } else {
+    timeString = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  }
 
   const refreshData = () => {
     router.replace(router.asPath);
@@ -60,8 +74,8 @@ const Post = ({ pdata }) => {
             />
           </div>
           <div className="ml-3">
-            <p className="font-medium">Arinaymay Bhaskar</p>
-            <p className="text-xs text-gray-400"> Just now </p>
+            <p className="font-medium">{pdata.userId.fullname}</p>
+            <p className="text-xs text-gray-400">{timeString}</p>
           </div>
         </div>
 
