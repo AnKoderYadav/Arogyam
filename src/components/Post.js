@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import { useSession } from "next-auth/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FeedPosts from "@/models/feedModel";
 
 const Post = ({ pdata }) => {
   const { data: session } = useSession();
@@ -25,7 +26,32 @@ const Post = ({ pdata }) => {
   } else {
     timeString = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
   }
+  const [postLiked, setPostLiked] = useState(false);
 
+  const handleLike = (e) => {
+    e.preventDefault();
+    if (!session) {
+      return;
+    }
+    if (!postLiked) {
+      setPostLiked(true);
+      pdata.likeCount += 1;
+    } else {
+      setPostLiked(false);
+      pdata.likeCount -= 1;
+    }
+    fetch(`/api/posts/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pdata: pdata._id,
+        userId: session.user._id,
+        liked: postLiked,
+      }),
+    });
+  };
   const refreshData = () => {
     router.replace(router.asPath);
   };
@@ -60,8 +86,9 @@ const Post = ({ pdata }) => {
     },
     onSubmit,
   });
-
+  // console.log(pdata.likeCount);
   return (
+    
     <div className="flex flex-col">
       <div className="p-5 bg-lightMode-component dark:bg-darkMode-component mt-5 rounded-t-2xl shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">
         <div className="flex flex-row">
@@ -85,12 +112,24 @@ const Post = ({ pdata }) => {
         <Image src={pdata.image} objectFit="cover" layout="fill" />
       </div>
       {/* Footer */}
-
       <div className="flex flex-col rounded-b-2xl bg-lightMode-component dark:bg-darkMode-component text-neutral-700 dark:text-neutral-400 border-t p-2">
         <div className="flex justify-between items-center gap-9 ">
-          <div id="inputIcons" className="rounded-none gap-1 cursor-pointer">
-            <img src="/like.svg" alt="" />
-            <p className="text-xs sm:text-base">Like</p>
+          <div onClick={(e) => handleLike(e)} id="inputIcons" className="rounded-none gap-1 cursor-pointer">
+          {postLiked ? (
+              <span >❤️ </span>
+            ) : (
+              <span >🤍 </span>
+            )}
+
+            <div
+              style={{
+                paddingRight: "10px",
+                whiteSpace: "nowrap",
+                display: "inline-block",
+              }}
+            >
+              {pdata.likeCount}
+          </div>
           </div>
 
           <button

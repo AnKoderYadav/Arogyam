@@ -32,7 +32,7 @@ export async function getServerSideProps({ req }) {
     const post = JSON.parse(JSON.stringify(doc));
     return post;
   });
-
+  
   return {
     props: { user, posts },
   };

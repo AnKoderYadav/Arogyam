@@ -5,10 +5,8 @@ import Image from "next/image";
 import { getSession } from "next-auth/react";
 import dbConnect from "@/dbconnect";
 import FeedPosts from "@/models/feedModel";
-
 export async function getServerSideProps({ req, params }) {
   const session = await getSession({ req });
-
   if (!session?.user) {
     return {
       redirect: {
@@ -34,7 +32,7 @@ export async function getServerSideProps({ req, params }) {
 }
 
 const PostPage = ({ post }) => {
-  
+  console.log(post);
   return (
     <MainLayout>
       <div className="bg-lightMode-background dark:bg-darkMode-background w-full h-full flex content-center justify-center overflow-scroll scrollbar-hide">
