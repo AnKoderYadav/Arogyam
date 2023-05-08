@@ -14,6 +14,7 @@ import { BsSortDown, BsSortDownAlt } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
+import { toastOptions } from "@/lib/lib";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -66,7 +67,7 @@ export async function getServerSideProps({ req }) {
 }
 
 const Home = ({ user, posts, consultations }) => {
-  
+
   const [image, setImage] = useState(null);
   const [sorted, setSorted] = useState(true);
   const router = useRouter();
@@ -75,13 +76,14 @@ const Home = ({ user, posts, consultations }) => {
     router.replace(router.asPath);
   };
 
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
+  // const toastOptions = {
+  //   position: "bottom-right",
+  //   autoClose: 8000,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   theme: "dark",
+  // };
+
 
   const onSubmit = async (values, error) => {
     const body = new FormData();
@@ -121,8 +123,8 @@ const Home = ({ user, posts, consultations }) => {
   return (
     <>
       <MainLayout>
-        <div className="w-full h-full flex justify-around items-start overflow-x-hidden p-5 gap-8 text-lightMode-txt dark:text-darkMode-txt bg-lightMode-background dark:bg-darkMode-background">
-          <div className="w-full flex flex-col gap-5 p-5 pt-0">
+        <div className="w-full h-full flex justify-center items-start overflow-x-hidden p-5 gap-1 text-lightMode-txt dark:text-darkMode-txt bg-lightMode-background dark:bg-darkMode-background">
+          <div className=" max-w-3xl w-full flex flex-col gap-5 p-5 pt-0">
             {posts[0] && !posts[0].solved ? (
               <>
                 <CurrentPost
@@ -130,25 +132,27 @@ const Home = ({ user, posts, consultations }) => {
                   refreshData={refreshData}
                   user={user}
                 />
-                <div className="w-full flex gap-4 justify-between px-4 items-center ">
-                  <div className=" text-xl font-bold tracking-tight leading-tight flex flex-row items-center gap-4">
-                    Sort By
+                <div className="w-full flex gap-4 justify-between  items-center ">
+                  <button
+                    onClick={() => {
+                      setSorted(!sorted);
+                      consultations.reverse();
+                    }}
+                    className="border-[1px] border-neutral-400 dark:border-neutral-700  p-[1px] px-1 rounded-md cursor-pointer  tracking-tight leading-tight flex flex-row items-center gap-[6px]">
+                    Sort by
                     <span
                       className="cursor-pointer font-bold"
-                      onClick={() => {
-                        setSorted(!sorted);
-                        consultations.reverse();
-                      }}
+
                     >
                       {sorted ? <BsSortDownAlt /> : <BsSortDown />}
                     </span>
-                  </div>
-                  <div className=" text-xl font-bold tracking-tight leading-tight">
+                  </button>
+                  <div className=" tracking-tight leading-tight mr-3">
                     {consultations.length + " "}offers
                   </div>
                 </div>
 
-                <div className="w-full flex flex-row flex-wrap justify-evenly">
+                <div className="w-full flex flex-row flex-wrap gap-2">
                   {consultations.map((consultation) => {
                     return (
                       <OfferBox
@@ -223,7 +227,7 @@ const Home = ({ user, posts, consultations }) => {
               </div>
             )}
           </div>
-          <div className="flex sticky top-0" id="Trending">
+          <div className=" lg:flex md:flex sticky top-0 hidden  " id="Trending">
             <TrendingBox key={1} />
           </div>
         </div>

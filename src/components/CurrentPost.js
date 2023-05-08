@@ -31,12 +31,14 @@ const CurrentPost = ({ user, post, refreshData }) => {
         <div className="flex content-center items-center w-full">
           <div className="w-full flex flex-row content-center items-center">
             <img
-              className="w-[3rem] h-[3rem] rounded-full"
+              className="w-10 h-10 rounded-full"
               src={user.profile}
               alt="img"
             />
-            <span className="ml-4 text-2xl font-bold">{user.fullname}</span>
-            <span className="ml-4 text-sm">{timeString}</span>
+            <div className="flex flex-col">
+            <span className="ml-4 text-sm font-medium tracking-tight">{user.fullname}</span>
+            <span className="ml-4 text-xs">{timeString}</span>
+            </div>
           </div>
           <span
             className="text-center text-3xl hover:text-red-600 cursor-pointer"
@@ -45,13 +47,18 @@ const CurrentPost = ({ user, post, refreshData }) => {
             <MdDelete />
           </span>
         </div>
-        <div className="flex flex-col gap-2 w-full p-4">
-          <p className="text-md text-justify font-sans">{post.description}</p>
+        <div className="flex flex-col gap-2 w-full ">
+          <p className="text-sm text-justify font-sans">{post.description}</p>
           <img
             className="w-auto h-[300px] object-contain"
             src={post.image}
             alt=""
           />
+        </div>
+        <div className="flex items-end w-full justify-end mr-2">
+        <button className="text-sm bg-cyan-500 text-white  dark:bg-cyan-800 p-1 px-3 rounded-lg hover:bg-cyan-700 ">
+          Solved?
+        </button>
         </div>
       </div>
     </>

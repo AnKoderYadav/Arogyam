@@ -51,7 +51,7 @@ const Home = ({ doctor, posts }) => {
         <div className="w-full h-full flex justify-center gap-8 md:p-8 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
           <div
             id="doctorProfileBox"
-            className="sticky top-0 h-fit w-[25%] flex flex-col shadow-xl bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt p-2 gap-2 rounded-lg"
+            className="sticky top-0 h-fit w-[20%] flex flex-col shadow-xl bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt p-2 gap-2 rounded-lg"
           >
             <div className="flex content-center items-center flex-col gap-2 border-b-[1px] border-black dark:border-white p-2">
               <img

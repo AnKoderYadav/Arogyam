@@ -11,15 +11,15 @@ module.exports = {
       colors: {
         lightMode: {
           background: "#e0e0e0",
-          txt: "#030303",
+          txt: "#2D2D2D",
           component: "#fcfcfc",
           btn: "#0891b2",
           componentHead: "#f0f0f0",
         },
         darkMode: {
-          background: "#000000",
+          background: "#202124",
           txt: "#f7f7f7",
-          component: "#1e1e1e",
+          component: "#3c4043",
           btn: "#033e4d",
           componentHead: "#111111",
         },

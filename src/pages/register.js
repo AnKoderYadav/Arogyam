@@ -5,17 +5,10 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { toastOptions } from "@/lib/lib";
 
 const Register = () => {
   const router = useRouter();
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
 
   const handleValidation = () => {
     const { password, confirmPassword, fullname, email } = formik.values;

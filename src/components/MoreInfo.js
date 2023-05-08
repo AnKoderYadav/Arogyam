@@ -3,16 +3,10 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { AiFillLinkedin, AiOutlineTwitter } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { toastOptions } from "@/lib/lib";
 
 const MoreInfo = ({ doctor }) => {
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
-
+  
   const handleValidation = () => {
     const { experience, qualification, linkedin, twitter } = formik.values;
     if (experience + qualification + linkedin + twitter === "") {
@@ -81,7 +75,7 @@ const MoreInfo = ({ doctor }) => {
             <input
               className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
               type="link"
-              {...formik.getFieldProps("linkdin")}
+              {...formik.getFieldProps("linkedin")}
             />
           </div>
 
@@ -115,7 +109,7 @@ const MoreInfo = ({ doctor }) => {
         </div>
       </div>
 
-      <div className="flex flex-wrap -mx-3 ">
+      <div className="flex flex-wrap -mx-3 mt-4">
         <div className="w-full px-3">
           <label
             className="block uppercase tracking-wide text-xs font-semibold mb-2"

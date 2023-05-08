@@ -65,17 +65,15 @@ const Feed = ({ user, posts }) => {
         id="inputBox"
         className="bg-lightMode-component  my-4 dark:bg-darkMode-component dark:text-darkMode-txt p-2 rounded-2xl shadow-md text-lightMode-txt font-medium mt-0 content-center items-center"
       >
-        <div className=" flex space-x-4 p-4 items-center">
-          <Image
-            className="rounded-full"
+        <div className=" flex  space-x-4 p-4 pb-0 ">
+          <img
+            className="rounded-full w-10 h-10 mt-1 top-0"
             src={user.profile}
-            width={40}
-            height={40}
             alt=""
           />
           <form
             action=""
-            className="flex flex-1 "
+            className="flex flex-1 flex-col"
             onSubmit={formik.handleSubmit}
           >
             <input
@@ -84,30 +82,39 @@ const Feed = ({ user, posts }) => {
               placeholder="What's on your Mind?"
               {...formik.getFieldProps("description")}
             />
-            <button
-              id="inputIcons"
-              type="submit"
-              className="flex flex-row gap-2 items-center "
-            >
-              <img src="/Submit.svg" alt="" className="" />
-              Submit
-            </button>
+            <div className="flex border-t-[1px] mt-5 border-neutral-300 dark:border-neutral-700 gap-2">
+              <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-neutral-800 border-neutral-300 rounded-xl mt-2 dark:border-neutral-700  w-1/2">
+
+
+                <button id="inputIcons" className="flex flex-row gap-2 items-center text-black dark:text-white ">
+                  <span class="material-symbols-outlined">
+                    image
+                  </span>
+                  Upload Picture
+                </button>
+                <input
+                  type="file"
+                  className="w-full h-10 opacity-0 left-0 absolute  hover:bg-gray-100 cursor-pointer"
+                  onChange={(e) => {
+                    setImage(e.target.files[0]);
+                  }}
+                />
+              </div>
+              <button
+                id="inputIcons"
+                type="submit"
+                className="flex flex-row gap-2 items-center mt-2  bg-lightMode-componentHead dark:bg-neutral-800 text-black dark:text-white"
+              >
+                <span class="material-symbols-outlined">
+                  check_circle
+                </span>
+                Submit
+              </button>
+            </div>
           </form>
         </div>
 
-        <div className="flex justify-around border-t-[1px] gap-9 border-neutral-300 dark:border-neutral-700 p-2">
-          <button id="inputIcons" className="flex flex-row gap-2 items-center ">
-            <img src="/upload.svg" alt="" className="" />
-            Upload Picture
-          </button>
-          <input
-            type="file"
-            className="w-48"
-            onChange={(e) => {
-              setImage(e.target.files[0]);
-            }}
-          />
-        </div>
+
       </div>
       <div id="Post" className="mb-52">
         {posts.map((pdata) => {

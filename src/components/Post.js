@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FeedPosts from "@/models/feedModel";
+import Link from "next/link";
 
 const Post = ({ pdata }) => {
   const { data: session } = useSession();
@@ -88,37 +89,46 @@ const Post = ({ pdata }) => {
   });
   // console.log(pdata.likeCount);
   return (
-    
+
     <div className="flex flex-col">
       <div className="p-5 bg-lightMode-component dark:bg-darkMode-component mt-5 rounded-t-2xl shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">
-        <div className="flex flex-row">
-          <div className="flex items-center space-x-2">
-            <Image
-              className="rounded-full"
-              src={pdata?.userId.profile}
-              width={40}
-              height={40}
-            />
+        <div className="flex flex-row justify-between">
+          <div className="flex flex-row ">
+
+            <div className="flex items-center space-x-2 flex-row">
+              <img
+                className="rounded-full w-10 h-10"
+                src={pdata?.userId.profile}
+
+              />
+            </div>
+            <div className="ml-3">
+              <p className="font-medium">{pdata.userId.fullname}</p>
+              <p className="text-xs text-gray-400">{timeString}</p>
+            </div>
           </div>
-          <div className="ml-3">
-            <p className="font-medium">{pdata.userId.fullname}</p>
-            <p className="text-xs text-gray-400">{timeString}</p>
-          </div>
+          <Link href={`/feed/${pdata._id}`}>
+            <button className="text-black dark:text-white">
+              <span class="material-symbols-outlined">
+                open_in_new
+              </span>
+            </button>
+          </Link>
         </div>
 
-        <p className="mt-1">{pdata.description}</p>
+        <p className="mt-2">{pdata.description}</p>
       </div>
       <div className="relative h-56 md-h-96 bg-lightMode-component dark:bg-darkMode-component">
         <Image src={pdata.image} objectFit="cover" layout="fill" />
       </div>
       {/* Footer */}
       <div className="flex flex-col rounded-b-2xl bg-lightMode-component dark:bg-darkMode-component text-neutral-700 dark:text-neutral-400 border-t p-2">
-        <div className="flex justify-between items-center gap-9 ">
+        <div className="flex justify-between items-center gap-9 mx-2">
           <div onClick={(e) => handleLike(e)} id="inputIcons" className="rounded-none gap-1 cursor-pointer">
-          {postLiked ? (
-              <span >❤️ </span>
+            {postLiked ? (
+              <span className="text-xl">❤️ </span>
             ) : (
-              <span >🤍 </span>
+              <span className="text-xl">🤍 </span>
             )}
 
             <div
@@ -129,7 +139,7 @@ const Post = ({ pdata }) => {
               }}
             >
               {pdata.likeCount}
-          </div>
+            </div>
           </div>
 
           <button
@@ -138,22 +148,25 @@ const Post = ({ pdata }) => {
             id="inputIcons"
             className="rounded-none gap-1 cursor-pointer"
           >
-            <img src="/comment.svg" alt="" />
+            <span class="material-symbols-outlined">
+              chat
+            </span>
             <p className="text-xs sm:text-base ">Comment</p>
           </button>
 
           <div id="inputIcons" className="rounded-none gap-1 cursor-pointer">
-            <img src="/share.svg" alt="" />
+            <span class="material-symbols-outlined">
+              share
+            </span>
             <p className="text-xs sm:text-base">Share</p>
           </div>
         </div>
         {show && (
           <div id="CommentSection" className=" flex space-x-4 p-4 items-center">
-            <Image
-              className="rounded-full"
-              src={"/pfp.webp"}
-              width={30}
-              height={30}
+            {/* TO BE CHANGED */}
+            <img
+              className="rounded-full w-8 h-8"
+              src={session?.user.profile}
             />
             <form
               action=""
@@ -166,8 +179,10 @@ const Post = ({ pdata }) => {
                 placeholder="Write a comment.."
                 {...formik.getFieldProps("content")}
               />
-              <button type="submit">
-                <img src="/send.svg" className="cursor-pointer" alt="" />
+              <button type="submit" className="ml-4">
+                <span class="material-symbols-outlined">
+                  send
+                </span>
               </button>
             </form>
           </div>

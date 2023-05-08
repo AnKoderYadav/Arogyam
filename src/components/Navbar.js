@@ -34,18 +34,18 @@ const Navbar = ({ isDoctor }) => {
           </div>
           <div className="order-3 w-full md:w-auto md:order-2">
             <ul className="text-xl flex justify-around gap-4">
-              <li className="md:px-2 md:py-2 dark:text-white dark:hover:text-slate-400 hover:text-white">
+              <li className="md:px-2 md:py-2 text-white dark:text-white dark:hover:text-slate-400 hover:text-neutral-700">
                 <Link href={basePath}>Home</Link>
               </li>
-              <li className="md:px-2 md:py-2 dark:text-white dark:hover:text-slate-400 hover:text-white">
+              <li className="md:px-2 md:py-2 text-white dark:text-white dark:hover:text-slate-400 hover:text-neutral-700">
                 <Link href="/feed">Feed</Link>
               </li>
-              <li className="md:px-2 md:py-2 dark:text-white dark:hover:text-slate-400 hover:text-white">
+              <li className="md:px-2 md:py-2 text-white dark:text-white dark:hover:text-slate-400 hover:text-neutral-700">
                 <Link href={`${basePath}profile`}>Profile</Link>
               </li>
               {isDoctor ? (
                 <>
-                  <li className="md:px-2 md:py-2 dark:text-white dark:hover:text-slate-400 hover:text-white">
+                  <li className="md:px-2 md:py-2 text-white dark:text-white dark:hover:text-slate-400 hover:text-neutral-700">
                     <Link href="/doctor/consult">Consult</Link>
                   </li>
                 </>

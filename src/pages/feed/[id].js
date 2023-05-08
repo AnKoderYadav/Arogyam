@@ -36,11 +36,11 @@ const PostPage = ({ post }) => {
   return (
     <MainLayout>
       <div className="bg-lightMode-background dark:bg-darkMode-background w-full h-full flex content-center justify-center overflow-scroll scrollbar-hide">
-        <div className="max-w-3xl mx-5">
-          <Post pdata={post} />
+        <div className=" mx-5 flex flex-col md:flex-row lg:flex-row gap-5 w-full content-center justify-center mt-10 " >
+          <Post className="w-2/5" pdata={post} />
           {/* Comment Section */}
-          <div className="p-5 bg-lightMode-component dark:bg-darkMode-component mt-5 rounded-2xl shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">
-            <h1 className="font-semibold text-xl">Comments</h1>
+          <div className="p-5 w-full md:w-[30%] lg:[30%] h-2/3 bg-lightMode-component overflow-scroll scrollbar-hide dark:bg-darkMode-component mt-5 rounded-2xl shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">
+            <h1 className="font-semibold text-md">Comments</h1>
             {post.comments.map((comment) => {
                const elapsedTime = Date.now() - new Date(comment.createdAt).getTime();
                const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
@@ -60,18 +60,16 @@ const PostPage = ({ post }) => {
               return (
                 <div
                   id="Comment"
-                  className="border-t-[1px] mt-1 border-neutral-400 dark:border-neutral-700 flex space-x-4 p-4 items-center"
+                  className=" border-t-[1px] mt-1  border-neutral-800 dark:border-neutral-600 flex space-x-4 p-2 "
                 >
-                  <Image
-                    className="rounded-full"
+                  <img
+                    className="rounded-full w-8 h-8 mt-1"
                     src={comment.profile}
-                    width={30}
-                    height={30}
                   />
-                  <div className="flex flex-grow bg-lightMode-componentHead dark:bg-darkMode-componentHead p-2 px-4 rounded-2xl  flex-col">
-                    <p className="font-semibold">{comment.name} </p>
-                    <p>{timeString}</p>
-                    <p className="text-sm">{comment.content}</p>
+                  <div className="flex flex-grow bg-lightMode-componentHead dark:bg-neutral-800 p-2 px-4 rounded-2xl  flex-col">
+                    <p className="font-semibold text-xs">{comment.name} </p>
+                    <p className="text-[9px] text-neutral-500">{timeString}</p>
+                    <p className="text-xs">{comment.content}</p>
                   </div>
                 </div>
               );

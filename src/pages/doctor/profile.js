@@ -7,6 +7,7 @@ import { getSession } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Users from "@/models/userModel";
+import { toastOptions } from "@/lib/lib";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });

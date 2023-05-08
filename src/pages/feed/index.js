@@ -42,11 +42,11 @@ const feed = ({ user, posts }) => {
   return (
     <MainLayout>
       <div className="bg-lightMode-background dark:bg-darkMode-background overflow-y-scroll scrollbar-hide">
-        <div className="flex gap-3 justify-between">
-          <div className="max-w-4xl w-full h-screen m-7 ">
+        <div className="flex justify-center gap-1 ">
+          <div className="max-w-3xl w-full h-screen m-7 ">
             <FeedBox user={user} posts={posts} />
           </div>
-          <div className="m-7 " id="Trending">
+          <div className="mt-7 lg:flex md:flex sticky top-0 hidden  " id="Trending">
             <TrendingBox />
           </div>
         </div>

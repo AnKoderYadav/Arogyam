@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Users from "@/models/userModel";
 import dbConnect from "@/dbconnect";
+import { toastOptions } from "@/lib/lib";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -43,13 +44,6 @@ const Profile = ({ user }) => {
     }
   };
 
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
 
   const handleValidation = () => {
     const { password, fullname, contact } = formik.values;
@@ -120,7 +114,7 @@ const Profile = ({ user }) => {
       <MainLayout>
         <div className=" h-full bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row  items-start p-5 justify-center font-sans text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
           <div className="flex flex-col mt-8 w-[20rem] m-4">
-            <div className=" p-5 mb-0 bg-lightMode-componentHead pl-5  rounded-t-md pb-1 w-auto  dark:bg-darkMode-componentHead">
+            <div className=" p-5 mb-0 bg-lightMode-componentHead pl-5  rounded-t-md pb-1 w-auto  dark:bg-neutral-800">
               <h1 className="font-bold text-2xl">
                 Your{" "}
                 <span className="text-cyan-800 dark:text-cyan-600">
@@ -131,7 +125,7 @@ const Profile = ({ user }) => {
             <div className="mt-0  rounded-md border-slate-950 flex flex-col bg-lightMode-component dark:bg-darkMode-component items-center justify-center text-lightMode-txt dark:text-darkMode-txt w-auto rounded-t-none p-5">
               <div className="flex justify-center mb-3 p-3 pb-0">
                 <img
-                  className="rounded-full h-auto border-[1px] border-slate-600"
+                  className="rounded-full  border-[1px] w-48 h-48 border-slate-600"
                   src={createObjectURL}
                   alt="Profile photo"
                 />
@@ -152,8 +146,10 @@ const Profile = ({ user }) => {
           </div>
 
           <div className="m-8 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-4/5 overflow-y-scroll scrollbar-hide ">
-            <div className="p-5 bg-lightMode-componentHead dark:bg-darkMode-componentHead rounded-t-md pb-1">
-              <h1 className="font-bold text-2xl">Edit Profile</h1>
+            <div className="p-5 bg-lightMode-componentHead dark:bg-neutral-800 rounded-t-md pb-1">
+              <h1 className="font-bold text-2xl">Edit <span className="text-cyan-800 dark:text-cyan-600">
+                Profile
+              </span></h1>
             </div>
             <form
               className="w-full p-5"
@@ -166,7 +162,7 @@ const Profile = ({ user }) => {
                     Full Name
                   </label>
                   <input
-                    className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+                    className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
                     type="text"
                     {...formik.getFieldProps("fullname")}
                   />
@@ -178,7 +174,7 @@ const Profile = ({ user }) => {
                     age
                   </label>
                   <input
-                    className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+                    className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
                     type="text"
                     placeholder="in years"
                     {...formik.getFieldProps("age")}
@@ -191,7 +187,7 @@ const Profile = ({ user }) => {
                     Contact Number
                   </label>
                   <input
-                    className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+                    className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
                     type="text"
                     placeholder="99xxxxxxxx"
                     {...formik.getFieldProps("contact")}
@@ -204,7 +200,7 @@ const Profile = ({ user }) => {
                     Password
                   </label>
                   <input
-                    className="appearance-none block w-full bg-neutral-200 mb-3 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+                    className="appearance-none block w-full bg-neutral-200 mb-3 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
                     type="password"
                     placeholder="**************"
                     {...formik.getFieldProps("password")}
@@ -221,7 +217,7 @@ const Profile = ({ user }) => {
                   </label>
                   <div className="relative">
                     <select
-                      className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+                      className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
                       id="grid-state"
                       {...formik.getFieldProps("gender")}
                     >
