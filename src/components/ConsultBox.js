@@ -2,16 +2,9 @@ import React from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
+import { toastOptions } from "@/lib/lib";
 
 const ConsultBox = ({ post, doctor }) => {
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
-
   const handleValidation = () => {
     const { fee, startTime, endTime } = formik.values;
     if (fee === "" || startTime === "" || endTime === "") {
@@ -63,36 +56,6 @@ const ConsultBox = ({ post, doctor }) => {
             {...formik.getFieldProps("fee")}
           />
         </div>
-
-        {/* <div className="w-full">
-          <label
-            className="block uppercase tracking-wide  text-xs font-semibold mb-2"
-            htmlFor="grid-password"
-          >
-            Start Time
-          </label>
-          <input
-            className="appearance-none p-4 block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-            id="grid-qualifications"
-            type="text"
-            {...formik.getFieldProps("startTime")}
-          />
-        </div>
-
-        <div className="w-full">
-          <label
-            className="block uppercase tracking-wide text-xs font-semibold mb-2"
-            htmlFor="grid-password"
-          >
-            End Time
-          </label>
-          <input
-            className="appearance-none p-4 block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-            id="grid-password"
-            type="text"
-            {...formik.getFieldProps("endTime")}
-          />
-        </div> */}
 
         <div className="flex flex-row mx-7 p-5 justify-center">
           <button

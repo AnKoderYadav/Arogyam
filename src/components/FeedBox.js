@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Post from "./Post";
 import { useRouter } from "next/router";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { toastOptions } from "@/lib/lib";
 import "react-toastify/dist/ReactToastify.css";
 
 const Feed = ({ user, posts }) => {
@@ -15,21 +16,13 @@ const Feed = ({ user, posts }) => {
     router.replace(router.asPath);
   };
 
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
-
   const onSubmit = async (values, error) => {
     const body = new FormData();
     body.append("file", image);
     const newFilename = `${Date.now()}_${image.name}`;
     body.append("newFilename", newFilename);
 
-    const response = await fetch("/api/upload", {
+    await fetch("/api/upload", {
       method: "POST",
       body,
     });
@@ -84,12 +77,11 @@ const Feed = ({ user, posts }) => {
             />
             <div className="flex border-t-[1px] mt-5 border-neutral-300 dark:border-neutral-700 gap-2">
               <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-neutral-800 border-neutral-300 rounded-xl mt-2 dark:border-neutral-700  w-1/2">
-
-
-                <button id="inputIcons" className="flex flex-row gap-2 items-center text-black dark:text-white ">
-                  <span class="material-symbols-outlined">
-                    image
-                  </span>
+                <button
+                  id="inputIcons"
+                  className="flex flex-row gap-2 items-center text-black dark:text-white "
+                >
+                  <span class="material-symbols-outlined">image</span>
                   Upload Picture
                 </button>
                 <input
@@ -105,16 +97,12 @@ const Feed = ({ user, posts }) => {
                 type="submit"
                 className="flex flex-row gap-2 items-center mt-2  bg-lightMode-componentHead dark:bg-neutral-800 text-black dark:text-white"
               >
-                <span class="material-symbols-outlined">
-                  check_circle
-                </span>
+                <span class="material-symbols-outlined">check_circle</span>
                 Submit
               </button>
             </div>
           </form>
         </div>
-
-
       </div>
       <div id="Post" className="mb-52">
         {posts.map((pdata) => {

@@ -6,27 +6,28 @@ import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
 
 const MoreInfo = ({ doctor }) => {
-  
   const handleValidation = () => {
     const { experience, qualification, linkedin, twitter } = formik.values;
     if (experience + qualification + linkedin + twitter === "") {
-      toast.info("Enter Atleast One Field", toastOptions);
+      toast.info("Invalid Update Request", toastOptions);
     }
   };
 
   const onSubmit = async (values, err) => {
-    const { qualification, experience, linkedin, twitter, timeSlot } = values;
+    if (handleValidation) {
+      const { qualification, experience, linkedin, twitter, timeSlot } = values;
 
-    const res = await axios.post(`/api/user/doctor/${doctor._id}`, {
-      qualification,
-      experience,
-      linkedin,
-      twitter,
-      timeSlot,
-    });
+      const res = await axios.post(`/api/user/doctor/${doctor._id}`, {
+        qualification,
+        experience,
+        linkedin,
+        twitter,
+        timeSlot,
+      });
 
-    if (res.status === 200) toast.success(res.data.msg, toastOptions);
-    else toast.error(res.data.msg, toastOptions);
+      if (res.status === 200) toast.success(res.data.msg, toastOptions);
+      else toast.error(res.data.msg, toastOptions);
+    }
   };
 
   const formik = useFormik({

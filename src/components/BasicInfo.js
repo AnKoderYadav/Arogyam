@@ -2,32 +2,22 @@ import React from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
+import { toastOptions } from "@/lib/lib";
 
 const BasicInfo = ({ doctor, image }) => {
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
-
   const handleValidation = () => {
     const { password, fullname, contact } = formik.values;
     if (password === "") {
-      toast.info("Password cannot be empty.", toastOptions);
+      toast.info("Password cannot be Empty!", toastOptions);
       return false;
     } else if (fullname.length < 3) {
-      toast.info("Fullname should be greater than 3 characters.", toastOptions);
+      toast.info("Invalid Fullname!", toastOptions);
       return false;
     } else if (password.length < 8) {
-      toast.info(
-        "Password should be equal or greater than 8 characters.",
-        toastOptions
-      );
+      toast.info("Password should be minimum of characters!", toastOptions);
       return false;
     } else if (contact.length < 10) {
-      toast.info("Invalid Contact", toastOptions);
+      toast.info("Invalid Contact!", toastOptions);
       return false;
     }
     return true;
@@ -40,7 +30,7 @@ const BasicInfo = ({ doctor, image }) => {
         body.append("file", image);
         body.append("id", doctor._id);
 
-        const response = await fetch("/api/upload", {
+        await fetch("/api/upload", {
           method: "POST",
           body,
         });

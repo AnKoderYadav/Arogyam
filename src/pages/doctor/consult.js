@@ -24,7 +24,6 @@ export async function getServerSideProps({ req }) {
   dbConnect().catch((error) => res.json({ error: "Connection Failed" }));
 
   //current user
-  //current user
   let res = await Doctors.findOne({ doctorId: session.user.id }).populate(
     "doctorId"
   );
@@ -55,16 +54,18 @@ export async function getServerSideProps({ req }) {
 
 const Consult = ({ doctor, consultations }) => {
   const router = useRouter();
+
   const refreshData = () => {
     router.replace(router.asPath);
   };
+
   const [openId, setOpenId] = useState("");
   return (
     <MainLayout>
       <div className="h-full flex flex-wrap overflow-y-scroll scrollbar-thin p-8 gap-8 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt justify-center">
         {consultations.map((consultation) => {
           const handleRevoke = async () => {
-            const res = await axios.delete(
+            await axios.delete(
               `/api/user/doctor/consultation/${consultation._id}`
             );
             refreshData();
@@ -119,7 +120,7 @@ const Consult = ({ doctor, consultations }) => {
                     </span>
                   </div>
                 </div>
-                {openId && (
+                {openId === consultation._id && (
                   <EmailBox doctor={doctor} consultation={consultation} />
                 )}
               </div>

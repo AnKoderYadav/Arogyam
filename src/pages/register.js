@@ -13,19 +13,13 @@ const Register = () => {
   const handleValidation = () => {
     const { password, confirmPassword, fullname, email } = formik.values;
     if (password !== confirmPassword) {
-      toast.error(
-        "Password and confirm password should be same.",
-        toastOptions
-      );
+      toast.error("Password & confirm password should be Same!", toastOptions);
       return false;
     } else if (password.length < 8) {
-      toast.error(
-        "Password should be equal or greater than 8 characters.",
-        toastOptions
-      );
+      toast.error("Password should be minimum of 8 characters", toastOptions);
       return false;
-    } else if (email === "") {
-      toast.error("Email is required.", toastOptions);
+    } else if (email === "" || fullname === "") {
+      toast.error("Fields cannot be Empty!", toastOptions);
       return false;
     }
     return true;

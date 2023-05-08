@@ -44,20 +44,16 @@ const Profile = ({ user }) => {
     }
   };
 
-
   const handleValidation = () => {
     const { password, fullname, contact } = formik.values;
     if (password === "") {
-      toast.info("Password Cannot Be Empty", toastOptions);
+      toast.info("Password Cannot Be Empty!", toastOptions);
       return false;
     } else if (fullname.length < 3) {
-      toast.info("Fullname should be greater than 3 characters.", toastOptions);
+      toast.info("Invalid Full Name!", toastOptions);
       return false;
     } else if (password.length < 8) {
-      toast.info(
-        "Password should be equal or greater than 8 characters.",
-        toastOptions
-      );
+      toast.info("Password should be minimum of 8 characters!", toastOptions);
       return false;
     } else if (contact.length !== 10) {
       toast.info("Invalid Contact", toastOptions);
@@ -74,7 +70,7 @@ const Profile = ({ user }) => {
         body.append("file", image);
         body.append("newFilename", newFilename);
 
-        const response = await fetch("/api/upload", {
+        await fetch("/api/upload", {
           method: "POST",
           body,
         });
@@ -147,9 +143,12 @@ const Profile = ({ user }) => {
 
           <div className="m-8 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-4/5 overflow-y-scroll scrollbar-hide ">
             <div className="p-5 bg-lightMode-componentHead dark:bg-neutral-800 rounded-t-md pb-1">
-              <h1 className="font-bold text-2xl">Edit <span className="text-cyan-800 dark:text-cyan-600">
-                Profile
-              </span></h1>
+              <h1 className="font-bold text-2xl">
+                Edit{" "}
+                <span className="text-cyan-800 dark:text-cyan-600">
+                  Profile
+                </span>
+              </h1>
             </div>
             <form
               className="w-full p-5"

@@ -8,13 +8,14 @@ import MainLayout from "@/layouts/MainLayout";
 import OfferBox from "@/components/OfferBox";
 import CurrentPost from "@/components/CurrentPost";
 import TrendingBox from "@/components/TrendingBox";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { useFormik } from "formik";
 import { BsSortDown, BsSortDownAlt } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { toastOptions } from "@/lib/lib";
+import Doctors from "@/models/doctorModel";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -43,6 +44,8 @@ export async function getServerSideProps({ req }) {
     return post;
   });
 
+  const Doctor = await Doctors.findOne({ email: user.email });
+
   let consultations = [];
   // all consultation offers on current post
 
@@ -67,7 +70,6 @@ export async function getServerSideProps({ req }) {
 }
 
 const Home = ({ user, posts, consultations }) => {
-
   const [image, setImage] = useState(null);
   const [sorted, setSorted] = useState(true);
   const router = useRouter();
@@ -76,26 +78,16 @@ const Home = ({ user, posts, consultations }) => {
     router.replace(router.asPath);
   };
 
-  // const toastOptions = {
-  //   position: "bottom-right",
-  //   autoClose: 8000,
-  //   pauseOnHover: true,
-  //   draggable: true,
-  //   theme: "dark",
-  // };
-
-
   const onSubmit = async (values, error) => {
     const body = new FormData();
     body.append("file", image);
     const newFilename = `${Date.now()}_${image.name}`;
     body.append("newFilename", newFilename);
 
-    const response = await fetch("/api/upload", {
+    await fetch("/api/upload", {
       method: "POST",
       body,
     });
-    console.log(response);
 
     const { description, severity } = values;
     const res = await axios.post("/api/user/post", {
@@ -138,12 +130,10 @@ const Home = ({ user, posts, consultations }) => {
                       setSorted(!sorted);
                       consultations.reverse();
                     }}
-                    className="border-[1px] border-neutral-400 dark:border-neutral-700  p-[1px] px-1 rounded-md cursor-pointer  tracking-tight leading-tight flex flex-row items-center gap-[6px]">
+                    className="border-[1px] border-neutral-400 dark:border-neutral-700  p-[1px] px-1 rounded-md cursor-pointer  tracking-tight leading-tight flex flex-row items-center gap-[6px]"
+                  >
                     Sort by
-                    <span
-                      className="cursor-pointer font-bold"
-
-                    >
+                    <span className="cursor-pointer font-bold">
                       {sorted ? <BsSortDownAlt /> : <BsSortDown />}
                     </span>
                   </button>
@@ -227,7 +217,7 @@ const Home = ({ user, posts, consultations }) => {
               </div>
             )}
           </div>
-          <div className=" lg:flex md:flex sticky top-0 hidden  " id="Trending">
+          <div className=" lg:flex md:flex sticky top-0 hidden " id="Trending">
             <TrendingBox key={1} />
           </div>
         </div>

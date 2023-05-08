@@ -40,7 +40,7 @@ export async function getServerSideProps({ req }) {
   });
 
   return {
-    props: { session, doctor, posts },
+    props: { doctor, posts },
   };
 }
 

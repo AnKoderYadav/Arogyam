@@ -10,15 +10,13 @@ import { toastOptions } from "@/lib/lib";
 const Login = () => {
   const router = useRouter();
 
-  
-
   const validateForm = () => {
     const { email, password } = formik.values;
     if (email === "") {
-      toast.error("Email and Password is required.", toastOptions);
+      toast.error("Email & Password cannot be Empty!", toastOptions);
       return false;
     } else if (password === "") {
-      toast.error("Email and Password is required.", toastOptions);
+      toast.error("Email & Password cannot be Empty!", toastOptions);
       return false;
     }
     return true;

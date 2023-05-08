@@ -4,9 +4,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { useSession } from "next-auth/react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { toastOptions } from "@/lib/lib";
 import "react-toastify/dist/ReactToastify.css";
-import FeedPosts from "@/models/feedModel";
 import Link from "next/link";
 
 const Post = ({ pdata }) => {
@@ -55,40 +55,8 @@ const Post = ({ pdata }) => {
     });
   };
 
-  // const handleLike = (e) => {
-  //   e.preventDefault();
-  //   if (!session) {
-  //     return;
-  //   }
-  //   if (!postLiked) {
-  //     setPostLiked(true);
-  //     pdata.likeCount += 1;
-  //   } else {
-  //     setPostLiked(false);
-  //     pdata.likeCount -= 1;
-  //   }
-  //   fetch(`/api/posts/like`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       pdata: pdata._id,
-  //       userId: session.user._id,
-  //       liked: postLiked,
-  //     }),
-  //   });
-  // };
   const refreshData = () => {
     router.replace(router.asPath);
-  };
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
   };
 
   const onSubmit = async (values, error) => {
