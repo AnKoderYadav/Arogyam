@@ -4,12 +4,14 @@ import emailjs from "@emailjs/browser";
 const EmailBox = ({ consultation, doctor }) => {
   function handleEmail(e) {
     e.preventDefault();
-
     emailjs
       .sendForm(
         "service_js0osnq",
+        // process.env.SERVICE_KEY_ID,
         "template_rxsxcuf",
+        // process.env.TEMPLATE_KEY_ID,
         e.target,
+        // process.env.MAIL_SERVICE_ID,
         "_VBxc4nEfA5rz_PNP"
       )
       .then(
@@ -26,24 +28,7 @@ const EmailBox = ({ consultation, doctor }) => {
   return (
     <>
       <form className="w-full flex flex-col gap-4 p-5" onSubmit={handleEmail}>
-        <div className="w-full">
-          <label
-            className="block uppercase tracking-wide text-xs font-semibold mb-2"
-            htmlFor="grid-subject"
-          >
-            Subject
-          </label>
-          <input
-            className="appearance-none p-4 block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-            id="grid-subject"
-            type="text"
-            name="subject"
-            defaultValue="Arogyam Consultation Service for Your Query"
-            placeholder="Subject"
-          />
-        </div>
-
-        <div className="w-full">
+        <div className="w-full hidden">
           <label
             className="block uppercase tracking-wide  text-xs font-semibold mb-2"
             htmlFor="grid-name"
@@ -60,7 +45,7 @@ const EmailBox = ({ consultation, doctor }) => {
           />
         </div>
 
-        <div className="w-full">
+        <div className="w-full hidden">
           <label
             className="block uppercase tracking-wide text-xs font-semibold mb-2"
             htmlFor="grid-doctor-name"
@@ -76,25 +61,8 @@ const EmailBox = ({ consultation, doctor }) => {
             defaultValue={doctor.doctorId.fullname}
           />
         </div>
-
-        <div className="w-full">
-          <label
-            className="block uppercase tracking-wide text-xs font-semibold mb-2"
-            htmlFor="grid-email"
-          >
-            Email
-          </label>
-          <input
-            className="appearance-none p-4 block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-            id="grid-email"
-            type="text"
-            name="email"
-            placeholder="Email"
-            defaultValue={doctor.doctorId.email}
-          />
-        </div>
-
-        <div className="w-full">
+        {/* Make To Email Div Hidden  */}
+        <div className="w-full ">
           <label
             className="block uppercase tracking-wide text-xs font-semibold mb-2"
             htmlFor="grid-to-email"
@@ -110,30 +78,22 @@ const EmailBox = ({ consultation, doctor }) => {
             placeholder="patient email"
           />
         </div>
-
         <div className="w-full">
           <label
             className="block uppercase tracking-wide text-xs font-semibold mb-2"
-            htmlFor="grid-message"
+            htmlFor="grid-to-email"
           >
-            Message
+            Consultation Timings
           </label>
-          <textarea
+          <input
             className="appearance-none p-4 block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-            id="grid-message"
-            name="message"
-            defaultValue={`
-                    Thank you for your Trusting us with your Health! We're excited to have you on board and will be happy to help you to Get Fit and Healthy again.
-                    
-                    Please Find below the Google Meet link for Consultation Session for your Given time Slot of : 
-                    Start Time : ${consultation.timeSlot.startTime}
-                    End Time : ${consultation.timeSlot.endTime}
-                    
-                    Google Meet Link = "https://meet.google.com/_meet/chd-rpar-tsy?hs=187&authuser=0&ijlm=1681544653867&adhoc=1"
-                    I would be glad to extend the Consultaion period if any further issue is noticed in your Health on our behalf.`}
+            id="grid-to-email"
+            type="text"
+            name="timings"
+            defaultValue={consultation.postId.patientId.email}
+            placeholder="patient email"
           />
         </div>
-
         <div className="flex flex-row mx-7 p-5 justify-center">
           <button
             type="submit"

@@ -19,17 +19,18 @@ const Post = ({ pdata }) => {
   const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
   const days = Math.floor(elapsedTime / 1000 / 60 / 60 / 24);
 
-  let timeString = '';
+  let timeString = "";
   if (days > 0) {
-    timeString = `${days} day${days > 1 ? 's' : ''} ago`;
+    timeString = `${days} day${days > 1 ? "s" : ""} ago`;
   } else if (hours > 0) {
-    timeString = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    timeString = `${hours} hour${hours > 1 ? "s" : ""} ago`;
   } else {
-    timeString = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    timeString = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
   }
+
   const [postLiked, setPostLiked] = useState(false);
 
-  const handleLike = (e) => {
+  const handleLike = async (e) => {
     e.preventDefault();
     if (!session) {
       return;
@@ -41,18 +42,43 @@ const Post = ({ pdata }) => {
       setPostLiked(false);
       pdata.likeCount -= 1;
     }
-    fetch(`/api/posts/like`, {
+    const response = await fetch(`/api/user/feedPost/like`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        pdata: pdata._id,
-        userId: session.user._id,
+        feedId: pdata._id,
+        // usedId = session.user._id;
         liked: postLiked,
       }),
     });
   };
+
+  // const handleLike = (e) => {
+  //   e.preventDefault();
+  //   if (!session) {
+  //     return;
+  //   }
+  //   if (!postLiked) {
+  //     setPostLiked(true);
+  //     pdata.likeCount += 1;
+  //   } else {
+  //     setPostLiked(false);
+  //     pdata.likeCount -= 1;
+  //   }
+  //   fetch(`/api/posts/like`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       pdata: pdata._id,
+  //       userId: session.user._id,
+  //       liked: postLiked,
+  //     }),
+  //   });
+  // };
   const refreshData = () => {
     router.replace(router.asPath);
   };
@@ -89,17 +115,14 @@ const Post = ({ pdata }) => {
   });
   // console.log(pdata.likeCount);
   return (
-
     <div className="flex flex-col">
       <div className="p-5 bg-lightMode-component dark:bg-darkMode-component mt-5 rounded-t-2xl shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row ">
-
             <div className="flex items-center space-x-2 flex-row">
               <img
                 className="rounded-full w-10 h-10"
                 src={pdata?.userId.profile}
-
               />
             </div>
             <div className="ml-3">
@@ -109,9 +132,7 @@ const Post = ({ pdata }) => {
           </div>
           <Link href={`/feed/${pdata._id}`}>
             <button className="text-black dark:text-white">
-              <span class="material-symbols-outlined">
-                open_in_new
-              </span>
+              <span class="material-symbols-outlined">open_in_new</span>
             </button>
           </Link>
         </div>
@@ -119,12 +140,21 @@ const Post = ({ pdata }) => {
         <p className="mt-2">{pdata.description}</p>
       </div>
       <div className="relative h-56 md-h-96 bg-lightMode-component dark:bg-darkMode-component">
-        <Image src={pdata.image} objectFit="cover" layout="fill" />
+        <Image
+          src={pdata.image}
+          objectFit="cover"
+          layout="fill"
+          className="object-contain"
+        />
       </div>
       {/* Footer */}
       <div className="flex flex-col rounded-b-2xl bg-lightMode-component dark:bg-darkMode-component text-neutral-700 dark:text-neutral-400 border-t p-2">
         <div className="flex justify-between items-center gap-9 mx-2">
-          <div onClick={(e) => handleLike(e)} id="inputIcons" className="rounded-none gap-1 cursor-pointer">
+          <div
+            onClick={(e) => handleLike(e)}
+            id="inputIcons"
+            className="rounded-none gap-1 cursor-pointer"
+          >
             {postLiked ? (
               <span className="text-xl">❤️ </span>
             ) : (
@@ -148,26 +178,19 @@ const Post = ({ pdata }) => {
             id="inputIcons"
             className="rounded-none gap-1 cursor-pointer"
           >
-            <span class="material-symbols-outlined">
-              chat
-            </span>
+            <span class="material-symbols-outlined">chat</span>
             <p className="text-xs sm:text-base ">Comment</p>
           </button>
 
           <div id="inputIcons" className="rounded-none gap-1 cursor-pointer">
-            <span class="material-symbols-outlined">
-              share
-            </span>
+            <span class="material-symbols-outlined">share</span>
             <p className="text-xs sm:text-base">Share</p>
           </div>
         </div>
         {show && (
           <div id="CommentSection" className=" flex space-x-4 p-4 items-center">
             {/* TO BE CHANGED */}
-            <img
-              className="rounded-full w-8 h-8"
-              src={session?.user.profile}
-            />
+            <img className="rounded-full w-8 h-8" src={session?.user.profile} />
             <form
               action=""
               className="flex flex-1 "
@@ -180,9 +203,7 @@ const Post = ({ pdata }) => {
                 {...formik.getFieldProps("content")}
               />
               <button type="submit" className="ml-4">
-                <span class="material-symbols-outlined">
-                  send
-                </span>
+                <span class="material-symbols-outlined">send</span>
               </button>
             </form>
           </div>
