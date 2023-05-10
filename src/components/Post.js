@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const Post = ({ pdata }) => {
   const { data: session } = useSession();
-  console.log(session.user);
+  console.log(session);
   const [show, setShow] = useState(true);
   const [postLiked, setPostLiked] = useState(false);
   const router = useRouter();
@@ -32,10 +32,9 @@ const Post = ({ pdata }) => {
 
   const handleLike = async () => {
     setPostLiked(!postLiked);
-    await axios.post("api/user/feedPost/like", {
+    await axios.post(`/api/user/feedPost/${pdata._id}`, {
       userId: session.user.id,
       liked: postLiked,
-      feedId: pdata._id.toString(),
     });
     console.log("hello");
   };
