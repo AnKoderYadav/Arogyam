@@ -3,7 +3,21 @@ import { FcShare, FcPlus } from "react-icons/fc";
 import ConsultBox from "./ConsultBox";
 
 const RequestBox = ({ post, doctor }) => {
+  
   const [offer, setOffer] = useState(false);
+  const elapsedTime = Date.now() - new Date(post.createdAt).getTime();
+  const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
+  const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
+  const days = Math.floor(elapsedTime / 1000 / 60 / 60 / 24);
+
+  let timeString = '';
+  if (days > 0) {
+    timeString = `${days} day${days > 1 ? 's' : ''} ago`;
+  } else if (hours > 0) {
+    timeString = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  } else {
+    timeString = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  }
   return (
     <>
       <div className="flex items-center flex-col w-full bg-lightMode-component text-lightMode-txt shadow-xl rounded-lg dark:bg-darkMode-component dark:text-darkMode-txt p-2 ">
@@ -19,7 +33,7 @@ const RequestBox = ({ post, doctor }) => {
               {post.patientId.fullname}
             </span>
             <span className="text-xs">
-              Time
+              {timeString}
             </span>
             </div>
           </div>

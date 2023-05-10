@@ -107,12 +107,12 @@ const Post = ({ pdata }) => {
 
         <p className="mt-2">{pdata.description}</p>
       </div>
-      <div className="relative h-56 md-h-96 bg-lightMode-component dark:bg-darkMode-component">
-        <Image
+      <div className=" flex justify-center align-center md-h-96 bg-zinc-300 dark:bg-neutral-800">
+        <img
           src={pdata.image}
-          objectFit="cover"
-          layout="fill"
-          className="object-contain"
+          // objectFit="contain"
+          // layout="fill"
+          className="object-contain max-h-96 "
         />
       </div>
       {/* Footer */}

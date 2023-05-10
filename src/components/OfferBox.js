@@ -34,13 +34,13 @@ const OfferBox = ({ consultation }) => {
   }, []);
   return (
     <>
-      <div className="flex justify-between rounded-lg items-center flex-col w-auto min-w-[250px] max-w-[325px]  bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt shadow-md m-4 p-2 gap-2">
+      <div className="flex justify-between rounded-lg items-center flex-col w-[325px]  bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt shadow-md m-4 p-2 gap-2">
         <div className="w-full flex content-center items-center p-1">
           <div className="w-full flex content-center items-center flex-col">
             <div className="flex w-full ">
               <img
                 className="w-10 h-10 rounded-full ml-2 mb-2 mr-2"
-                src="https://img.collegedekhocdn.com/media/img/careers/doctor-clinic.jpg"
+                src={consultation.doctorProfile}
                 alt="img"
               />
               <span className=" text-xl flex items-center text-cyan-500">

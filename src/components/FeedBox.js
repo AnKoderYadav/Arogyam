@@ -69,9 +69,9 @@ const Feed = ({ user, posts }) => {
             className="flex flex-1 flex-col"
             onSubmit={formik.handleSubmit}
           >
-            <input
-              type="text"
-              className="rounded-full h-12 bg-gray-100 dark:bg-neutral-800  flex flex-grow px-5 focus:outline-none "
+            <textarea
+              rows="5"
+              className="rounded-xl bg-gray-100 dark:bg-neutral-800  flex flex-grow p-4 focus:outline-none "
               placeholder="What's on your Mind?"
               {...formik.getFieldProps("description")}
             />
