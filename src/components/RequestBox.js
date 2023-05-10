@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { FcShare, FcPlus } from "react-icons/fc";
+import { FcShare, FcPlus, FcApproval} from "react-icons/fc";
 import ConsultBox from "./ConsultBox";
-
 const RequestBox = ({ post, doctor }) => {
   
+
   const [offer, setOffer] = useState(false);
   const elapsedTime = Date.now() - new Date(post.createdAt).getTime();
   const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
@@ -53,20 +53,27 @@ const RequestBox = ({ post, doctor }) => {
           />
         </div>
         <div className="flex flex-wrap justify-around  gap-2 m-2 border-t-[1px] pt-2 w-4/5 dark:border-neutral-600">
-          <div className="w-fit text-xl flex  content-center items-center hover:text-gray-600 cursor-pointer p-2 py-0">
+          <div className="w-fit text-xl flex  content-center items-center cursor-pointer p-2 py-0">
             <span className="text-xl ">
+              {!post.offers.includes(`${doctor._id}`) ? (
               <button
                 className="md:text-md w-full rounded-xl flex flex-row items-center md:font-bold tracking-tight leading-tight pl-[1px] pb-[1px] hover:bg-slate-300 pr-2 content-center"
                 onClick={() => setOffer(!offer)}
               >
                 <FcPlus className="md:text-2xl mr-2" />
                 Offer consultation
-              </button>
+              </button>):(
+              <div
+              className=" md:text-md w-full rounded-xl flex flex-row items-center md:font-bold tracking-tight leading-tight  p-[5px]  pr-2 content-center"
+              >
+                <FcApproval className="md:text-2xl mr-2"/>Offered
+              </div>
+              )}
             </span>
           </div>
           <div className="w-fit text-xl flex content-center items-center hover:text-gray-600 cursor-pointer ">
             <span className="text-xl ">
-              <button className="text-md w-full md:font-bold tracking-tight hover:bg-slate-300 pr-2 leading-tight rounded-xl pl-[1px] pb-[1px] flex flex-row items-center content-center">
+              <button className="text-md w-full md:font-bold tracking-tight hover:bg-slate-300 pr-2 leading-tight rounded-xl  p-[5px] flex flex-row items-center content-center">
                 <FcShare className="md:text-2xl mr-2" />
                 Share
               </button>
