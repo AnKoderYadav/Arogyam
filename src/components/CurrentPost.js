@@ -3,11 +3,6 @@ import { MdDelete } from "react-icons/md";
 import axios from "axios";
 
 const CurrentPost = ({ user, post, refreshData }) => {
-  const handleDelete = async () => {
-    const res = await axios.delete(`/api/user/post/delete/${post._id}`);
-    console.log(res);
-    refreshData();
-  };
   const elapsedTime = Date.now() - new Date(post.createdAt).getTime();
   const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
   const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
@@ -21,6 +16,16 @@ const CurrentPost = ({ user, post, refreshData }) => {
   } else {
     timeString = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
   }
+
+  const handleDelete = async () => {
+    await axios.delete(`/api/user/post/delete/${post._id}`);
+    refreshData();
+  };
+
+  const handleSolved = async () => {
+    await axios.post(`/api/user/post/${post._id}`, { solved: true });
+    refreshData();
+  };
 
   return (
     <>
@@ -55,8 +60,11 @@ const CurrentPost = ({ user, post, refreshData }) => {
           />
         </div>
         <div className="flex items-end w-full justify-end mr-2">
-          <button className="text-sm bg-cyan-500 text-white  dark:bg-cyan-800 p-1 px-3 rounded-lg hover:bg-cyan-700 ">
-            Solved?
+          <button
+            className="text-sm bg-cyan-500 text-white  dark:bg-cyan-800 p-1 px-3 rounded-lg hover:bg-cyan-700 "
+            onClick={handleSolved}
+          >
+            Solved
           </button>
         </div>
       </div>

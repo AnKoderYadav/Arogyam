@@ -28,7 +28,7 @@ const BasicInfo = ({ doctor, image }) => {
       if (image !== "") {
         const body = new FormData();
         body.append("file", image);
-        body.append("id", doctor._id);
+        body.append("newFilename", newFilename);
 
         await fetch("/api/upload", {
           method: "POST",
@@ -45,7 +45,9 @@ const BasicInfo = ({ doctor, image }) => {
         password,
         gender,
         profile:
-          image !== "" ? `/uploads/${doctor._id + image.name}` : doctor.profile,
+          image !== ""
+            ? `https://storage.googleapis.com/arogyam-storage-bucket/${newFilename}`
+            : user.profile,
       });
 
       if (res.status === 200) toast.info(res.data.msg, toastOptions);

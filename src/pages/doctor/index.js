@@ -31,7 +31,7 @@ export async function getServerSideProps({ req }) {
   const doctor = JSON.parse(JSON.stringify(res));
 
   //all posts
-  res = await Posts.find().populate("patientId").sort({
+  res = await Posts.find({ solved: false }).populate("patientId").sort({
     updatedAt: -1,
   });
   const posts = res.map((doc) => {
@@ -79,9 +79,7 @@ const Home = ({ doctor, posts }) => {
             </div>
             <div className="py-4 pb-1 text-center flex justify-center items-center text-white">
               <Link href="/doctor/consult">
-                <button
-                  className="font-bold -tracking-tightest leading-tight text-xs p-2 bg-lightMode-btn text-lightMode-txt dark:bg-darkMode-btn dark:text-darkMode-txt rounded-md"
-                >
+                <button className="font-bold -tracking-tightest leading-tight text-xs p-2 bg-lightMode-btn text-lightMode-txt dark:bg-darkMode-btn dark:text-darkMode-txt rounded-md">
                   Manage Consultations
                 </button>
               </Link>

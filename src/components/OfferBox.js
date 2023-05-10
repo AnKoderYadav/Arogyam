@@ -8,7 +8,7 @@ const publishableKey = `${process.env.STRIPE_PUBLISHABLE_KEY}`;
 loadStripe(publishableKey);
 
 const OfferBox = ({ consultation }) => {
-  console.log(consultation);
+  // console.log(consultation);
   React.useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
@@ -16,11 +16,9 @@ const OfferBox = ({ consultation }) => {
       console.log("Order placed! You will receive an email confirmation.");
       async function accept() {
         try {
-          const res = await axios.put(
-            `/api/user/doctor/consultation/${consultation._id}`,
-            { isAccepted: true }
-          );
-          console.log(res);
+          await axios.put(`/api/user/doctor/consultation/${consultation._id}`, {
+            isAccepted: true,
+          });
         } catch (error) {
           console.error(error);
         }
@@ -40,72 +38,66 @@ const OfferBox = ({ consultation }) => {
         <div className="w-full flex content-center items-center p-1">
           <div className="w-full flex content-center items-center flex-col">
             <div className="flex w-full ">
-            <img
-              className="w-10 h-10 rounded-full ml-2 mb-2 mr-2"
-              src="https://img.collegedekhocdn.com/media/img/careers/doctor-clinic.jpg"
-              alt="img"
-            />
-            <span className=" text-xl flex items-center text-cyan-500">
+              <img
+                className="w-10 h-10 rounded-full ml-2 mb-2 mr-2"
+                src="https://img.collegedekhocdn.com/media/img/careers/doctor-clinic.jpg"
+                alt="img"
+              />
+              <span className=" text-xl flex items-center text-cyan-500">
                 {consultation.doctorName}
               </span>
             </div>
             <div className="border-t-[1px] ml-2 px-2 py-2 flex w-full justify-start items-start">
-              
               <ul className="flex flex-col w-full text-xs font-thin font-sans justify-start items-start">
                 <li className="font-thin font-sans">
-                  <span className="font-bold">
-                    Qualificaton - 
-                    </span> 
-                    <br/>{consultation.doctorRefId.qualification}
+                  <span className="font-bold">Qualificaton -</span>
+                  <br />
+                  {consultation.doctorRefId.qualification}
                 </li>
                 <li className="font-thin font-sans">
-                <span className="font-bold">
-                    Experience - 
-                    </span>  <br/>{consultation.doctorRefId.experience}
+                  <span className="font-bold">Experience -</span> <br />
+                  {consultation.doctorRefId.experience}
                 </li>
                 <li className="font-thin font-sans">
-                <span className="font-bold">
-                    LinkedIn - 
-                    </span> {consultation.doctorRefId.linkdin}
+                  <span className="font-bold">LinkedIn -</span>{" "}
+                  {consultation.doctorRefId.linkedin}
                 </li>
                 <li className="font-thin font-sans">
-                <span className="font-bold">
-                    Twitter - 
-                    </span>  {consultation.doctorRefId.twitter}
+                  <span className="font-bold">Twitter -</span>{" "}
+                  {consultation.doctorRefId.twitter}
                 </li>
                 <li className="font-thin font-sans">
-                <span className="font-bold">
-                    Working Hours - 
-                    </span> <br/>{consultation.doctorRefId.timeSlot}
+                  <span className="font-bold">Working Hours -</span> <br />
+                  {consultation.doctorRefId.timeSlot}
                 </li>
               </ul>
             </div>
           </div>
-
         </div>
-
 
         <div className="flex justify-between items-center">
           <span className="text-center  text-green-500 text-xl">
             ₹{consultation.fee}
           </span>
-          <div className="ml-2 flex items-center h-[3px] justify-center bg-white w-[3px] rounded-full">
-          </div>
+          <div className="ml-2 flex items-center h-[3px] justify-center bg-white w-[3px] rounded-full"></div>
           <form
             action={`/api/checkout_sessions/${consultation.priceId}`}
             method="POST"
             className="w-fit text-sm flex justify-center  items-center hover:text-gray-500 cursor-pointer"
           >
             <span className="pl-2">
-              <button className=" w-full p-[2px] px-3 bg-green-600 rounded-sm text-white ">
-                {" "}
-                <div className="flex items-center">
-                Accept
-                <span className="material-symbols-outlined text-base ">
-                  done
-                </span>
+              {" "}
+              {!consultation.isAccepted ? (
+                <button className=" w-full p-[2px] px-3 bg-yellow-600 rounded-sm text-white ">
+                  <div className="flex items-center font-semibold">Accept</div>
+                </button>
+              ) : (
+                <div className=" w-full p-[2px] px-3 bg-green-600 rounded-sm text-white">
+                  <div className="flex items-center font-semibold">
+                    In Queue
+                  </div>
                 </div>
-              </button>
+              )}
             </span>
           </form>
         </div>
