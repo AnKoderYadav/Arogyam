@@ -45,15 +45,9 @@ const Profile = ({ user }) => {
   };
 
   const handleValidation = () => {
-    const { password, fullname, contact } = formik.values;
-    if (password === "") {
-      toast.info("Password Cannot Be Empty!", toastOptions);
-      return false;
-    } else if (fullname.length < 3) {
+    const { fullname, contact } = formik.values;
+    if (fullname.length < 3) {
       toast.info("Invalid Full Name!", toastOptions);
-      return false;
-    } else if (password.length < 8) {
-      toast.info("Password should be minimum of 8 characters!", toastOptions);
       return false;
     } else if (contact.length !== 10) {
       toast.info("Invalid Contact", toastOptions);
@@ -76,10 +70,9 @@ const Profile = ({ user }) => {
         });
       }
 
-      const { fullname, password, age, gender, contact } = values;
+      const { fullname, age, gender, contact } = values;
       const res = await axios.post(`/api/user/${user._id}`, {
         fullname,
-        password,
         age,
         gender,
         contact,
@@ -97,7 +90,6 @@ const Profile = ({ user }) => {
   const formik = useFormik({
     initialValues: {
       fullname: user.fullname,
-      password: "",
       age: user.age,
       gender: user.gender,
       contact: user.contact,
@@ -193,7 +185,7 @@ const Profile = ({ user }) => {
                   />
                 </div>
               </div>
-              <div className="flex flex-wrap -mx-3 mb-6">
+              {/* <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">
                   <label className="block uppercase tracking-wide text-xs font-semibold mb-2">
                     Password
@@ -205,7 +197,7 @@ const Profile = ({ user }) => {
                     {...formik.getFieldProps("password")}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3 mb-6 md:mb-0">
                   <label

@@ -22,6 +22,9 @@ const PostSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    offers: {
+      type: [String],
+    },
   },
   {
     timestamps: true,

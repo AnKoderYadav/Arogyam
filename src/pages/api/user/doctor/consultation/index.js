@@ -1,5 +1,6 @@
 import dbConnect from "@/dbconnect";
 import Consultations from "@/models/consultModel";
+import Posts from "@/models/postModel";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -7,7 +8,7 @@ export default async function handler(req, res) {
   dbConnect().catch((error) => res.json({ error: "Connection Failed" }));
 
   if (req.method === "POST") {
-    const { postId, fee, doctorName, doctorRefId } = req.body;
+    const { postId, fee, doctorName, doctorRefId, doctorProfile } = req.body;
 
     const product = await stripe.products.create({
       name: doctorName,
@@ -19,11 +20,13 @@ export default async function handler(req, res) {
       currency: "inr",
     });
 
-    console.log(price);
+    await Posts.findByIdAndUpdate(postId, { $push: { offers: doctorRefId } });
+    // console.log(price);
 
     const consultation = await Consultations.create({
       postId,
       doctorName,
+      doctorProfile,
       doctorRefId,
       fee,
       doctorName,

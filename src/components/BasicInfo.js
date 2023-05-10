@@ -6,15 +6,9 @@ import { toastOptions } from "@/lib/lib";
 
 const BasicInfo = ({ doctor, image }) => {
   const handleValidation = () => {
-    const { password, fullname, contact } = formik.values;
-    if (password === "") {
-      toast.info("Password cannot be Empty!", toastOptions);
-      return false;
-    } else if (fullname.length < 3) {
+    const { fullname, contact } = formik.values;
+    if (fullname.length < 3) {
       toast.info("Invalid Fullname!", toastOptions);
-      return false;
-    } else if (password.length < 8) {
-      toast.info("Password should be minimum of characters!", toastOptions);
       return false;
     } else if (contact.length < 10) {
       toast.info("Invalid Contact!", toastOptions);
@@ -25,9 +19,11 @@ const BasicInfo = ({ doctor, image }) => {
 
   const onSubmit = async (values, err) => {
     if (handleValidation()) {
+      const newFilename = `${Date.now()}_${image.name}`;
       if (image !== "") {
         const body = new FormData();
         body.append("file", image);
+
         body.append("newFilename", newFilename);
 
         await fetch("/api/upload", {
@@ -36,13 +32,12 @@ const BasicInfo = ({ doctor, image }) => {
         });
       }
 
-      const { fullname, age, contact, password, gender } = values;
+      const { fullname, age, contact, gender } = values;
 
       const res = await axios.post(`/api/user/${doctor._id}`, {
         fullname,
         age,
         contact,
-        password,
         gender,
         profile:
           image !== ""
@@ -60,7 +55,6 @@ const BasicInfo = ({ doctor, image }) => {
       fullname: doctor.fullname,
       age: doctor.age,
       contact: doctor.contact,
-      password: "",
       gender: doctor.gender,
     },
     onSubmit,
@@ -144,7 +138,8 @@ const BasicInfo = ({ doctor, image }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap -mx-3">
+
+      {/* <div className="flex flex-wrap -mx-3">
         <div className="w-full px-3">
           <label
             className="block uppercase tracking-wide text-xs font-semibold mb-2"
@@ -159,11 +154,11 @@ const BasicInfo = ({ doctor, image }) => {
             placeholder="******************"
             {...formik.getFieldProps("password")}
           />
-          {/* <p className="text-red-500 text-xs italic">
+          <p className="text-red-500 text-xs italic">
             Please fill out this field.
-          </p> */}
+          </p>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex flex-row mx-7 justify-center">
         <button

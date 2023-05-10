@@ -21,6 +21,7 @@ const ConsultBox = ({ post, doctor }) => {
       const res = await axios.post("/api/user/doctor/consultation", {
         postId: post._id,
         doctorName: doctor.doctorId.fullname,
+        doctorProfile: doctor.doctorId.profile,
         doctorRefId: doctor._id,
         fee,
       });
