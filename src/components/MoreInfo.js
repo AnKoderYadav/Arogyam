@@ -51,8 +51,7 @@ const MoreInfo = ({ doctor }) => {
             Qualifications
           </label>
           <input
-            className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-            id="grid-qualifications"
+            className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
             type="text"
             placeholder="College name, Degree..."
             {...formik.getFieldProps("qualification")}
@@ -69,23 +68,25 @@ const MoreInfo = ({ doctor }) => {
             Social Accounts
           </label>
 
-          <div className="flex flex-row m-4 border-[1px] border-black rounded-sm">
+          <div className="flex flex-row m-4 mx-0 border-[1px] border-neutral-400 dark:border-neutral-800 rounded-md">
             <label className=" uppercase m-2 flex items-center justify-center h-auto  text-xl font-bold mb-2">
               <AiFillLinkedin />
             </label>
             <input
-              className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+              className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
               type="link"
+              placeholder="LinkedIn profile link"
               {...formik.getFieldProps("linkedin")}
             />
           </div>
 
-          <div className="flex flex-row m-4 border-[1px] border-black rounded-sm">
+          <div className="flex flex-row m-4 mx-0 border-[1px]  border-neutral-400 dark:border-neutral-800 rounded-md">
             <label className=" uppercase m-2 flex items-center justify-center h-auto text-xl font-bold mb-2">
               <AiOutlineTwitter />
             </label>
             <input
-              className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+              className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+              placeholder="Twitter profile link"
               type="link"
               {...formik.getFieldProps("twitter")}
             />
@@ -101,7 +102,7 @@ const MoreInfo = ({ doctor }) => {
             Experience
           </label>
           <input
-            className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+            className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
             id="grid-password"
             type="text"
             placeholder="Experience"
@@ -119,7 +120,7 @@ const MoreInfo = ({ doctor }) => {
             Time Slot
           </label>
           <input
-            className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+            className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
             id="grid-password"
             type="text"
             placeholder="Time Slot"
@@ -130,7 +131,7 @@ const MoreInfo = ({ doctor }) => {
       <div className="flex flex-row  mx-7 justify-center">
         <button
           type="submit"
-          className="text-sm p-2 w-full font-medium bg-lightMode-btn dark:bg-darkMode-btn rounded-md m-5 text-white"
+          className="text-sm p-2 w-full font-medium bg-lightMode-btn dark:bg-cyan-700 rounded-md m-5 text-white"
         >
           Update Profile
         </button>

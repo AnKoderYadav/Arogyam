@@ -41,15 +41,13 @@ export async function getServerSideProps({ req }) {
 const feed = ({ user, posts }) => {
   return (
     <MainLayout>
-      <div className="bg-lightMode-background dark:bg-darkMode-background overflow-y-scroll scrollbar-hide">
-        <div className="flex justify-center gap-1 ">
-          <div className="max-w-3xl w-full h-screen m-7 ">
+      <div className="bg-lightMode-background justify-center flex dark:bg-darkMode-background overflow-y-scroll scrollbar-hide w-full h-full">
+          <div className=" max-w-3xl w-full flex flex-col gap-5 p-5 pt-7">
             <FeedBox user={user} posts={posts} />
           </div>
-          <div className="mt-7 lg:flex md:flex sticky top-0 hidden  " id="Trending">
+          <div className="mt-7 lg:flex md:flex sticky top-5 hidden" id="Trending">
             <TrendingBox />
           </div>
-        </div>
       </div>
     </MainLayout>
   );

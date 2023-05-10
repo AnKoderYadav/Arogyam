@@ -51,37 +51,36 @@ const Home = ({ doctor, posts }) => {
         <div className="w-full h-full flex justify-center gap-8 md:p-8 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
           <div
             id="doctorProfileBox"
-            className="sticky top-0 h-fit w-[20%] flex flex-col shadow-xl bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt p-2 gap-2 rounded-lg"
+            className="sticky top-0 h-fit w-[15%] justify-center flex flex-col shadow-xl bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component  dark:text-darkMode-txt py-6 rounded-lg"
           >
-            <div className="flex content-center items-center flex-col gap-2 border-b-[1px] border-black dark:border-white p-2">
+            <div className="flex content-center justify-center items-center flex-col gap-2 mb-2">
               <img
-                className="w-[12rem] h-[12rem] rounded-full object-cover"
+                className="w-44 h-44 rounded-full border-[1px] m-2 border-cyan-600 dark:border-neutral-600 object-cover"
                 src={doctor.doctorId.profile}
                 alt="pic"
               />
-              <span className="text-3xl font-bold ">
+              <span className="text-lg font-medium ">
                 {doctor.doctorId.fullname}
               </span>
             </div>
-            <div className="p-4 gap-2 flex justify-center items-center flex-col border-b-[1px] border-black dark:border-white">
-              <div className="flex flex-row items-center">
-                <div className="font-medium text-xl mr-2">Requests</div>
-                <div className="font-medium text-xl text-teal-700">
+            <div className="py-2 gap-2 w-2/3 mx-9 flex justify-center items-center flex-col border-y-[1px] border-black dark:border-white">
+              <div className="flex flex-row items-center ">
+                <div className="text-md mr-2">Requests</div>
+                <div className="text-md text-teal-700">
                   {doctor.requestCount}
                 </div>
               </div>
               <div className="flex flex-row items-center">
-                <div className="text-xl font-medium mr-2">Accepted</div>
-                <div className="font-medium text-xl text-teal-700">
+                <div className="text-md mr-2">Accepted</div>
+                <div className=" text-md text-teal-700">
                   {doctor.consultCount}
                 </div>
               </div>
             </div>
-            <div className="p-4 pb-1 text-center flex justify-center items-center text-white">
+            <div className="py-4 pb-1 text-center flex justify-center items-center text-white">
               <Link href="/doctor/consult">
                 <button
-                  className="w-full h-full font-bold -tracking-tightest leading-tight text-lg bg-lightMode-btn text-lightMode-txt dark:bg-darkMode-btn dark:text-darkMode-txt p-3 rounded-md
-                "
+                  className="font-bold -tracking-tightest leading-tight text-xs p-2 bg-lightMode-btn text-lightMode-txt dark:bg-darkMode-btn dark:text-darkMode-txt rounded-md"
                 >
                   Manage Consultations
                 </button>

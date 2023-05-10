@@ -56,9 +56,9 @@ const Feed = ({ user, posts }) => {
     <div className="text-sm">
       <div
         id="inputBox"
-        className="bg-lightMode-component  my-4 dark:bg-darkMode-component dark:text-darkMode-txt p-2 rounded-2xl shadow-md text-lightMode-txt font-medium mt-0 content-center items-center"
+        className="bg-lightMode-component mb-4 dark:bg-darkMode-component dark:text-darkMode-txt p-2 rounded-lg shadow-md text-lightMode-txt font-medium content-center items-center"
       >
-        <div className=" flex  space-x-4 p-4 pb-0 ">
+        <div className=" flex  space-x-4 p-2 px-4 ">
           <img
             className="rounded-full w-10 h-10 mt-1 top-0"
             src={user.profile}
@@ -75,11 +75,10 @@ const Feed = ({ user, posts }) => {
               placeholder="What's on your Mind?"
               {...formik.getFieldProps("description")}
             />
-            <div className="flex border-t-[1px] mt-5 border-neutral-300 dark:border-neutral-700 gap-2">
-              <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-neutral-800 border-neutral-300 rounded-xl mt-2 dark:border-neutral-700  w-1/2">
+            <div className="flex border-t-[1px] mt-2 border-neutral-300 dark:border-neutral-500 gap-2">
+              <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-cyan-800 rounded-lg mt-2 dark:border-neutral-700  w-1/2">
                 <button
-                  id="inputIcons"
-                  className="flex flex-row gap-2 items-center text-black dark:text-white "
+                  className="flex flex-row py-2 items-center text-black dark:text-white "
                 >
                   <span class="material-symbols-outlined">image</span>
                   Upload Picture
@@ -92,14 +91,15 @@ const Feed = ({ user, posts }) => {
                   }}
                 />
               </div>
+              <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-cyan-800 rounded-lg mt-2 dark:border-neutral-700  w-1/2 items-center">
               <button
-                id="inputIcons"
                 type="submit"
-                className="flex flex-row gap-2 items-center mt-2  bg-lightMode-componentHead dark:bg-neutral-800 text-black dark:text-white"
-              >
+                className="flex flex-row gap-2 items-center  text-black dark:text-white"
+                >
                 <span class="material-symbols-outlined">check_circle</span>
                 Submit
               </button>
+                </div>
             </div>
           </form>
         </div>

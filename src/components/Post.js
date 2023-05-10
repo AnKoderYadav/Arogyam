@@ -84,7 +84,7 @@ const Post = ({ pdata }) => {
   // console.log(pdata.likeCount);
   return (
     <div className="flex flex-col">
-      <div className="p-5 bg-lightMode-component dark:bg-darkMode-component mt-5 rounded-t-2xl shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">
+      <div className="p-5 bg-lightMode-component dark:bg-darkMode-component mt-5 rounded-t-lg shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row ">
             <div className="flex items-center space-x-2 flex-row">
@@ -116,12 +116,11 @@ const Post = ({ pdata }) => {
         />
       </div>
       {/* Footer */}
-      <div className="flex flex-col rounded-b-2xl bg-lightMode-component dark:bg-darkMode-component text-neutral-700 dark:text-neutral-400 border-t p-2">
-        <div className="flex justify-between items-center gap-9 mx-2">
+      <div className="flex flex-col rounded-b-lg bg-lightMode-component dark:bg-darkMode-component text-neutral-700 dark:text-neutral-400 border-t p-2">
+        <div className="flex justify-between items-center gap-9 mx-10 mb-2">
           <div
             onClick={(e) => handleLike(e)}
-            id="inputIcons"
-            className="rounded-none gap-1 cursor-pointer"
+            className="rounded-lg cursor-pointer flex items-center space-x-1 hover:bg-neutral-300 dark:hover:bg-neutral-500 dark:hover:text-white justify-center p-1"
           >
             {postLiked ? (
               <span className="text-xl">❤️ </span>
@@ -143,21 +142,19 @@ const Post = ({ pdata }) => {
           <button
             type="button"
             onClick={() => setShow(!show)}
-            id="inputIcons"
-            className="rounded-none gap-1 cursor-pointer"
+            className="rounded-lg cursor-pointer flex items-center space-x-1 hover:bg-neutral-300 dark:hover:bg-neutral-500 dark:hover:text-white justify-center p-2 px-3"
           >
             <span class="material-symbols-outlined">chat</span>
             <p className="text-xs sm:text-base ">Comment</p>
           </button>
 
-          <div id="inputIcons" className="rounded-none gap-1 cursor-pointer">
+          <div  className="rounded-lg cursor-pointer flex items-center space-x-1 hover:bg-neutral-300 dark:hover:bg-neutral-500 dark:hover:text-white justify-center p-2 px-3">
             <span class="material-symbols-outlined">share</span>
             <p className="text-xs sm:text-base">Share</p>
           </div>
         </div>
         {show && (
-          <div id="CommentSection" className=" flex space-x-4 p-4 items-center">
-            {/* TO BE CHANGED */}
+          <div id="CommentSection" className=" flex mx-4 space-x-4 p-4 items-center border-t-[1px] border-neutral-400 dark:border-neutral-600">
             <img className="rounded-full w-8 h-8" src={session?.user.profile} />
             <form
               action=""

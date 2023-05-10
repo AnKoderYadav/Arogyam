@@ -62,71 +62,77 @@ const Consult = ({ doctor, consultations }) => {
   const [openId, setOpenId] = useState("");
   return (
     <MainLayout>
-      <div className="h-full flex flex-wrap overflow-y-scroll scrollbar-thin p-8 gap-8 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt justify-center">
-        {consultations.map((consultation) => {
-          const handleRevoke = async () => {
-            await axios.delete(
-              `/api/user/doctor/consultation/${consultation._id}`
-            );
-            refreshData();
-          };
+      <div className="h-full flex overflow-y-scroll scrollbar-thin p-4  bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt justify-center items-start w-full">
+        <div className="max-w-7xl">
+          <h1 className="m-2 text-2xl tracking-tight font-sans">Your Consultations</h1>
+          <div className="gap-4 flex flex-wrap lg:justify-start md:justify-start justify-center">
 
-          const handleOpen = () => {
-            openId === "" ? setOpenId(consultation._id) : setOpenId("");
-          };
+            {consultations.map((consultation) => {
+              const handleRevoke = async () => {
+                await axios.delete(
+                  `/api/user/doctor/consultation/${consultation._id}`
+                );
+                refreshData();
+              };
 
-          return (
-            <>
-              <div className="w-[25rem] h-fit flex justify-center items-center bg-lightMode-component dark:bg-darkMode-component shadow-xl flex-col rounded-lg">
-                <div className="w-full flex flex-col p-4 gap-2">
-                  <div className="w-full flex content-center items-center">
-                    <div className="w-full content-center items-center flex flex-row">
-                      <img
-                        className="w-[2rem] h-[2rem] rounded-full "
-                        src={consultation.postId.patientId.profile}
-                        alt="img"
-                      />
-                      <span className="w-full pl-4 font-medium -tracking-tight leading-tight">
-                        {consultation.postId.patientId.fullname}
-                      </span>
+              const handleOpen = () => {
+                openId === "" ? setOpenId(consultation._id) : setOpenId("");
+              };
+
+              return (
+                <>
+                  <div className="w-[25rem] h-fit flex justify-center items-center bg-lightMode-component dark:bg-darkMode-component shadow-md flex-col rounded-lg">
+                    <div className="w-full flex flex-col p-4 gap-2">
+                      <div className="w-full flex content-center items-center">
+                        <div className="w-full content-center items-center flex flex-row">
+                          <img
+                            className="w-[2rem] h-[2rem] rounded-full "
+                            src={consultation.postId.patientId.profile}
+                            alt="img"
+                          />
+                          <span className="w-full pl-4 font-medium -tracking-tight leading-tight">
+                            {consultation.postId.patientId.fullname}
+                          </span>
+                        </div>
+                        <span className="text-center text-xl font-semibold py-2 flex flex-row px-0 text-green-400 dark:text-green-700">
+                          {consultation.isAccepted ? "PAID" : consultation.fee}
+                        </span>
+                      </div>
+                      <div className="w-full flex flex-col items-center gap-2 font-medium">
+                        <p>{consultation.postId.description}</p>
+                        <img
+                          className="w-2/3 h-[15rem]"
+                          src={consultation.postId.image}
+                          alt=""
+                        />
+                      </div>
                     </div>
-                    <span className="text-center text-xl font-semibold py-2 flex flex-row px-0 text-green-400 dark:text-green-700">
-                      {consultation.isAccepted ? "PAID" : consultation.fee}
-                    </span>
+                    <div className="flex justify-center w-full bg-lightMode-componentHead dark:bg-darkMode-componentHead dark:text-darkMode-txt p-5 m-2 rounded-b-lg">
+                      <div className="w-fit text-xl flex justify-center items-center dark:hover:text-cyan-300 hover:text-cyan-800 cursor-pointer">
+                        <span className="text-md w-full flex flex-row justify-evenly font-bold tracking-tight leading-tight">
+                          {consultation.isAccepted ? (
+                            <>
+                              <FcNext className="text-2xl mr-1" />
+                              <p onClick={handleOpen}>Send Mail</p>
+                            </>
+                          ) : (
+                            <>
+                              <FcCancel className="text-2xl mr-1" />
+                              <p onClick={handleRevoke}>Revoke consultation</p>
+                            </>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    {openId === consultation._id && (
+                      <EmailBox doctor={doctor} consultation={consultation} />
+                    )}
                   </div>
-                  <div className="w-full flex flex-col items-center gap-2 font-medium">
-                    <p>{consultation.postId.description}</p>
-                    <img
-                      className="w-2/3 h-[15rem]"
-                      src={consultation.postId.image}
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-center w-full bg-lightMode-componentHead dark:bg-darkMode-componentHead dark:text-darkMode-txt p-5 m-2 rounded-b-lg">
-                  <div className="w-fit text-xl flex justify-center items-center dark:hover:text-cyan-300 hover:text-cyan-800 cursor-pointer">
-                    <span className="text-md w-full flex flex-row justify-evenly font-bold tracking-tight leading-tight">
-                      {consultation.isAccepted ? (
-                        <>
-                          <FcNext className="text-2xl mr-1" />
-                          <p onClick={handleOpen}>Send Mail</p>
-                        </>
-                      ) : (
-                        <>
-                          <FcCancel className="text-2xl mr-1" />
-                          <p onClick={handleRevoke}>Revoke consultation</p>
-                        </>
-                      )}
-                    </span>
-                  </div>
-                </div>
-                {openId === consultation._id && (
-                  <EmailBox doctor={doctor} consultation={consultation} />
-                )}
-              </div>
-            </>
-          );
-        })}
+                </>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </MainLayout>
   );

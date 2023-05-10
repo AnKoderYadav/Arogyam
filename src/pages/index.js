@@ -162,9 +162,14 @@ const Home = ({ user, posts, consultations }) => {
                       src={user.profile}
                       alt="img"
                     />
-                    <span className="ml-4 text-2xl font-bold">
-                      {user.fullname}
+                    <div className=" ml-4 flex flex-col">
+                    <span className=" text-xl ">
+                      Welcome to Arogyam! 
                     </span>
+                    <span>
+                    {user.fullname}
+                    </span>
+                    </div>
                   </div>
                 </div>
                 <form
@@ -195,7 +200,7 @@ const Home = ({ user, posts, consultations }) => {
                         Severity
                       </label>
                       <select
-                        className="appearance-none p-2 block border-[1px] border-stone-500 bg-neutral-200 dark:bg-darkMode-componentHead rounded leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+                        className="appearance-none p-2 block  bg-lightMode-btn dark:bg-darkMode-btn hover:bg-cyan-600 rounded leading-tight placeholder:text-white text-white focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
                         id="grid-state"
                         {...formik.getFieldProps("severity")}
                       >
@@ -206,7 +211,7 @@ const Home = ({ user, posts, consultations }) => {
                     </span>
 
                     <button
-                      className="font-medium bg-lightMode-btn dark:bg-darkMode-btn hover:bg-cyan-600 disabled:text-black/40 disabled:bg-white/75 disabled:cursor-not-allowed text-white rounded-md px-12 p-2"
+                      className="font-medium bg-lightMode-btn dark:bg-darkMode-btn hover:bg-cyan-600 disabled:text-white disabled:bg-black/25 dark:disabled:text-black/40 dark:disabled:bg-white/75 disabled:cursor-not-allowed text-white rounded-md px-12 p-2"
                       type="submit"
                       disabled={!formik.values.description.trim()}
                     >

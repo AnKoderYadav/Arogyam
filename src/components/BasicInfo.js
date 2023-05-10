@@ -74,8 +74,7 @@ const BasicInfo = ({ doctor, image }) => {
             Full Name
           </label>
           <input
-            className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-            id="grid-first-name"
+            className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
             type="text"
             placeholder="Full name"
             {...formik.getFieldProps("fullname")}
@@ -91,7 +90,7 @@ const BasicInfo = ({ doctor, image }) => {
             Age
           </label>
           <input
-            className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+            className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
             id="grid-age"
             type="text"
             placeholder="in years"
@@ -109,7 +108,7 @@ const BasicInfo = ({ doctor, image }) => {
             Contact Number
           </label>
           <input
-            className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+            className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
             id="grid-qualifications"
             type="number"
             placeholder="XXXXXXXXXX"
@@ -127,11 +126,10 @@ const BasicInfo = ({ doctor, image }) => {
           </label>
           <div className="relative">
             <select
-              className="appearance-none block w-full bg-neutral-200 dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-              id="grid-state"
+              className="appearance-none block w-full bg-neutral-200 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
               {...formik.getFieldProps("gender")}
             >
-              <option>Rather not say</option>
+              <option>Prefer not to say</option>
               <option>Male</option>
               <option>Female</option>
               <option>Transgender</option>
@@ -153,7 +151,7 @@ const BasicInfo = ({ doctor, image }) => {
             Password
           </label>
           <input
-            className="appearance-none block w-full bg-neutral-200 mb-3 border-[1px] dark:bg-darkMode-componentHead rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
+            className="appearance-none block w-full bg-neutral-200 mb-3 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
             id="grid-password"
             type="password"
             placeholder="******************"
@@ -168,7 +166,7 @@ const BasicInfo = ({ doctor, image }) => {
       <div className="flex flex-row mx-7 justify-center">
         <button
           type="submit"
-          className="text-sm p-2 w-full font-medium bg-lightMode-btn dark:bg-darkMode-btn rounded-md m-5 text-white"
+          className="text-sm p-2 w-full font-medium bg-lightMode-btn dark:bg-cyan-700 rounded-md m-5 text-white"
         >
           Update Profile
         </button>

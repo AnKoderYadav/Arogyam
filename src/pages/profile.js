@@ -109,7 +109,7 @@ const Profile = ({ user }) => {
     <>
       <MainLayout>
         <div className=" h-full bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row  items-start p-5 justify-center font-sans text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
-          <div className="flex flex-col mt-8 w-[20rem] m-4">
+          <div className="flex flex-col mt-8 lg:w-[15rem] w-[20rem] md:w-[15rem] m-4">
             <div className=" p-5 mb-0 bg-lightMode-componentHead pl-5  rounded-t-md pb-1 w-auto  dark:bg-neutral-800">
               <h1 className="font-bold text-2xl">
                 Your{" "}
@@ -118,10 +118,10 @@ const Profile = ({ user }) => {
                 </span>
               </h1>
             </div>
-            <div className="mt-0  rounded-md border-slate-950 flex flex-col bg-lightMode-component dark:bg-darkMode-component items-center justify-center text-lightMode-txt dark:text-darkMode-txt w-auto rounded-t-none p-5">
+            <div className="mt-0 rounded-md border-slate-950 flex flex-col bg-lightMode-component dark:bg-darkMode-component items-center justify-center text-lightMode-txt dark:text-darkMode-txt w-auto rounded-t-none p-5">
               <div className="flex justify-center mb-3 p-3 pb-0">
                 <img
-                  className="rounded-full  border-[1px] w-48 h-48 border-slate-600"
+                  className="rounded-full  border-[1px] w-40 h-40 border-slate-600"
                   src={createObjectURL}
                   alt="Profile photo"
                 />
@@ -141,7 +141,7 @@ const Profile = ({ user }) => {
             </div>
           </div>
 
-          <div className="m-8 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-4/5 overflow-y-scroll scrollbar-hide ">
+          <div className="m-8 mb-0 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-[100%] md:h-[95%] lg:h-[95%] overflow-y-scroll scrollbar-hide">
             <div className="p-5 bg-lightMode-componentHead dark:bg-neutral-800 rounded-t-md pb-1">
               <h1 className="font-bold text-2xl">
                 Edit{" "}
@@ -220,7 +220,7 @@ const Profile = ({ user }) => {
                       id="grid-state"
                       {...formik.getFieldProps("gender")}
                     >
-                      <option>Rather not say</option>
+                      <option>Prefer not to say</option>
                       <option>Male</option>
                       <option>Female</option>
                       <option>Transgender</option>

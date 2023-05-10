@@ -46,9 +46,9 @@ const DocProfile = ({ doctor }) => {
   return (
     <>
       <MainLayout>
-        <div className="bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row items-start p-5 justify-center font-sans h-full text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
-          <div className="flex flex-col mt-8 w-[20rem] m-4">
-            <div className=" p-5 mb-0 bg-lightMode-componentHead pl-5  rounded-t-md pb-1 w-auto  dark:bg-darkMode-componentHead">
+        <div className="bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row items-start justify-center font-sans h-full text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
+          <div className="flex flex-col lg:w-[15rem] w-[20rem] md:w-[15rem] m-4 mx-0">
+            <div className=" p-5 mb-0 bg-lightMode-componentHead pl-5  rounded-t-md pb-1 w-auto  dark:bg-neutral-800">
               <h1 className="font-bold text-2xl">
                 Your{" "}
                 <span className="text-cyan-800 dark:text-cyan-600">
@@ -59,7 +59,7 @@ const DocProfile = ({ doctor }) => {
             <div className=" mt-0  rounded-md border-slate-950 flex flex-col bg-lightMode-component dark:bg-darkMode-component items-center justify-center text-lightMode-txt dark:text-darkMode-txt w-auto rounded-t-none p-5">
               <div className=" flex justify-center mb-3 p-3 pb-0">
                 <img
-                  className="rounded-full h-auto border-[1px] border-slate-600"
+                  className="rounded-full  border-[1px] w-40 h-40 border-slate-600"
                   src={createObjectURL}
                   alt="Profile photo"
                 />
@@ -69,7 +69,7 @@ const DocProfile = ({ doctor }) => {
               </div>
 
               <div>
-                <div className="relative text-sm p-4 py-2 w-40 font-medium text-white bg-lightMode-btn dark:bg-darkMode-btn rounded-md ">
+                <div className="relative text-sm p-4 py-2 w-40 font-medium text-white bg-lightMode-btn dark:bg-cyan-700 rounded-md ">
                   <input
                     id="photo"
                     type="file"
@@ -82,9 +82,12 @@ const DocProfile = ({ doctor }) => {
             </div>
           </div>
 
-          <div className="m-8 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-4/5 overflow-y-scroll scrollbar-hide ">
-            <div className="p-5 bg-lightMode-componentHead dark:bg-darkMode-componentHead rounded-t-md pb-1">
-              <h1 className="font-bold text-2xl">Edit Profile</h1>
+          <div className="m-4 mb-0 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-[100%] md:h-[95%] lg:h-[95%] overflow-y-scroll scrollbar-hide">
+            <div className="p-5 bg-lightMode-componentHead dark:bg-neutral-800 rounded-t-md pb-1">
+              <h1 className="font-bold text-2xl">Edit {" "}
+              <span className="text-cyan-800 dark:text-cyan-600">
+                Profile
+              </span></h1>
               <div className="flex flex-row justify-around items-center mt-2">
                 <button
                   className="w-full h-full active:underline rounded-sm"
