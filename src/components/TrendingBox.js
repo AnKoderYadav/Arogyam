@@ -1,26 +1,18 @@
 import React from "react";
+import axios from "axios";
+import useSWR from "swr";
 
-const Array = [
-  "Dr. Aarav Sharma",
-  "Dr. Akshay Patel",
-  "Dr. Anjali Gupta",
-  "Dr. Arjun Singh",
-  "Dr. Avni Mehta",
-  "Dr. Chetan Desai",
-  "Dr. Devanshi Shah",
-  "Dr. Divya Kapoor",
-  "Dr. Neha Singh",
-  "Dr. Sakshi Sharma",
-];
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const TrendingBox = () => {
+  const { data, error } = useSWR("/api/trending", fetcher);
   return (
     <>
       <div className="min-w-[15rem] h-fit flex flex-col p-4 gap-4 shadow-xl bg-lightMode-component dark:bg-darkMode-component text-lightMode-txt dark:text-darkMode-txt rounded-lg sticky top-0">
         <div className="w-full font-bold tracking-tight leading-tight flex flex-wrap content-center items-center ml-1 p-1 rounded-md text-md ">
           <p className="mr-3 ">Trending Specialists</p>
         </div>
-        {Array.map((name, index) => {
+        {data.trendingSpecialist.map((doctor, index) => {
           return (
             <div
               key={index}
@@ -30,7 +22,7 @@ const TrendingBox = () => {
                 {index + 1}
               </span>
               <span key={index} className=" border-neutral-500">
-                {name}
+                {doctor.doctorName}
               </span>
             </div>
           );

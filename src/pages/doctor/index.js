@@ -1,7 +1,7 @@
 import TrendingBox from "@/components/TrendingBox";
 import MainLayout from "@/layouts/MainLayout";
 import RequestBox from "@/components/RequestBox";
-import React from "react";
+import React, { useState } from "react";
 import dbConnect from "@/dbconnect";
 import Link from "next/link";
 import { getSession } from "next-auth/react";
@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Posts from "@/models/postModel";
 import Doctors from "@/models/doctorModel";
+import Consultations from "@/models/consultModel";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -39,12 +40,28 @@ export async function getServerSideProps({ req }) {
     return post;
   });
 
+  res = await Consultations.find({ doctorRefId: doctor._id });
+
+  const consultations = res.map((doc) => {
+    const consultation = JSON.parse(JSON.stringify(doc));
+    return consultation;
+  });
+
   return {
-    props: { doctor, posts },
+    props: { doctor, posts, consultations },
   };
 }
 
-const Home = ({ doctor, posts }) => {
+const Home = ({ doctor, posts, consultations }) => {
+  console.log(consultations);
+  const consultCount = consultations.filter(
+    (consultation) => consultation.isAccepted === true
+  ).length;
+  const requestCount = consultations.filter(
+    (consultation) => consultation.isAccepted === false
+  ).length;
+  console.log(consultCount, requestCount);
+
   return (
     <>
       <MainLayout>
@@ -65,16 +82,12 @@ const Home = ({ doctor, posts }) => {
             </div>
             <div className="py-2 gap-2 w-2/3 mx-9 flex justify-center items-center flex-col border-y-[1px] border-black dark:border-white">
               <div className="flex flex-row items-center ">
-                <div className="text-md mr-2">Requests</div>
-                <div className="text-md text-teal-700">
-                  {doctor.requestCount}
-                </div>
+                <div className="text-md mr-2">Offered</div>
+                <div className="text-md text-teal-700">{requestCount}</div>
               </div>
               <div className="flex flex-row items-center">
                 <div className="text-md mr-2">Accepted</div>
-                <div className=" text-md text-teal-700">
-                  {doctor.consultCount}
-                </div>
+                <div className=" text-md text-teal-700">{consultCount}</div>
               </div>
             </div>
             <div className="py-4 pb-1 text-center flex justify-center items-center text-white">

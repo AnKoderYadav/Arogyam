@@ -1,22 +1,20 @@
 import React, { useState } from "react";
-import { FcShare, FcPlus, FcApproval} from "react-icons/fc";
+import { FcShare, FcPlus, FcApproval } from "react-icons/fc";
 import ConsultBox from "./ConsultBox";
 const RequestBox = ({ post, doctor }) => {
-  
-
   const [offer, setOffer] = useState(false);
   const elapsedTime = Date.now() - new Date(post.createdAt).getTime();
   const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
   const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
   const days = Math.floor(elapsedTime / 1000 / 60 / 60 / 24);
 
-  let timeString = '';
+  let timeString = "";
   if (days > 0) {
-    timeString = `${days} day${days > 1 ? 's' : ''} ago`;
+    timeString = `${days} day${days > 1 ? "s" : ""} ago`;
   } else if (hours > 0) {
-    timeString = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    timeString = `${hours} hour${hours > 1 ? "s" : ""} ago`;
   } else {
-    timeString = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    timeString = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
   }
   return (
     <>
@@ -29,19 +27,15 @@ const RequestBox = ({ post, doctor }) => {
               alt="img"
             />
             <div className="flex flex-col pl-3">
-            <span className="text-md tracking-tight font-sans">
-              {post.patientId.fullname}
-            </span>
-            <span className="text-xs">
-              {timeString}
-            </span>
+              <span className="text-md tracking-tight font-sans font-semibold">
+                {post.patientId.fullname}
+              </span>
+              <span className="text-xs">{timeString}</span>
             </div>
           </div>
           <span className="text-sm flex flex-row pr-5 w-full justify-end">
             <span className="mr-2">Severity - </span>
-            <span className="uppercase text-sm">
-              {post.severity}
-            </span>
+            <span className="uppercase text-sm">{post.severity}</span>
           </span>
         </div>
         <div className="flex p-3 py-0 gap-2 w-full flex-col ">
@@ -56,18 +50,18 @@ const RequestBox = ({ post, doctor }) => {
           <div className="w-fit text-xl flex  content-center items-center cursor-pointer p-2 py-0">
             <span className="text-xl ">
               {!post.offers.includes(`${doctor._id}`) ? (
-              <button
-                className="md:text-md w-full rounded-xl flex flex-row items-center md:font-bold tracking-tight leading-tight pl-[1px] pb-[1px] hover:bg-slate-300 pr-2 content-center"
-                onClick={() => setOffer(!offer)}
-              >
-                <FcPlus className="md:text-2xl mr-2" />
-                Offer consultation
-              </button>):(
-              <div
-              className=" md:text-md w-full rounded-xl flex flex-row items-center md:font-bold tracking-tight leading-tight  p-[5px]  pr-2 content-center"
-              >
-                <FcApproval className="md:text-2xl mr-2"/>Offered
-              </div>
+                <button
+                  className="md:text-md w-full rounded-xl flex flex-row items-center md:font-bold tracking-tight leading-tight p-[5px] hover:bg-slate-300 hover:text-gray-600 pr-2 content-center"
+                  onClick={() => setOffer(!offer)}
+                >
+                  <FcPlus className="md:text-2xl mr-2" />
+                  Offer consultation
+                </button>
+              ) : (
+                <div className=" md:text-md w-full rounded-xl flex flex-row items-center md:font-bold tracking-tight leading-tight  p-[5px]  pr-2 content-center">
+                  <FcApproval className="md:text-2xl mr-2" />
+                  Offered
+                </div>
               )}
             </span>
           </div>

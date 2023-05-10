@@ -38,9 +38,9 @@ const FeedPostSchema = new Schema(
       type: [CommentSchema],
       default: [],
     },
-    likeCount: {
-      type: Number,
-      default: 0,
+    likeBy: {
+      type: [String],
+      default: [],
     },
   },
   {

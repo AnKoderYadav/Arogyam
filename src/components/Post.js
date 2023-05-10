@@ -30,28 +30,11 @@ const Post = ({ pdata }) => {
 
   const [postLiked, setPostLiked] = useState(false);
 
-  const handleLike = async (e) => {
-    e.preventDefault();
-    if (!session) {
-      return;
-    }
-    if (!postLiked) {
-      setPostLiked(true);
-      pdata.likeCount += 1;
-    } else {
-      setPostLiked(false);
-      pdata.likeCount -= 1;
-    }
-    const response = await fetch(`/api/user/feedPost/like`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        feedId: pdata._id,
-        // usedId = session.user._id;
-        liked: postLiked,
-      }),
+  const handleLike = async () => {
+    setPostLiked(!postLiked);
+    await axios.post("api/user/feedPost/like", {
+      userId: session.user.id,
+      liked: postLiked,
     });
   };
 
@@ -108,18 +91,13 @@ const Post = ({ pdata }) => {
         <p className="mt-2">{pdata.description}</p>
       </div>
       <div className=" flex justify-center align-center md-h-96 bg-zinc-300 dark:bg-neutral-800">
-        <img
-          src={pdata.image}
-          // objectFit="contain"
-          // layout="fill"
-          className="object-contain max-h-96 "
-        />
+        <img src={pdata.image} className="object-contain max-h-[17rem]" />
       </div>
       {/* Footer */}
       <div className="flex flex-col rounded-b-lg bg-lightMode-component dark:bg-darkMode-component text-neutral-700 dark:text-neutral-400 border-t p-2">
         <div className="flex justify-between items-center gap-9 mx-10 mb-2">
           <div
-            onClick={(e) => handleLike(e)}
+            onClick={handleLike}
             className="rounded-lg cursor-pointer flex items-center space-x-1 hover:bg-neutral-300 dark:hover:bg-neutral-500 dark:hover:text-white justify-center p-1"
           >
             {postLiked ? (
@@ -135,7 +113,7 @@ const Post = ({ pdata }) => {
                 display: "inline-block",
               }}
             >
-              {pdata.likeCount}
+              {pdata.likeBy.length}
             </div>
           </div>
 
@@ -148,13 +126,16 @@ const Post = ({ pdata }) => {
             <p className="text-xs sm:text-base ">Comment</p>
           </button>
 
-          <div  className="rounded-lg cursor-pointer flex items-center space-x-1 hover:bg-neutral-300 dark:hover:bg-neutral-500 dark:hover:text-white justify-center p-2 px-3">
+          <div className="rounded-lg cursor-pointer flex items-center space-x-1 hover:bg-neutral-300 dark:hover:bg-neutral-500 dark:hover:text-white justify-center p-2 px-3">
             <span class="material-symbols-outlined">share</span>
             <p className="text-xs sm:text-base">Share</p>
           </div>
         </div>
         {show && (
-          <div id="CommentSection" className=" flex mx-4 space-x-4 p-4 items-center border-t-[1px] border-neutral-400 dark:border-neutral-600">
+          <div
+            id="CommentSection"
+            className=" flex mx-4 space-x-4 p-4 items-center border-t-[1px] border-neutral-400 dark:border-neutral-600"
+          >
             <img className="rounded-full w-8 h-8" src={session?.user.profile} />
             <form
               action=""
