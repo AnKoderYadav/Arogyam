@@ -80,7 +80,7 @@ const Feed = ({ user, posts }) => {
                 <button
                   className="flex flex-row py-2 items-center text-black dark:text-white "
                 >
-                  <span class="material-symbols-outlined">image</span>
+                  <span className="material-symbols-outlined">image</span>
                   Upload Picture
                 </button>
                 <input
@@ -96,7 +96,7 @@ const Feed = ({ user, posts }) => {
                 type="submit"
                 className="flex flex-row gap-2 items-center  text-black dark:text-white"
                 >
-                <span class="material-symbols-outlined">check_circle</span>
+                <span className="material-symbols-outlined">check_circle</span>
                 Submit
               </button>
                 </div>
