@@ -11,7 +11,9 @@ import Link from "next/link";
 
 const Post = ({ pdata }) => {
   const { data: session } = useSession();
+  console.log(session.user);
   const [show, setShow] = useState(true);
+  const [postLiked, setPostLiked] = useState(false);
   const router = useRouter();
   // console.log(pdata.createdAt);
   const elapsedTime = Date.now() - new Date(pdata.createdAt).getTime();
@@ -28,14 +30,14 @@ const Post = ({ pdata }) => {
     timeString = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
   }
 
-  const [postLiked, setPostLiked] = useState(false);
-
   const handleLike = async () => {
     setPostLiked(!postLiked);
     await axios.post("api/user/feedPost/like", {
       userId: session.user.id,
       liked: postLiked,
+      feedId: pdata._id.toString(),
     });
+    console.log("hello");
   };
 
   const refreshData = () => {

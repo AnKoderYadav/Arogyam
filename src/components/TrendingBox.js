@@ -12,7 +12,7 @@ const TrendingBox = () => {
         <div className="w-full font-bold tracking-tight leading-tight flex flex-wrap content-center items-center ml-1 p-1 rounded-md text-md ">
           <p className="mr-3 ">Trending Specialists</p>
         </div>
-        {data.trendingSpecialist.map((doctor, index) => {
+        {data?.trendingSpecialist.map((doctor, index) => {
           return (
             <div
               key={index}
