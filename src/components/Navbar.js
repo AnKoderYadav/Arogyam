@@ -13,7 +13,7 @@ const Navbar = ({ isDoctor }) => {
     <>
       <nav className="sticky top-0 bg-lightMode-btn dark:bg-gray-800 w-100 px-8 md:px-auto">
         <div className="md:h-16 h-28 mx-auto md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">
-          <div className="text-white md:order-1 flex items-center">
+          <Link href="/feed" className="text-white md:order-1 flex items-center cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-10 w-10"
@@ -31,7 +31,7 @@ const Navbar = ({ isDoctor }) => {
             <span className="ml-2 text-2xl font-extrabold tracking-tight leading-tight">
               AROGYAM
             </span>
-          </div>
+          </Link>
           <div className="order-3 w-full md:w-auto md:order-2">
             <ul className="text-xl flex justify-around gap-4">
               <li className="md:px-2 md:py-2 text-white dark:text-white dark:hover:text-slate-400 hover:text-neutral-700">
