@@ -26,8 +26,8 @@ const EmailBox = ({ consultation, doctor }) => {
     e.target.reset();
   }
   return (
-    <>
-      <form className="w-full flex flex-col gap-4 p-5" onSubmit={handleEmail}>
+    <div className="w-auto min-w-[75%] bg-neutral-100 dark:bg-neutral-800 m-3 rounded-lg flex flex-grow border-[1px] border-neutral-600">
+      <form className="w-full flex flex-col gap-4 p-4" onSubmit={handleEmail}>
         <div className="w-full hidden">
           <label
             className="block uppercase tracking-wide  text-xs font-semibold mb-2"
@@ -94,17 +94,17 @@ const EmailBox = ({ consultation, doctor }) => {
             placeholder="patient email"
           />
         </div>
-        <div className="flex flex-row mx-7 p-5 justify-center">
+        <div className="flex flex-row  justify-center">
           <button
             type="submit"
             value="Send"
-            className="text-sm p-2 w-full font-medium bg-lightMode-btn dark:bg-darkMode-btn rounded-md text-white"
+            className="text-sm p-2 w-1/3 font-medium bg-lightMode-btn dark:bg-darkMode-btn rounded-md text-white"
           >
             Send
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

@@ -80,14 +80,14 @@ const Home = ({ doctor, posts, consultations }) => {
                 {doctor.doctorId.fullname}
               </span>
             </div>
-            <div className="py-2 gap-2 w-2/3 mx-9 flex justify-center items-center flex-col border-y-[1px] border-black dark:border-white">
-              <div className="flex flex-row items-center ">
-                <div className="text-md mr-2">Offered</div>
-                <div className="text-md text-teal-700">{requestCount}</div>
+            <div className="py-2 gap-2 w-[70%] mx-9 flex  items-center flex-col border-y-[1px] border-black dark:border-white">
+              <div className="flex flex-row items-center w-full justify-between">
+                <p className="text-md mr-2">Offered</p>
+                <div className="text-md bg-neutral-500 rounded-xl w-8 h-8 flex items-center justify-center text-white">{requestCount}</div>
               </div>
-              <div className="flex flex-row items-center">
-                <div className="text-md mr-2">Accepted</div>
-                <div className=" text-md text-teal-700">{consultCount}</div>
+              <div className="flex flex-row items-center w-full justify-between">
+                <p className="text-md mr-2">Accepted</p>
+                <div className="text-md bg-neutral-500 rounded-xl w-8 h-8 flex justify-center items-center text-white">{consultCount}</div>
               </div>
             </div>
             <div className="py-4 pb-1 text-center flex justify-center items-center text-white">

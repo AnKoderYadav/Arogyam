@@ -63,9 +63,9 @@ const Consult = ({ doctor, consultations }) => {
   return (
     <MainLayout>
       <div className="h-full flex overflow-y-scroll scrollbar-thin p-4  bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt justify-center items-start w-full">
-        <div className="max-w-7xl">
-          <h1 className="m-2 text-2xl tracking-tight font-sans">Your Consultations</h1>
-          <div className="gap-4 flex flex-wrap lg:justify-start md:justify-start justify-center">
+        <div className="max-w-7xl min-w-[60%] ">
+          <h1 className="m-2 text-2xl tracking-tight font-sans border-b-[1px] border-neutral-400 pb-1 mb-8">Your Consultations</h1>
+          <div className="gap-4 px-2 flex flex-wrap lg:justify-start md:justify-start justify-center">
 
             {consultations.map((consultation) => {
               const handleRevoke = async () => {
@@ -82,44 +82,53 @@ const Consult = ({ doctor, consultations }) => {
               return (
                 <>
                   <div className="w-[25rem] h-fit flex justify-center items-center bg-lightMode-component dark:bg-darkMode-component shadow-md flex-col rounded-lg">
-                    <div className="w-full flex flex-col p-4 gap-2">
-                      <div className="w-full flex content-center items-center">
-                        <div className="w-full content-center items-center flex flex-row">
+                    <div className="w-full flex flex-col pt-0 gap-2">
+                      <div className="w-full flex bg-neutral-300 dark:bg-neutral-800 py-2 rounded-t-lg px-4 content-center items-center">
+                        <div className="w-full content-center  items-center flex flex-row">
                           <img
                             className="w-[2rem] h-[2rem] rounded-full "
                             src={consultation.postId.patientId.profile}
                             alt="img"
                           />
-                          <span className="w-full pl-4 font-medium -tracking-tight leading-tight">
-                            {consultation.postId.patientId.fullname}
-                          </span>
+                          <div className="flex pl-2 flex-col">
+                            <span className="w-full text-md  tracking-tight ">
+                              {consultation.postId.patientId.fullname}
+                            </span>
+                            <span className="text-[9px]">
+                              Just Now
+                            </span>
+                          </div>
                         </div>
-                        <span className="text-center text-xl font-semibold py-2 flex flex-row px-0 text-green-400 dark:text-green-700">
+                        <span className="text-center text-xl font-sans font-semibold w-24 h-8 justify-center items-center rounded-sm bg-neutral-400 dark:bg-neutral-700 flex flex-row text-black dark:text-neutral-300">
                           {consultation.isAccepted ? "PAID" : consultation.fee}
                         </span>
                       </div>
-                      <div className="w-full flex flex-col items-center gap-2 font-medium">
-                        <p>{consultation.postId.description}</p>
+                      <div className="w-full flex flex-col gap-2 ">
+                        <p className="pl-5 text-sm"> {consultation.postId.description}</p>
                         <img
-                          className="w-2/3 h-[15rem]"
+                          className="w-full h-[15rem]"
                           src={consultation.postId.image}
                           alt=""
                         />
                       </div>
                     </div>
-                    <div className="flex justify-center w-full bg-lightMode-componentHead dark:bg-darkMode-componentHead dark:text-darkMode-txt p-5 m-2 rounded-b-lg">
-                      <div className="w-fit text-xl flex justify-center items-center dark:hover:text-cyan-300 hover:text-cyan-800 cursor-pointer">
-                        <span className="text-md w-full flex flex-row justify-evenly font-bold tracking-tight leading-tight">
+                    <div className="flex justify-center  w-full rounded-b-lg">
+                      <div className="w-fit text-xl  flex justify-center items-center cursor-pointer">
+                        <span className="text-md w-full flex flex-row justify-evenly font-bold tracking-tight leading-tight p-2">
                           {consultation.isAccepted ? (
-                            <>
-                              <FcNext className="text-2xl mr-1" />
-                              <p onClick={handleOpen}>Send Mail</p>
-                            </>
+                            <div className="bg-neutral-300 dark:bg-neutral-700 border-[1px] border-neutral-600 dark:border-neutral-600 flex text-neutral-800 dark:text-neutral-200 px-2 py-2 rounded-sm">
+                              <span class="material-symbols-outlined">
+                                mail
+                              </span>
+                              <p className="ml-2 font-normal" onClick={handleOpen}>Send Mail</p>
+                            </div>
                           ) : (
-                            <>
-                              <FcCancel className="text-2xl mr-1" />
-                              <p onClick={handleRevoke}>Revoke consultation</p>
-                            </>
+                            <div className="bg-[#F15A59]/50 hover:text-red-950">
+                              <span class="material-symbols-outlined">
+                                do_not_disturb_on
+                              </span>
+                              <p className="text-sm" onClick={handleRevoke}>Revoke consultation</p>
+                            </div>
                           )}
                         </span>
                       </div>
