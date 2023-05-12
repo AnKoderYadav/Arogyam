@@ -1,21 +1,17 @@
 import React, { useState } from "react";
-import { FcShare, FcPlus, FcApproval } from "react-icons/fc";
+import {
+  FcShare,
+  FcPlus,
+  FcApproval,
+  FcMediumPriority,
+  FcHighPriority,
+  FcLowPriority,
+} from "react-icons/fc";
 import ConsultBox from "./ConsultBox";
+import getTimeElapsed from "./function/getTimeElapsed";
 const RequestBox = ({ post, doctor }) => {
   const [offer, setOffer] = useState(false);
-  const elapsedTime = Date.now() - new Date(post.createdAt).getTime();
-  const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
-  const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
-  const days = Math.floor(elapsedTime / 1000 / 60 / 60 / 24);
-
-  let timeString = "";
-  if (days > 0) {
-    timeString = `${days} day${days > 1 ? "s" : ""} ago`;
-  } else if (hours > 0) {
-    timeString = `${hours} hour${hours > 1 ? "s" : ""} ago`;
-  } else {
-    timeString = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
-  }
+  const timeElapsed = new Date().getTime() - new Date(post.createdAt);
   return (
     <>
       <div className="flex items-center flex-col w-full bg-lightMode-component text-lightMode-txt shadow-xl rounded-lg dark:bg-darkMode-component dark:text-darkMode-txt p-2 ">
@@ -30,13 +26,32 @@ const RequestBox = ({ post, doctor }) => {
               <span className="text-md tracking-tight font-sans font-semibold">
                 {post.patientId.fullname}
               </span>
-              <span className="text-xs">{timeString}</span>
+              <span className="text-xs">{getTimeElapsed(timeElapsed)} ago</span>
             </div>
           </div>
-          <span className="text-sm flex flex-row pr-5 w-full justify-end">
+          {post.severity === "Low" ? (
+            <span className="text-sm  flex flex-row pr-5 w-full justify-end">
+              <span className="mr-2 font-semibold">Severity - </span>
+              <FcLowPriority className="md:text-xl mr-2" />
+              <span className="uppercase text-sm">low</span>
+            </span>
+          ) : post.severity === "Medium" ? (
+            <span className="text-sm flex flex-row pr-5 w-full justify-end">
+              <span className="font-semibold mr-2">Severity - </span>
+              <FcMediumPriority className="md:text-xl mr-2" />
+              <span className="uppercase text-sm">Medium</span>
+            </span>
+          ) : (
+            <span className="text-sm flex flex-row pr-5 w-full justify-end">
+              <span className="font-semibold mr-2">Severity - </span>
+              <FcHighPriority className="md:text-xl mr-2" />
+              <span className="uppercase text-sm">High</span>
+            </span>
+          )}
+          {/* <span className="text-sm flex flex-row pr-5 w-full justify-end">
             <span className="mr-2">Severity - </span>
             <span className="uppercase text-sm">{post.severity}</span>
-          </span>
+          </span> */}
         </div>
         <div className="flex p-3 py-0 gap-2 w-full flex-col ">
           <p className="font-sans text-sm text-justify">{post.description}</p>

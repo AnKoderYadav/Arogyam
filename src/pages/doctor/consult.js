@@ -8,6 +8,7 @@ import dbConnect from "@/dbconnect";
 import Doctors from "@/models/doctorModel";
 import Consultations from "@/models/consultModel";
 import EmailBox from "@/components/EmailBox";
+import getTimeElapsed from "@/components/function/getTimeElapsed";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -64,10 +65,14 @@ const Consult = ({ doctor, consultations }) => {
     <MainLayout>
       <div className="h-full flex overflow-y-scroll scrollbar-thin p-4  bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt justify-center items-start w-full">
         <div className="max-w-7xl min-w-[60%] ">
-          <h1 className="m-2 text-2xl tracking-tight font-sans border-b-[1px] border-neutral-400  pb-1 mb-8">Your Consultations</h1>
+          <h1 className="m-2 text-2xl tracking-tight font-sans border-b-[1px] border-neutral-400  pb-1 mb-8">
+            Your Consultations
+          </h1>
           <div className="gap-4 px-2 flex flex-wrap lg:justify-start md:justify-start justify-center">
-
             {consultations.map((consultation) => {
+              const timeElapsed =
+                new Date().getTime() - new Date(consultation.postId.createdAt);
+
               const handleRevoke = async () => {
                 await axios.delete(
                   `/api/user/doctor/consultation/${consultation._id}`
@@ -95,16 +100,28 @@ const Consult = ({ doctor, consultations }) => {
                               {consultation.postId.patientId.fullname}
                             </span>
                             <span className="text-[9px]">
-                              Just Now
+                              {getTimeElapsed(timeElapsed)} ago
                             </span>
                           </div>
                         </div>
-                        <span className="text-center text-xl font-sans font-semibold w-24 h-8 justify-center items-center rounded-sm bg-neutral-400 dark:bg-neutral-700 flex flex-row text-black dark:text-neutral-300">
+                        {consultation.isAccepted ? (
+                          <span className="text-center text-xl font-sans font-semibold w-24 h-8 justify-center items-center rounded-sm  bg-lightMode-btn  dark:bg-darkMode-btn flex flex-row text-white dark:text-neutral-300">
+                            PAID
+                          </span>
+                        ) : (
+                          <span className="text-center text-xl font-sans font-semibold w-24 h-8 justify-center items-center rounded-sm bg-red-400 dark:bg-red-900 flex flex-row text-white dark:text-neutral-300">
+                            {consultation.fee}
+                          </span>
+                        )}
+                        {/* <span className="text-center text-xl font-sans font-semibold w-24 h-8 justify-center items-center rounded-sm bg-neutral-400 dark:bg-neutral-700 flex flex-row text-black dark:text-neutral-300">
                           {consultation.isAccepted ? "PAID" : consultation.fee}
-                        </span>
+                        </span> */}
                       </div>
                       <div className="w-full flex flex-col gap-2 ">
-                        <p className="pl-5 text-sm"> {consultation.postId.description}</p>
+                        <p className="pl-5 text-sm">
+                          {" "}
+                          {consultation.postId.description}
+                        </p>
                         <img
                           className="object-contain max-h-[17rem]"
                           src={consultation.postId.image}
@@ -120,14 +137,24 @@ const Consult = ({ doctor, consultations }) => {
                               <span class="material-symbols-outlined">
                                 mail
                               </span>
-                              <p className="ml-2 text-base font-normal" onClick={handleOpen}>Send Mail</p>
+                              <p
+                                className="ml-2 text-base font-normal"
+                                onClick={handleOpen}
+                              >
+                                Send Mail
+                              </p>
                             </div>
                           ) : (
-                            <div className="bg-neutral-300 dark:bg-neutral-700 flex text-neutral-800 hover:bg-red-500/50 hover:border-0 dark:text-neutral-200 px-2 py-2 rounded-sm">
+                            <div className="bg-neutral-300 dark:bg-neutral-700 flex  text-neutral-800 hover:bg-red-500/50 hover:border-0 dark:text-neutral-200 px-2 py-2 rounded-sm">
                               <span class="material-symbols-outlined">
                                 do_not_disturb_on
                               </span>
-                              <p className="ml-2 text-base font-normal" onClick={handleRevoke}>Revoke consultation</p>
+                              <p
+                                className="ml-2 text-base font-normal"
+                                onClick={handleRevoke}
+                              >
+                                Revoke consultation
+                              </p>
                             </div>
                           )}
                         </span>

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import getTimeElapsed from "./function/getTimeElapsed";
 
 const Post = ({ pdata }) => {
   const { data: session } = useSession();
@@ -15,20 +16,7 @@ const Post = ({ pdata }) => {
   const [show, setShow] = useState(true);
   const [postLiked, setPostLiked] = useState(false);
   const router = useRouter();
-  // console.log(pdata.createdAt);
-  const elapsedTime = Date.now() - new Date(pdata.createdAt).getTime();
-  const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
-  const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
-  const days = Math.floor(elapsedTime / 1000 / 60 / 60 / 24);
-
-  let timeString = "";
-  if (days > 0) {
-    timeString = `${days} day${days > 1 ? "s" : ""} ago`;
-  } else if (hours > 0) {
-    timeString = `${hours} hour${hours > 1 ? "s" : ""} ago`;
-  } else {
-    timeString = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
-  }
+  const timeElapsed = new Date().getTime() - new Date(pdata.createdAt);
 
   const handleLike = async () => {
     setPostLiked(!postLiked);
@@ -79,7 +67,9 @@ const Post = ({ pdata }) => {
             </div>
             <div className="ml-3">
               <p className="font-medium">{pdata.userId.fullname}</p>
-              <p className="text-xs text-gray-400">{timeString}</p>
+              <p className="text-xs text-gray-400">
+                {getTimeElapsed(timeElapsed)} ago
+              </p>
             </div>
           </div>
           <Link href={`/feed/${pdata._id}`}>

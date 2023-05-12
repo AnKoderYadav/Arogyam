@@ -5,6 +5,8 @@ import Image from "next/image";
 import { getSession } from "next-auth/react";
 import dbConnect from "@/dbconnect";
 import FeedPosts from "@/models/feedModel";
+import getTimeElapsed from "@/components/function/getTimeElapsed";
+
 export async function getServerSideProps({ req, params }) {
   const session = await getSession({ req });
   if (!session?.user) {
@@ -40,23 +42,11 @@ const PostPage = ({ post }) => {
           <Post pdata={post} />
         </div>
         <div className="p-5 w-full md:w-[30%] lg:[30%] h-2/3 bg-lightMode-component overflow-scroll scrollbar-hide dark:bg-darkMode-component mt-5 rounded-lg shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt mx-5 ">
-          <h1 className="font-semibold text-md mx-8 md:mx-0 lg:mx-0">Comments</h1>
+          <h1 className="font-semibold text-md mx-8 md:mx-0 lg:mx-0">
+            Comments
+          </h1>
           {post.comments.map((comment) => {
-            const elapsedTime = Date.now() - new Date(comment.createdAt).getTime();
-            const minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
-            const hours = Math.floor((elapsedTime / 1000 / 60 / 60) % 24);
-            const days = Math.floor(elapsedTime / 1000 / 60 / 60 / 24);
-
-            let timeString = '';
-            if (days > 0) {
-              timeString = `${days} day${days > 1 ? 's' : ''} ago`;
-            } else if (hours > 0) {
-              timeString = `${hours} hour${hours > 1 ? 's' : ''} ago`;
-            } else {
-              timeString = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-            }
-
-
+            const timeElapsed = new Date().getTime() - new Date(post.createdAt);
             return (
               <div
                 id="Comment"
@@ -68,7 +58,9 @@ const PostPage = ({ post }) => {
                 />
                 <div className="flex flex-grow bg-lightMode-componentHead dark:bg-neutral-800 p-2 px-4 rounded-2xl  flex-col">
                   <p className="font-semibold text-xs">{comment.name} </p>
-                  <p className="text-[9px] text-neutral-500">{timeString}</p>
+                  <p className="text-[9px] text-neutral-500">
+                    {getTimeElapsed(timeElapsed)} ago
+                  </p>
                   <p className="text-xs">{comment.content}</p>
                 </div>
               </div>
