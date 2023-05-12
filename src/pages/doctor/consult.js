@@ -64,7 +64,7 @@ const Consult = ({ doctor, consultations }) => {
     <MainLayout>
       <div className="h-full flex overflow-y-scroll scrollbar-thin p-4  bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt justify-center items-start w-full">
         <div className="max-w-7xl min-w-[60%] ">
-          <h1 className="m-2 text-2xl tracking-tight font-sans border-b-[1px] border-neutral-400 pb-1 mb-8">Your Consultations</h1>
+          <h1 className="m-2 text-2xl tracking-tight font-sans border-b-[1px] border-neutral-400  pb-1 mb-8">Your Consultations</h1>
           <div className="gap-4 px-2 flex flex-wrap lg:justify-start md:justify-start justify-center">
 
             {consultations.map((consultation) => {
@@ -86,7 +86,7 @@ const Consult = ({ doctor, consultations }) => {
                       <div className="w-full flex bg-neutral-300 dark:bg-neutral-800 py-2 rounded-t-lg px-4 content-center items-center">
                         <div className="w-full content-center  items-center flex flex-row">
                           <img
-                            className="w-[2rem] h-[2rem] rounded-full "
+                            className="w-[2rem] h-[2rem] rounded-full"
                             src={consultation.postId.patientId.profile}
                             alt="img"
                           />
@@ -106,7 +106,7 @@ const Consult = ({ doctor, consultations }) => {
                       <div className="w-full flex flex-col gap-2 ">
                         <p className="pl-5 text-sm"> {consultation.postId.description}</p>
                         <img
-                          className="w-full h-[15rem]"
+                          className="object-contain max-h-[17rem]"
                           src={consultation.postId.image}
                           alt=""
                         />
@@ -116,18 +116,18 @@ const Consult = ({ doctor, consultations }) => {
                       <div className="w-fit text-xl  flex justify-center items-center cursor-pointer">
                         <span className="text-md w-full flex flex-row justify-evenly font-bold tracking-tight leading-tight p-2">
                           {consultation.isAccepted ? (
-                            <div className="bg-neutral-300 dark:bg-neutral-700 border-[1px] border-neutral-600 dark:border-neutral-600 flex text-neutral-800 dark:text-neutral-200 px-2 py-2 rounded-sm">
+                            <div className="bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-500 flex hover:text-white text-neutral-800 dark:text-neutral-200 px-2 py-2 rounded-sm">
                               <span class="material-symbols-outlined">
                                 mail
                               </span>
-                              <p className="ml-2 font-normal" onClick={handleOpen}>Send Mail</p>
+                              <p className="ml-2 text-base font-normal" onClick={handleOpen}>Send Mail</p>
                             </div>
                           ) : (
-                            <div className="bg-[#F15A59]/50 hover:text-red-950">
+                            <div className="bg-neutral-300 dark:bg-neutral-700 flex text-neutral-800 hover:bg-red-500/50 hover:border-0 dark:text-neutral-200 px-2 py-2 rounded-sm">
                               <span class="material-symbols-outlined">
                                 do_not_disturb_on
                               </span>
-                              <p className="text-sm" onClick={handleRevoke}>Revoke consultation</p>
+                              <p className="ml-2 text-base font-normal" onClick={handleRevoke}>Revoke consultation</p>
                             </div>
                           )}
                         </span>
