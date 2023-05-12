@@ -1,10 +1,13 @@
 import Link from "next/link";
 import React from "react";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Navbar = ({ isDoctor }) => {
+  const router = useRouter();
   const handleSignOut = () => {
-    signOut();
+    signOut({ redirect: false });
+    router.push("/login");
   };
 
   const basePath = isDoctor ? "/doctor/" : "/";
@@ -13,7 +16,10 @@ const Navbar = ({ isDoctor }) => {
     <>
       <nav className="sticky top-0 bg-lightMode-btn dark:bg-gray-800 w-100 px-8 md:px-auto">
         <div className="md:h-16 h-28 mx-auto md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">
-          <Link href="/feed" className="text-white md:order-1 flex items-center cursor-pointer">
+          <Link
+            href="/feed"
+            className="text-white md:order-1 flex items-center cursor-pointer"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-10 w-10"
