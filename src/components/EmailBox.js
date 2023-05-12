@@ -62,7 +62,7 @@ const EmailBox = ({ consultation, doctor }) => {
           />
         </div>
         {/* Make To Email Div Hidden  */}
-        <div className="w-full ">
+        <div className="w-full hidden">
           <label
             className="block uppercase tracking-wide text-xs font-semibold mb-2"
             htmlFor="grid-to-email"

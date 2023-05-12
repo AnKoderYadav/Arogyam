@@ -16,7 +16,6 @@ export default async function upload(req, res) {
   const file = fdata.files.file;
   const buffer = await fs.promises.readFile(file.filepath);
   let publicUrl = "";
-  console.log(fdata.fields);
 
   const cloudStorage = new Storage({
     projectId: process.env.PROJECT_ID,
