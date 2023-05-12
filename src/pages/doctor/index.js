@@ -53,7 +53,6 @@ export async function getServerSideProps({ req }) {
 }
 
 const Home = ({ doctor, posts, consultations }) => {
-  console.log(consultations);
   const consultCount = consultations.filter(
     (consultation) => consultation.isAccepted === true
   ).length;
@@ -83,11 +82,15 @@ const Home = ({ doctor, posts, consultations }) => {
             <div className="py-2 gap-2 w-[70%] mx-9 flex  items-center flex-col border-y-[1px] border-black dark:border-white">
               <div className="flex flex-row items-center w-full justify-between">
                 <p className="text-md mr-2">Offered</p>
-                <div className="text-md bg-cyan-500 dark:bg-cyan-800  rounded-xl w-8 h-8 flex items-center justify-center text-white">{requestCount}</div>
+                <div className="text-md bg-cyan-500 dark:bg-cyan-800  rounded-xl w-8 h-8 flex items-center justify-center text-white">
+                  {requestCount}
+                </div>
               </div>
               <div className="flex flex-row items-center w-full justify-between">
                 <p className="text-md mr-2">Accepted</p>
-                <div className="text-md bg-cyan-500 dark:bg-cyan-800 rounded-xl w-8 h-8 flex justify-center items-center text-white">{consultCount}</div>
+                <div className="text-md bg-cyan-500 dark:bg-cyan-800 rounded-xl w-8 h-8 flex justify-center items-center text-white">
+                  {consultCount}
+                </div>
               </div>
             </div>
             <div className="py-4 pb-1 text-center flex justify-center items-center text-white">

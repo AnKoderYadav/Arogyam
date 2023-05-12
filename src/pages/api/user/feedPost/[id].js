@@ -6,11 +6,12 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     const { userId, liked } = req.body;
-    console.log(userId, liked);
-    if (!liked) {
-      await FeedPosts.findByIdAndUpdate(req.query.id, {
-        $push: { likeBy: userId },
-      });
+    if (liked) {
+      await FeedPosts.findByIdAndUpdate(
+        req.query.id,
+        { $addToSet: { likeBy: userId } },
+        { new: true }
+      );
     } else {
       await FeedPosts.findByIdAndUpdate(req.query.id, {
         $pull: { likeBy: userId },

@@ -32,7 +32,7 @@ export async function getServerSideProps({ req }) {
     const post = JSON.parse(JSON.stringify(doc));
     return post;
   });
-  
+
   return {
     props: { user, posts },
   };
@@ -42,12 +42,12 @@ const feed = ({ user, posts }) => {
   return (
     <MainLayout>
       <div className="bg-lightMode-background justify-center flex dark:bg-darkMode-background overflow-y-scroll scrollbar-hide w-full h-full">
-          <div className=" max-w-3xl w-full flex flex-col gap-5 p-5 pt-7">
-            <FeedBox user={user} posts={posts} />
-          </div>
-          <div className="mt-7 lg:flex md:flex sticky top-5 hidden" id="Trending">
-            <TrendingBox />
-          </div>
+        <div className=" max-w-3xl w-full flex flex-col gap-5 p-5 pt-7">
+          <FeedBox user={user} posts={posts} key={1} />
+        </div>
+        <div className="mt-7 lg:flex md:flex sticky top-5 hidden" id="Trending">
+          <TrendingBox key={2} />
+        </div>
       </div>
     </MainLayout>
   );

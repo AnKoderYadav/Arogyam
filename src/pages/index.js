@@ -163,12 +163,8 @@ const Home = ({ user, posts, consultations }) => {
                       alt="img"
                     />
                     <div className=" ml-4 flex flex-col">
-                    <span className=" text-xl ">
-                      Welcome to Arogyam! 
-                    </span>
-                    <span>
-                    {user.fullname}
-                    </span>
+                      <span className=" text-xl ">Welcome to Arogyam!</span>
+                      <span>{user.fullname}</span>
                     </div>
                   </div>
                 </div>

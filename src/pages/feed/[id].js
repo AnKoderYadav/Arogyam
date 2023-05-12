@@ -22,9 +22,6 @@ export async function getServerSideProps({ req, params }) {
 
   //all posts by current user
   const res = await FeedPosts.findById(params.id).populate("userId");
-  // const res = await FeedPosts.findById(params.id).populate({
-  //   path: "userId",
-  // });
 
   const post = JSON.parse(JSON.stringify(res));
 
@@ -34,7 +31,6 @@ export async function getServerSideProps({ req, params }) {
 }
 
 const PostPage = ({ post }) => {
-  console.log(post);
   return (
     <MainLayout>
       <div className=" bg-lightMode-background justify-center flex dark:bg-darkMode-background md:flex-row lg:flex-row overflow-scroll scrollbar-hide w-full h-full flex-col">

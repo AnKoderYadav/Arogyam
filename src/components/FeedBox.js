@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
 import "react-toastify/dist/ReactToastify.css";
+import { useSession } from "next-auth/react";
 
 const Feed = ({ user, posts }) => {
   const [image, setImage] = useState(null);
@@ -77,9 +78,7 @@ const Feed = ({ user, posts }) => {
             />
             <div className="flex border-t-[1px] mt-2 border-neutral-300 dark:border-neutral-500 gap-2">
               <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-cyan-800 rounded-lg mt-2 dark:border-neutral-700  w-1/2">
-                <button
-                  className="flex flex-row py-2 items-center text-black dark:text-white "
-                >
+                <button className="flex flex-row py-2 items-center text-black dark:text-white ">
                   <span className="material-symbols-outlined">image</span>
                   Upload Picture
                 </button>
@@ -92,21 +91,23 @@ const Feed = ({ user, posts }) => {
                 />
               </div>
               <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-cyan-800 rounded-lg mt-2 dark:border-neutral-700  w-1/2 items-center">
-              <button
-                type="submit"
-                className="flex flex-row gap-2 items-center  text-black dark:text-white"
+                <button
+                  type="submit"
+                  className="flex flex-row gap-2 items-center  text-black dark:text-white"
                 >
-                <span className="material-symbols-outlined">check_circle</span>
-                Submit
-              </button>
-                </div>
+                  <span className="material-symbols-outlined">
+                    check_circle
+                  </span>
+                  Submit
+                </button>
+              </div>
             </div>
           </form>
         </div>
       </div>
-      <div id="Post" className="mb-52">
+      <div id="Post" className="mb-10">
         {posts.map((pdata) => {
-          return <Post pdata={pdata} />;
+          return <Post pdata={pdata} user={user} key={pdata._id} />;
         })}
       </div>
     </div>

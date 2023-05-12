@@ -1,30 +1,39 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
-import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import getTimeElapsed from "./function/getTimeElapsed";
 
-const Post = ({ pdata }) => {
-  const { data: session } = useSession();
-  console.log(session);
-  const [show, setShow] = useState(true);
-  const [postLiked, setPostLiked] = useState(false);
+const Post = ({ pdata, user }) => {
   const router = useRouter();
+
+  const [show, setShow] = useState(false);
+  const [postLiked, setPostLiked] = useState(pdata.likeBy.includes(user._id));
+  const [likeCount, setLikeCount] = useState(pdata.likeBy.length);
+
   const timeElapsed = new Date().getTime() - new Date(pdata.createdAt);
 
   const handleLike = async () => {
+    if (postLiked) {
+      await axios.post(`/api/user/feedPost/${pdata._id}`, {
+        userId: user._id,
+        liked: false,
+      });
+
+      setLikeCount(likeCount - 1);
+    } else {
+      await axios.post(`/api/user/feedPost/${pdata._id}`, {
+        userId: user._id,
+        liked: true,
+      });
+
+      setLikeCount(likeCount + 1);
+    }
     setPostLiked(!postLiked);
-    await axios.post(`/api/user/feedPost/${pdata._id}`, {
-      userId: session.user.id,
-      liked: postLiked,
-    });
-    console.log("hello");
   };
 
   const refreshData = () => {
@@ -34,8 +43,8 @@ const Post = ({ pdata }) => {
   const onSubmit = async (values, error) => {
     const { content } = values;
     const res = await axios.put(`/api/user/comment/${pdata._id}`, {
-      name: session?.user.name,
-      profile: session?.user.profile,
+      name: user.fullname,
+      profile: user.profile,
       content,
     });
 
@@ -74,7 +83,7 @@ const Post = ({ pdata }) => {
           </div>
           <Link href={`/feed/${pdata._id}`}>
             <button className="text-black dark:text-white">
-              <span class="material-symbols-outlined">open_in_new</span>
+              <span className="material-symbols-outlined">open_in_new</span>
             </button>
           </Link>
         </div>
@@ -104,7 +113,7 @@ const Post = ({ pdata }) => {
                 display: "inline-block",
               }}
             >
-              {pdata.likeBy.length}
+              {likeCount}
             </div>
           </div>
 
@@ -113,12 +122,12 @@ const Post = ({ pdata }) => {
             onClick={() => setShow(!show)}
             className="rounded-lg cursor-pointer flex items-center space-x-1 hover:bg-neutral-300 dark:hover:bg-neutral-500 dark:hover:text-white justify-center p-2 px-3"
           >
-            <span class="material-symbols-outlined">chat</span>
+            <span className="material-symbols-outlined">chat</span>
             <p className="text-xs sm:text-base ">Comment</p>
           </button>
 
           <div className="rounded-lg cursor-pointer flex items-center space-x-1 hover:bg-neutral-300 dark:hover:bg-neutral-500 dark:hover:text-white justify-center p-2 px-3">
-            <span class="material-symbols-outlined">share</span>
+            <span className="material-symbols-outlined">share</span>
             <p className="text-xs sm:text-base">Share</p>
           </div>
         </div>
@@ -127,7 +136,7 @@ const Post = ({ pdata }) => {
             id="CommentSection"
             className=" flex mx-4 space-x-4 p-4 items-center border-t-[1px] border-neutral-400 dark:border-neutral-600"
           >
-            <img className="rounded-full w-8 h-8" src={session?.user.profile} />
+            <img className="rounded-full w-8 h-8" src={user.profile} />
             <form
               action=""
               className="flex flex-1 "
@@ -140,7 +149,7 @@ const Post = ({ pdata }) => {
                 {...formik.getFieldProps("content")}
               />
               <button type="submit" className="ml-4">
-                <span class="material-symbols-outlined">send</span>
+                <span className="material-symbols-outlined">send</span>
               </button>
             </form>
           </div>

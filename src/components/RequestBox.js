@@ -48,10 +48,6 @@ const RequestBox = ({ post, doctor }) => {
               <span className="uppercase text-sm">High</span>
             </span>
           )}
-          {/* <span className="text-sm flex flex-row pr-5 w-full justify-end">
-            <span className="mr-2">Severity - </span>
-            <span className="uppercase text-sm">{post.severity}</span>
-          </span> */}
         </div>
         <div className="flex p-3 py-0 gap-2 w-full flex-col ">
           <p className="font-sans text-sm text-justify">{post.description}</p>
