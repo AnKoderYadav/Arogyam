@@ -91,7 +91,7 @@ const EmailBox = ({ consultation, doctor }) => {
             type="text"
             name="timings"
             defaultValue=""
-            placeholder="patient email"
+            placeholder="DD/MM/YYYY Timings"
           />
         </div>
         <div className="flex flex-row  justify-center">

@@ -94,7 +94,7 @@ const Consult = ({ doctor, consultations }) => {
 
               return (
                 <>
-                  <div className="w-[25rem] h-[25rem] flex justify-between items-center bg-lightMode-component dark:bg-darkMode-component shadow-md flex-col rounded-lg">
+                  <div className="w-[25rem] h-fit flex justify-between items-center bg-lightMode-component dark:bg-darkMode-component shadow-md flex-col rounded-lg">
                     <div className="w-full h-[21rem] flex flex-col justify-between gap-2">
                       <div className="w-full h-fit flex bg-neutral-300 dark:bg-neutral-800 py-2 rounded-t-lg px-4 content-center items-center">
                         <div className="w-full content-center  items-center flex flex-row">
