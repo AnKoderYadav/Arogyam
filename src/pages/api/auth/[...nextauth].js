@@ -25,7 +25,7 @@ export const authOptions = {
           delete user.password;
           return Promise.resolve(user);
         } else {
-          return res.status(400).json({ msg: "Invalid Credentials" });
+          throw new Error("Invalid Credentials");
         }
       },
     }),

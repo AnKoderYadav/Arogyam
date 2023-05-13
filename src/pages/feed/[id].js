@@ -1,10 +1,10 @@
 import Post from "@/components/Post";
 import MainLayout from "@/layouts/MainLayout";
 import React from "react";
-import Image from "next/image";
 import { getSession } from "next-auth/react";
 import dbConnect from "@/dbconnect";
 import FeedPosts from "@/models/feedModel";
+import Users from "@/models/userModel";
 import getTimeElapsed from "@/components/function/getTimeElapsed";
 
 export async function getServerSideProps({ req, params }) {
@@ -20,22 +20,25 @@ export async function getServerSideProps({ req, params }) {
 
   dbConnect().catch((error) => console.log(error));
 
+  let res = await Users.findById(session.user.id);
+  const user = JSON.parse(JSON.stringify(res));
+
   //all posts by current user
-  const res = await FeedPosts.findById(params.id).populate("userId");
+  res = await FeedPosts.findById(params.id).populate("userId");
 
   const post = JSON.parse(JSON.stringify(res));
 
   return {
-    props: { post },
+    props: { post, user },
   };
 }
 
-const PostPage = ({ post }) => {
+const PostPage = ({ post, user }) => {
   return (
     <MainLayout>
       <div className=" bg-lightMode-background justify-center flex dark:bg-darkMode-background md:flex-row lg:flex-row overflow-scroll scrollbar-hide w-full h-full flex-col">
         <div className="max-w-2xl w-full flex flex-col p-4 md:p-0 lg:p-0">
-          <Post pdata={post} />
+          <Post pdata={post} user={user} />
         </div>
         <div className="p-5 w-full md:w-[30%] lg:[30%] h-2/3 bg-lightMode-component overflow-scroll scrollbar-hide dark:bg-darkMode-component mt-5 rounded-lg shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt mx-5 ">
           <h1 className="font-semibold text-md mx-8 md:mx-0 lg:mx-0">

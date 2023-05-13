@@ -78,8 +78,12 @@ const Consult = ({ doctor, consultations }) => {
                 new Date().getTime() - new Date(consultation.postId.createdAt);
 
               const handleRevoke = async () => {
-                await axios.delete(
-                  `/api/user/doctor/consultation/${consultation._id}`
+                await axios.post(
+                  `/api/user/doctor/consultation/${consultation._id}`,
+                  {
+                    doctorId: consultation.doctorRefId,
+                    postId: consultation.postId._id,
+                  }
                 );
                 refreshData();
               };
@@ -128,7 +132,7 @@ const Consult = ({ doctor, consultations }) => {
                               <FcLowPriority className="md:text-xl mr-2" />
                               <span className="uppercase text-sm">low</span>
                             </span>
-                          ) : post.severity === "Medium" ? (
+                          ) : consultation.postId.severity === "Medium" ? (
                             <span className="text-sm flex flex-row pr-5 w-full justify-center">
                               <span className="font-semibold mr-2">
                                 Severity -{" "}
@@ -161,7 +165,7 @@ const Consult = ({ doctor, consultations }) => {
                         <span className="text-md w-full flex flex-row justify-evenly font-bold tracking-tight leading-tight p-2">
                           {consultation.isAccepted ? (
                             <div className="bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-500 flex hover:text-white text-neutral-800 dark:text-neutral-200 px-2 py-2 rounded-sm">
-                              <span class="material-symbols-outlined">
+                              <span className="material-symbols-outlined">
                                 mail
                               </span>
                               <p
@@ -173,7 +177,7 @@ const Consult = ({ doctor, consultations }) => {
                             </div>
                           ) : (
                             <div className="bg-neutral-300 dark:bg-neutral-700 flex text-neutral-800 hover:bg-red-500/50 hover:border-0 dark:text-neutral-200 px-2 py-2 rounded-sm">
-                              <span class="material-symbols-outlined">
+                              <span className="material-symbols-outlined">
                                 do_not_disturb_on
                               </span>
                               <p
@@ -188,7 +192,11 @@ const Consult = ({ doctor, consultations }) => {
                       </div>
                     </div>
                     {openId === consultation._id && (
-                      <EmailBox doctor={doctor} consultation={consultation} />
+                      <EmailBox
+                        doctor={doctor}
+                        consultation={consultation}
+                        key={1}
+                      />
                     )}
                   </div>
                 </>

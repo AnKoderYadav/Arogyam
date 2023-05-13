@@ -7,7 +7,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
 import "react-toastify/dist/ReactToastify.css";
-import { useSession } from "next-auth/react";
 
 const Feed = ({ user, posts }) => {
   const [image, setImage] = useState(null);

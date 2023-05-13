@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         $pull: { offers: doctorId },
       });
       const data = await Consultations.findByIdAndRemove(req.query.cid);
-      return res.json({ data, resp, msg: "Deleted Successfully" });
+      return res.status(200).json({ data, resp, msg: "Deleted Successfully" });
     } catch (error) {
       console.log(error);
     }

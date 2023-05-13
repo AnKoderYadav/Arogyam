@@ -90,7 +90,7 @@ const EmailBox = ({ consultation, doctor }) => {
             id="grid-to-email"
             type="text"
             name="timings"
-            defaultValue={consultation.postId.patientId.email}
+            defaultValue=""
             placeholder="patient email"
           />
         </div>

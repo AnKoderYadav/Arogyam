@@ -9,8 +9,15 @@ import {
 } from "react-icons/fc";
 import ConsultBox from "./ConsultBox";
 import getTimeElapsed from "./function/getTimeElapsed";
+import { useRouter } from "next/router";
 const RequestBox = ({ post, doctor }) => {
   const [offer, setOffer] = useState(false);
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
   const timeElapsed = new Date().getTime() - new Date(post.createdAt);
   return (
     <>
@@ -85,7 +92,14 @@ const RequestBox = ({ post, doctor }) => {
             </span>
           </div>
         </div>
-        {offer && <ConsultBox post={post} doctor={doctor} />}
+        {offer && (
+          <ConsultBox
+            post={post}
+            doctor={doctor}
+            setOffer={setOffer}
+            refreshData={refreshData}
+          />
+        )}
       </div>
     </>
   );

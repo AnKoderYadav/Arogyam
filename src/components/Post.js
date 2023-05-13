@@ -48,9 +48,11 @@ const Post = ({ pdata, user }) => {
       content,
     });
 
+    setShow(false);
+
     if (res.status === 200) {
       toast.success(res.data.msg, toastOptions);
-      setTimeout(refreshData, 4000);
+      refreshData();
     } else {
       toast.error(res.data.msg, toastOptions);
     }
