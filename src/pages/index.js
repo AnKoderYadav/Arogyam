@@ -148,6 +148,7 @@ const Home = ({ user, posts, consultations }) => {
                       <OfferBox
                         consultation={consultation}
                         key={consultation._id}
+                        hide={false}
                       />
                     );
                   })}

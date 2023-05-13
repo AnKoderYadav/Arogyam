@@ -1,37 +1,7 @@
 import React from "react";
-import axios from "axios";
-import { loadStripe } from "@stripe/stripe-js";
+import Link from "next/link";
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const publishableKey = `${process.env.STRIPE_PUBLISHABLE_KEY}`;
-loadStripe(publishableKey);
-
-const OfferBox = ({ consultation }) => {
-  // console.log(consultation);
-  React.useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      console.log("Order placed! You will receive an email confirmation.");
-      async function accept() {
-        try {
-          await axios.put(`/api/user/doctor/consultation/${consultation._id}`, {
-            isAccepted: true,
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      accept();
-    }
-
-    if (query.get("canceled")) {
-      console.log(
-        "Order canceled -- continue to shop around and checkout when you’re ready."
-      );
-    }
-  }, []);
+const OfferBox = ({ consultation, hide }) => {
   return (
     <>
       <div className="flex justify-between rounded-lg items-center flex-col w-[325px]  bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt shadow-md m-4 p-2 gap-2">
@@ -79,27 +49,33 @@ const OfferBox = ({ consultation }) => {
           <span className="text-center  text-green-500 text-xl">
             ₹{consultation.fee}
           </span>
-          <div className="ml-2 flex items-center h-[3px] justify-center bg-white w-[3px] rounded-full"></div>
-          <form
-            action={`/api/checkout_sessions/${consultation.priceId}`}
-            method="POST"
-            className="w-fit text-sm flex justify-center  items-center hover:text-gray-500 cursor-pointer"
-          >
-            <span className="pl-2">
-              {" "}
-              {!consultation.isAccepted ? (
-                <button className=" w-full p-[2px] px-3 bg-yellow-600 rounded-sm text-white ">
-                  <div className="flex items-center font-semibold">Accept</div>
-                </button>
-              ) : (
-                <div className=" w-full p-[2px] px-3 bg-green-600 rounded-sm text-white">
-                  <div className="flex items-center font-semibold">
-                    In Queue
-                  </div>
-                </div>
-              )}
-            </span>
-          </form>
+          {hide ? (
+            <></>
+          ) : (
+            <>
+              <div className="ml-2 flex items-center h-[3px] justify-center bg-white w-[3px] rounded-full"></div>
+              <div className="w-fit text-sm flex justify-center  items-center hover:text-gray-500 cursor-pointer">
+                <span className="pl-2">
+                  {" "}
+                  {!consultation.isAccepted ? (
+                    <Link href={`/checkout/${consultation.priceId}`}>
+                      <button className=" w-full p-[2px] px-3 bg-yellow-600 rounded-sm text-white ">
+                        <div className="flex items-center font-semibold">
+                          Accept
+                        </div>
+                      </button>
+                    </Link>
+                  ) : (
+                    <div className=" w-full p-[2px] px-3 bg-green-600 rounded-sm text-white">
+                      <div className="flex items-center font-semibold">
+                        In Progress
+                      </div>
+                    </div>
+                  )}
+                </span>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
