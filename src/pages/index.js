@@ -94,7 +94,7 @@ const Home = ({ user, posts, consultations }) => {
       patientId: user._id,
       description,
       severity,
-      image: `https://storage.googleapis.com/arogyam-storage-bucket/${newFilename}`,
+      image: `https://storage.googleapis.com/arogyam-bucket/${newFilename}`,
     });
 
     if (res.status === 200) {
