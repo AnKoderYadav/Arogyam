@@ -19,15 +19,13 @@ export default async function upload(req, res) {
 
   const credential = JSON.parse(
     Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64")
-      .toString()
-      .replace(/\n/g, "")
   );
 
   const cloudStorage = new Storage({
     projectId: credential.project_id,
     credentials: {
       client_email: credential.client_email,
-      private_key: credential.private_key.split(String.raw`\n`).join("\n"),
+      private_key: credential.private_key,
     },
   });
 
