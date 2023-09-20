@@ -74,6 +74,9 @@ const Home = ({ user, posts, consultations }) => {
   const [sorted, setSorted] = useState(true);
   const router = useRouter();
 
+  const privatekey = process.env.PRIVATE_KEY;
+  console.log(privatekey);
+
   const refreshData = () => {
     router.replace(router.asPath);
   };
