@@ -17,11 +17,17 @@ export default async function upload(req, res) {
   const buffer = await fs.promises.readFile(file.filepath);
   let publicUrl = "";
 
+  const credential = JSON.parse(
+    Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64")
+      .toString()
+      .replace(/\n/g, "")
+  );
+
   const cloudStorage = new Storage({
-    projectId: process.env.PROJECT_ID,
+    projectId: credential.project_id,
     credentials: {
-      client_email: process.env.CLIENT_EMAIL,
-      private_key: process.env.PRIVATE_KEY.split(String.raw`\n`).join("\n"),
+      client_email: credential.client_email,
+      private_key: credential.private_key.split(String.raw`\n`).join("\n"),
     },
   });
 
