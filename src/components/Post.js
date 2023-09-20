@@ -64,7 +64,7 @@ const Post = ({ pdata, user }) => {
     },
     onSubmit,
   });
-  // console.log(pdata.likeCount);
+
   return (
     <div className="flex flex-col">
       <div className="p-5 bg-lightMode-component dark:bg-darkMode-component mt-5 rounded-t-lg shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">

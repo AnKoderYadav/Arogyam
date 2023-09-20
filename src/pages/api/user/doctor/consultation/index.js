@@ -21,7 +21,6 @@ export default async function handler(req, res) {
     });
 
     await Posts.findByIdAndUpdate(postId, { $push: { offers: doctorRefId } });
-    // console.log(price);
 
     const consultation = await Consultations.create({
       postId,

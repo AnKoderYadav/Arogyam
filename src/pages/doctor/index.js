@@ -59,7 +59,6 @@ const Home = ({ doctor, posts, consultations }) => {
   const requestCount = consultations.filter(
     (consultation) => consultation.isAccepted === false
   ).length;
-  console.log(consultCount, requestCount);
 
   return (
     <>

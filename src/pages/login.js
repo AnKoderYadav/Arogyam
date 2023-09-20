@@ -30,7 +30,6 @@ const Login = () => {
         password: values.password,
       });
       const session = await getSession();
-      console.log(session);
 
       if (res.ok) router.push(session.user.isDoctor ? "/doctor" : "/");
       else toast.error(res.error, toastOptions);
