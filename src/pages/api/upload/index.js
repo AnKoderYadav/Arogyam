@@ -15,7 +15,6 @@ export default async function upload(req, res) {
 
   const file = fdata.files.file;
   const buffer = await fs.promises.readFile(file.filepath);
-  let publicUrl = "";
 
   const credential = JSON.parse(
     Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64")
@@ -40,16 +39,14 @@ export default async function upload(req, res) {
     const blob = bucket.file(fdata.fields.newFilename);
     const blobStream = blob.createWriteStream();
     blobStream.on("error", (err) => {
-      console.log(err);
+      res.status(200).json({ Error: err });
     });
 
     blobStream.on("finish", () => {
-      // The public URL can be used to directly access the file via HTTP.
-      publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+      const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+      res.status(200).json({ imageurl: publicUrl });
     });
     blobStream.end(buffer);
-
-    res.status(200).json({ imageurl: publicUrl, buffer });
   } else {
     res.status(500).json({ msg: "Only Post Request is Allowed" });
   }
