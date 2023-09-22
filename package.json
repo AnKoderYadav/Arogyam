@@ -1,8 +1,11 @@
 {
+  "homepage": "https://Ankur-Ydv.github.io/Arogyam",
   "name": "arogyam",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -19,6 +22,7 @@
     "formidable": "^2.1.1",
     "formik": "^2.2.9",
     "fs": "^0.0.1-security",
+    "gh-pages": "^6.0.0",
     "mongoose": "^7.1.0",
     "next": "13.3.2",
     "next-auth": "^4.22.1",
