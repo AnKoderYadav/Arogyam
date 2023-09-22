@@ -49,7 +49,7 @@ export default async function upload(req, res) {
     });
     blobStream.end(buffer);
 
-    res.status(200).json({ imageurl: publicUrl, bucket, file });
+    res.status(200).json({ imageurl: publicUrl, buffer });
   } else {
     res.status(500).json({ msg: "Only Post Request is Allowed" });
   }
