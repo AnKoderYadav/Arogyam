@@ -33,7 +33,7 @@ const Feed = ({ user, posts }) => {
       description,
       image:
         image !== ""
-          ? `https://storage.googleapis.com/arogyam-storage-bucket/${newFilename}`
+          ? `https://storage.googleapis.com/arogyam-bucket/${newFilename}`
           : "",
     });
 
