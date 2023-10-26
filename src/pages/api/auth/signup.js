@@ -10,8 +10,7 @@ export default async function handler(req, res) {
     const { fullname, email, password, isDoctor } = req.body;
 
     const emailCheck = await Users.findOne({ email });
-    if (emailCheck)
-      return res.json({ msg: "Email already used", status: false });
+    if (emailCheck) return res.status(201).json({ msg: "Email already used" });
 
     const hashedPassword = await hash(password, 10);
     const user = await Users.create({
@@ -20,10 +19,6 @@ export default async function handler(req, res) {
       password: hashedPassword,
       isDoctor,
     });
-
-    if (!user) {
-      return res.status(400).json({ msg: "User Already Registered" });
-    }
 
     if (isDoctor) {
       const doctor = await Doctors.create({

@@ -38,12 +38,11 @@ const Register = () => {
         isDoctor,
       });
 
-      if (res.status === 400) {
-        toast.error(res.data.msg, toastOptions);
-      }
-
       if (res.status === 200) {
         router.push("/login");
+      } else {
+        toast.error("User Already Registered", toastOptions);
+        setIsLoading(false);
       }
     }
   };

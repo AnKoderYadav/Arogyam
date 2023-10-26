@@ -8,7 +8,7 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
-      async authorize(credentials, req) {
+      async authorize(credentials, req, res) {
         dbConnect().catch((error) => {
           error: "Connection Failed...!";
         });
@@ -25,7 +25,7 @@ export const authOptions = {
           delete user.password;
           return Promise.resolve(user);
         } else {
-          throw new Error("Invalid Credentials");
+          return null;
         }
       },
     }),

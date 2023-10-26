@@ -35,7 +35,10 @@ const Login = () => {
       const session = await getSession();
 
       if (res.ok) router.push(session.user.isDoctor ? "/doctor" : "/");
-      else toast.error(res.error, toastOptions);
+      else {
+        toast.error("Invalid Credentials", toastOptions);
+        setIsLoading(false);
+      }
     }
   };
 
