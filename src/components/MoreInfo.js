@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { AiFillLinkedin, AiOutlineTwitter } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
+import Loader from "./Loader";
 
 const MoreInfo = ({ doctor }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleValidation = () => {
     const { experience, qualification, linkedin, twitter } = formik.values;
     if (experience + qualification + linkedin + twitter === "") {
@@ -14,6 +17,7 @@ const MoreInfo = ({ doctor }) => {
   };
 
   const onSubmit = async (values, err) => {
+    setIsLoading(true);
     if (handleValidation) {
       const { qualification, experience, linkedin, twitter, timeSlot } = values;
 
@@ -28,6 +32,7 @@ const MoreInfo = ({ doctor }) => {
       if (res.status === 200) toast.success(res.data.msg, toastOptions);
       else toast.error(res.data.msg, toastOptions);
     }
+    setIsLoading(false);
   };
 
   const formik = useFormik({
@@ -133,7 +138,7 @@ const MoreInfo = ({ doctor }) => {
           type="submit"
           className="text-sm p-2 w-full font-medium bg-lightMode-btn dark:bg-cyan-700 rounded-md m-5 text-white"
         >
-          Update Profile
+          {!isLoading ? "Update Profile" : <Loader />}
         </button>
       </div>
     </form>

@@ -10,12 +10,12 @@ import getTimeElapsed from "./function/getTimeElapsed";
 
 const Post = ({ pdata, user }) => {
   const router = useRouter();
-
+  const [timeElapsed, setTimeElapsed] = useState(
+    new Date().getTime() - new Date(pdata.createdAt)
+  );
   const [show, setShow] = useState(false);
   const [postLiked, setPostLiked] = useState(pdata.likeBy.includes(user._id));
   const [likeCount, setLikeCount] = useState(pdata.likeBy.length);
-
-  const timeElapsed = new Date().getTime() - new Date(pdata.createdAt);
 
   const handleLike = async () => {
     if (postLiked) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
@@ -6,8 +6,10 @@ import { getSession, signIn } from "next-auth/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastOptions } from "@/lib/lib";
+import Loader from "@/components/Loader";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const validateForm = () => {
@@ -23,6 +25,7 @@ const Login = () => {
   };
 
   const onSubmit = async (values, error) => {
+    setIsLoading(true);
     if (validateForm()) {
       const res = await signIn("credentials", {
         redirect: false,
@@ -116,7 +119,7 @@ const Login = () => {
                   type="submit"
                   className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4  focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-cyan-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
-                  Sign in
+                  {isLoading ? <Loader /> : "Sign In"}
                 </button>
 
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">

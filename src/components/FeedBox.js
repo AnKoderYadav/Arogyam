@@ -7,39 +7,45 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "./Loader";
 
 const Feed = ({ user, posts }) => {
   const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const refreshData = () => {
     router.replace(router.asPath);
+    setIsLoading(false);
   };
 
   const onSubmit = async (values, error) => {
+    setIsLoading(true);
     const body = new FormData();
     body.append("file", image);
-    const newFilename = `${Date.now()}_${image.name}`;
-    body.append("newFilename", newFilename);
+    let newFilename;
+    if (image) {
+      newFilename = `${Date.now()}_${image.name}`;
+      body.append("newFilename", newFilename);
 
-    await fetch("/api/upload", {
-      method: "POST",
-      body,
-    });
+      await fetch("/api/upload", {
+        method: "POST",
+        body,
+      });
+    }
 
     const { description } = values;
     const res = await axios.post("/api/user/feedPost", {
       userId: user._id,
       description,
-      image:
-        image !== ""
-          ? `https://storage.googleapis.com/arogyam-bucket/${newFilename}`
-          : "",
+      image: image
+        ? `https://storage.googleapis.com/arogyam-bucket/${newFilename}`
+        : "",
     });
 
     if (res.status === 200) {
       toast.success(res.data.msg, toastOptions);
-      setTimeout(refreshData, 4000);
+      refreshData();
     } else {
       toast.error(res.data.msg, toastOptions);
     }
@@ -76,14 +82,14 @@ const Feed = ({ user, posts }) => {
               {...formik.getFieldProps("description")}
             />
             <div className="flex border-t-[1px] mt-2 border-neutral-300 dark:border-neutral-500 gap-2">
-              <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-cyan-800 rounded-lg mt-2 dark:border-neutral-700  w-1/2">
-                <button className="flex flex-row py-2 items-center text-black dark:text-white ">
+              <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-cyan-800 rounded-lg mt-2 dark:border-neutral-700 w-1/2">
+                <button className="w-full flex flex-row py-2 justify-center text-black dark:text-white">
                   <span className="material-symbols-outlined">image</span>
                   Upload Picture
                 </button>
                 <input
                   type="file"
-                  className="w-full h-10 opacity-0 left-0 absolute  hover:bg-gray-100 cursor-pointer"
+                  className="w-full h-10 opacity-0 absolute hover:bg-gray-100 cursor-pointer"
                   onChange={(e) => {
                     setImage(e.target.files[0]);
                   }}
@@ -92,12 +98,18 @@ const Feed = ({ user, posts }) => {
               <div className="flex relative justify-around bg-lightMode-componentHead dark:bg-cyan-800 rounded-lg mt-2 dark:border-neutral-700  w-1/2 items-center">
                 <button
                   type="submit"
-                  className="flex flex-row gap-2 items-center  text-black dark:text-white"
+                  className="w-full flex flex-row gap-2 items-center text-black dark:text-white justify-center"
                 >
-                  <span className="material-symbols-outlined">
-                    check_circle
-                  </span>
-                  Submit
+                  {!isLoading ? (
+                    <>
+                      <span className="material-symbols-outlined">
+                        check_circle
+                      </span>
+                      Submit{" "}
+                    </>
+                  ) : (
+                    <Loader />
+                  )}
                 </button>
               </div>
             </div>

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Users from "@/models/userModel";
 import dbConnect from "@/dbconnect";
 import { toastOptions } from "@/lib/lib";
+import Loader from "@/components/Loader";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -33,6 +34,7 @@ export async function getServerSideProps({ req }) {
 
 const Profile = ({ user }) => {
   const [image, setImage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [createObjectURL, setCreateObjectURL] = useState(user.profile);
 
   const uploadToClient = (event) => {
@@ -45,6 +47,7 @@ const Profile = ({ user }) => {
   };
 
   const handleValidation = () => {
+    setIsLoading(true);
     const { fullname, contact } = formik.values;
     if (fullname.length < 3) {
       toast.info("Invalid Full Name!", toastOptions);
@@ -78,12 +81,13 @@ const Profile = ({ user }) => {
         contact,
         profile:
           image !== ""
-            ? `https://storage.googleapis.com/arogyam-storage-bucket/${newFilename}`
+            ? `https://storage.googleapis.com/arogyam-bucket/${newFilename}`
             : user.profile,
       });
 
       if (res.status === 200) toast.info(res.data.msg, toastOptions);
       else toast.error(res.data.msg, toastOptions);
+      setIsLoading(false);
     }
   };
 
@@ -185,19 +189,7 @@ const Profile = ({ user }) => {
                   />
                 </div>
               </div>
-              {/* <div className="flex flex-wrap -mx-3 mb-6">
-                <div className="w-full px-3">
-                  <label className="block uppercase tracking-wide text-xs font-semibold mb-2">
-                    Password
-                  </label>
-                  <input
-                    className="appearance-none block w-full bg-neutral-200 mb-3 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-                    type="password"
-                    placeholder="**************"
-                    {...formik.getFieldProps("password")}
-                  />
-                </div>
-              </div> */}
+
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3 mb-6 md:mb-0">
                   <label
@@ -230,7 +222,7 @@ const Profile = ({ user }) => {
                   type="submit"
                   className="text-sm p-2 w-full font-medium bg-lightMode-btn dark:bg-darkMode-btn rounded-md m-5 text-white"
                 >
-                  Update Profile
+                  {!isLoading ? "Update Profile" : <Loader />}
                 </button>
               </div>
             </form>

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
+import Loader from "./Loader";
 
 const BasicInfo = ({ doctor, image }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleValidation = () => {
     const { fullname, contact } = formik.values;
     if (fullname.length < 3) {
@@ -18,6 +21,7 @@ const BasicInfo = ({ doctor, image }) => {
   };
 
   const onSubmit = async (values, err) => {
+    setIsLoading(true);
     if (handleValidation()) {
       const newFilename = `${Date.now()}_${image.name}`;
       if (image !== "") {
@@ -41,12 +45,13 @@ const BasicInfo = ({ doctor, image }) => {
         gender,
         profile:
           image !== ""
-            ? `https://storage.googleapis.com/arogyam-storage-bucket/${newFilename}`
-            : user.profile,
+            ? `https://storage.googleapis.com/arogyam-bucket/${newFilename}`
+            : doctor.profile,
       });
 
       if (res.status === 200) toast.info(res.data.msg, toastOptions);
       else toast.error(res.data.msg, toastOptions);
+      setIsLoading(false);
     }
   };
 
@@ -165,7 +170,7 @@ const BasicInfo = ({ doctor, image }) => {
           type="submit"
           className="text-sm p-2 w-full font-medium bg-lightMode-btn dark:bg-cyan-700 rounded-md m-5 text-white"
         >
-          Update Profile
+          {!isLoading ? "Update Profile" : <Loader />}
         </button>
       </div>
     </form>

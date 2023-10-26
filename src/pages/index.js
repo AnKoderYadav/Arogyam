@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { toastOptions } from "@/lib/lib";
 import Doctors from "@/models/doctorModel";
+import Loader from "@/components/Loader";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -72,34 +73,43 @@ export async function getServerSideProps({ req }) {
 const Home = ({ user, posts, consultations }) => {
   const [image, setImage] = useState(null);
   const [sorted, setSorted] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const refreshData = () => {
     router.replace(router.asPath);
+    if (isLoading) setTimeout(() => setIsLoading(false), 2000);
+    if (image) setImage(null);
   };
 
   const onSubmit = async (values, error) => {
+    setIsLoading(true);
     const body = new FormData();
     body.append("file", image);
-    const newFilename = `${Date.now()}_${image.name}`;
-    body.append("newFilename", newFilename);
+    let newFilename;
+    if (image) {
+      newFilename = `${Date.now()}_${image.name}`;
+      body.append("newFilename", newFilename);
 
-    await fetch("/api/upload", {
-      method: "POST",
-      body,
-    });
+      await fetch("/api/upload", {
+        method: "POST",
+        body,
+      });
+    }
 
     const { description, severity } = values;
     const res = await axios.post("/api/user/post", {
       patientId: user._id,
       description,
       severity,
-      image: `https://storage.googleapis.com/arogyam-bucket/${newFilename}`,
+      image: image
+        ? `https://storage.googleapis.com/arogyam-bucket/${newFilename}`
+        : "",
     });
 
     if (res.status === 200) {
       toast.success(res.data.msg, toastOptions);
-      setTimeout(refreshData, 4000);
+      refreshData();
     } else {
       toast.error(res.data.msg, toastOptions);
     }
@@ -112,6 +122,7 @@ const Home = ({ user, posts, consultations }) => {
     },
     onSubmit,
   });
+
   return (
     <>
       <MainLayout>
@@ -121,6 +132,7 @@ const Home = ({ user, posts, consultations }) => {
               <>
                 <CurrentPost
                   post={posts[0]}
+                  canDelete={consultations.length ? false : true}
                   refreshData={refreshData}
                   user={user}
                 />
@@ -212,7 +224,7 @@ const Home = ({ user, posts, consultations }) => {
                       type="submit"
                       disabled={!formik.values.description.trim()}
                     >
-                      Post
+                      {isLoading ? <Loader /> : "Post"}
                     </button>
                   </div>
                 </form>

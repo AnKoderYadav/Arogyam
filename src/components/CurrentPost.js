@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import getTimeElapsed from "./function/getTimeElapsed";
+import Loader from "./Loader";
 
-const CurrentPost = ({ user, post, refreshData }) => {
-  const timeElapsed = new Date().getTime() - new Date(post.createdAt);
+const CurrentPost = ({ user, post, refreshData, canDelete }) => {
+  const [timeElapsed, setTimeElapsed] = useState(
+    new Date().getTime() - new Date(post.createdAt)
+  );
+
   const handleDelete = async () => {
-    await axios.delete(`/api/user/post/delete/${post._id}`);
     refreshData();
+    await axios.delete(`/api/user/post/delete/${post._id}`);
   };
 
   const handleSolved = async () => {
-    await axios.post(`/api/user/post/${post._id}`, { solved: true });
     refreshData();
+    await axios.post(`/api/user/post/${post._id}`, { solved: true });
   };
 
   return (
     <>
-      <div className="w-full h-[50%] flex content-center items-center flex-col bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt shadow-xl p-4 gap-4 rounded-lg min-w-1/2">
+      <div className="w-full flex content-center items-center flex-col bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt shadow-xl p-4 gap-4 rounded-lg min-w-1/2">
         <div className="flex content-center items-center w-full">
           <div className="w-full flex flex-row content-center items-center">
             <img
@@ -34,20 +38,24 @@ const CurrentPost = ({ user, post, refreshData }) => {
               </span>
             </div>
           </div>
-          <span
-            className="text-center text-3xl hover:text-red-600 cursor-pointer"
-            onClick={handleDelete}
-          >
-            <MdDelete />
-          </span>
+          {canDelete && (
+            <span
+              className="text-center text-3xl hover:text-red-600 cursor-pointer"
+              onClick={handleDelete}
+            >
+              <MdDelete />
+            </span>
+          )}
         </div>
         <div className="flex flex-col gap-2 w-full ">
           <p className="text-sm text-justify font-sans">{post.description}</p>
-          <img
-            className="w-auto h-[300px] object-contain"
-            src={post.image}
-            alt=""
-          />
+          {post.image !== "" && (
+            <img
+              className="w-auto h-[300px] object-contain"
+              src={post.image}
+              alt=""
+            />
+          )}
         </div>
         <div className="flex items-end w-full justify-end mr-2">
           <button
