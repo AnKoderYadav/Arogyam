@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import getTimeElapsed from "./function/getTimeElapsed";
-import Loader from "./Loader";
+import { MdDelete } from "react-icons/md";
 
-const CurrentPost = ({ user, post, refreshData, canDelete }) => {
+const CurrentQuery = ({ user, post, refreshData, canDelete }) => {
   const [timeElapsed, setTimeElapsed] = useState(
     new Date().getTime() - new Date(post.createdAt)
   );
@@ -21,7 +20,7 @@ const CurrentPost = ({ user, post, refreshData, canDelete }) => {
 
   return (
     <>
-      <div className="w-full flex content-center items-center flex-col bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt shadow-xl p-4 gap-4 rounded-lg min-w-1/2">
+      <section className="w-full flex content-center items-center flex-col bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt shadow-xl p-4 gap-4 rounded-lg min-w-1/2">
         <div className="flex content-center items-center w-full">
           <div className="w-full flex flex-row content-center items-center">
             <img
@@ -65,9 +64,9 @@ const CurrentPost = ({ user, post, refreshData, canDelete }) => {
             Solved
           </button>
         </div>
-      </div>
+      </section>
     </>
   );
 };
 
-export default CurrentPost;
+export default CurrentQuery;

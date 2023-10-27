@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
 
-const OfferBox = ({ consultation, hide }) => {
+const ConsultationOffer = ({ consultation, hide }) => {
   return (
     <>
-      <div className="flex justify-between rounded-lg items-center flex-col w-[325px]  bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt shadow-md m-4 p-2 gap-2">
+      <article className="flex justify-between rounded-lg items-center flex-col w-[325px]  bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component dark:text-darkMode-txt shadow-md m-4 p-2 gap-2">
         <div className="w-full flex content-center items-center p-1">
           <div className="w-full flex content-center items-center flex-col">
             <div className="flex w-full ">
@@ -77,9 +77,9 @@ const OfferBox = ({ consultation, hide }) => {
             </>
           )}
         </div>
-      </div>
+      </article>
     </>
   );
 };
 
-export default OfferBox;
+export default ConsultationOffer;

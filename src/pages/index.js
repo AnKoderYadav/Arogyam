@@ -5,18 +5,18 @@ import dbConnect from "@/dbconnect";
 import Posts from "@/models/postModel";
 import Consultations from "@/models/consultModel";
 import MainLayout from "@/layouts/MainLayout";
-import OfferBox from "@/components/OfferBox";
-import CurrentPost from "@/components/CurrentPost";
+import ConsultationOffer from "@/components/ConsultationOffer";
+import CurrentQuery from "@/components/CurrentQuery";
 import TrendingBox from "@/components/TrendingBox";
+import Doctors from "@/models/doctorModel";
+import Loader from "@/components/Loader";
 import { getSession } from "next-auth/react";
 import { useFormik } from "formik";
 import { BsSortDown, BsSortDownAlt } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { toastOptions } from "@/lib/lib";
-import Doctors from "@/models/doctorModel";
-import Loader from "@/components/Loader";
+import "react-toastify/dist/ReactToastify.css";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -126,11 +126,11 @@ const Home = ({ user, posts, consultations }) => {
   return (
     <>
       <MainLayout>
-        <div className="w-full h-full flex justify-center items-start overflow-x-hidden p-5 gap-1 text-lightMode-txt dark:text-darkMode-txt bg-lightMode-background dark:bg-darkMode-background">
-          <div className=" max-w-3xl w-full flex flex-col gap-5 p-5 pt-0">
+        <main className="w-full h-full flex justify-center items-start overflow-x-hidden p-5 gap-1 text-lightMode-txt dark:text-darkMode-txt bg-lightMode-background dark:bg-darkMode-background">
+          <section className="max-w-3xl w-full flex flex-col gap-5 p-5 pt-0">
             {posts[0] && !posts[0].solved ? (
               <>
-                <CurrentPost
+                <CurrentQuery
                   post={posts[0]}
                   canDelete={consultations.length ? false : true}
                   refreshData={refreshData}
@@ -157,7 +157,7 @@ const Home = ({ user, posts, consultations }) => {
                 <div className="w-full flex flex-row flex-wrap gap-2">
                   {consultations.map((consultation) => {
                     return (
-                      <OfferBox
+                      <ConsultationOffer
                         consultation={consultation}
                         key={consultation._id}
                         hide={false}
@@ -167,7 +167,7 @@ const Home = ({ user, posts, consultations }) => {
                 </div>
               </>
             ) : (
-              <div className="w-full flex items-center flex-col text-lightMode-txt dark:text-darkMode-txt bg-lightMode-component dark:bg-darkMode-component shadow-md p-4 gap-5 rounded-lg">
+              <article className="w-full flex items-center flex-col text-lightMode-txt dark:text-darkMode-txt bg-lightMode-component dark:bg-darkMode-component shadow-md p-4 gap-5 rounded-lg">
                 <div className="flex content-center items-center w-full">
                   <div className="w-full flex flex-row content-center items-center">
                     <img
@@ -228,13 +228,13 @@ const Home = ({ user, posts, consultations }) => {
                     </button>
                   </div>
                 </form>
-              </div>
+              </article>
             )}
-          </div>
-          <div className=" lg:flex md:flex sticky top-0 hidden " id="Trending">
+          </section>
+          <aside className="lg:flex md:flex sticky top-0 hidden" id="Trending">
             <TrendingBox key={1} />
-          </div>
-        </div>
+          </aside>
+        </main>
       </MainLayout>
       <ToastContainer />
     </>

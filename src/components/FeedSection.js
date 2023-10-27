@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import Post from "./Post";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./Loader";
 
-const Feed = ({ user, posts }) => {
+const FeedSection = ({ user, posts }) => {
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -59,12 +58,12 @@ const Feed = ({ user, posts }) => {
   });
 
   return (
-    <div className="text-sm">
-      <div
+    <>
+      <section
         id="inputBox"
-        className="bg-lightMode-component mb-4 dark:bg-darkMode-component dark:text-darkMode-txt p-2 rounded-lg shadow-md text-lightMode-txt font-medium content-center items-center"
+        className="text-sm bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt p-2 rounded-lg shadow-md text-lightMode-txt font-medium content-center items-center"
       >
-        <div className=" flex  space-x-4 p-2 px-4 ">
+        <div className="flex space-x-4 p-2 px-4 ">
           <img
             className="rounded-full w-10 h-10 mt-1 top-0"
             src={user.profile}
@@ -115,14 +114,15 @@ const Feed = ({ user, posts }) => {
             </div>
           </form>
         </div>
-      </div>
-      <div id="Post" className="mb-10">
+      </section>
+
+      <section id="Post" className="pb-5">
         {posts.map((pdata) => {
           return <Post pdata={pdata} user={user} key={pdata._id} />;
         })}
-      </div>
-    </div>
+      </section>
+    </>
   );
 };
 
-export default Feed;
+export default FeedSection;

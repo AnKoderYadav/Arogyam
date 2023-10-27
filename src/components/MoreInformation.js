@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
 import Loader from "./Loader";
 
-const MoreInfo = ({ doctor }) => {
+const MoreInformation = ({ doctor }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleValidation = () => {
@@ -45,6 +45,7 @@ const MoreInfo = ({ doctor }) => {
     },
     onSubmit,
   });
+
   return (
     <form className="w-full max-w-lg " onSubmit={formik.handleSubmit}>
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -144,4 +145,4 @@ const MoreInfo = ({ doctor }) => {
     </form>
   );
 };
-export default MoreInfo;
+export default MoreInformation;

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import MainLayout from "@/layouts/MainLayout";
-import BasicInfo from "@/components/BasicInfo";
-import MoreInfo from "@/components/MoreInfo";
 import dbConnect from "@/dbconnect";
+import Users from "@/models/userModel";
+import MainLayout from "@/layouts/MainLayout";
+import BasicInformation from "@/components/BasicInformation";
+import MoreInformation from "@/components/MoreInformation";
 import { getSession } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Users from "@/models/userModel";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -46,8 +46,9 @@ const DocProfile = ({ doctor }) => {
   return (
     <>
       <MainLayout>
-        <div className="bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row items-start justify-center font-sans h-full text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
-          <div className="flex flex-col lg:w-[15rem] w-[20rem] md:w-[15rem] m-4 mx-0">
+        <main className="bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row items-start justify-center font-sans h-full text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
+          {/* Image Section */}
+          <section className="flex flex-col lg:w-[15rem] w-[20rem] md:w-[15rem] m-4 mx-0">
             <div className=" p-5 mb-0 bg-lightMode-componentHead pl-5  rounded-t-md pb-1 w-auto  dark:bg-neutral-800">
               <h1 className="font-bold text-2xl">
                 Your{" "}
@@ -80,14 +81,17 @@ const DocProfile = ({ doctor }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className="m-4 mb-0 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-[100%] md:h-[95%] lg:h-[95%] overflow-y-scroll scrollbar-hide">
+          {/* Details Section */}
+          <section className="m-4 mb-0 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-[100%] md:h-[95%] lg:h-[95%] overflow-y-scroll scrollbar-hide">
             <div className="p-5 bg-lightMode-componentHead dark:bg-neutral-800 rounded-t-md pb-1">
-              <h1 className="font-bold text-2xl">Edit {" "}
-              <span className="text-cyan-800 dark:text-cyan-600">
-                Profile
-              </span></h1>
+              <h1 className="font-bold text-2xl">
+                Edit{" "}
+                <span className="text-cyan-800 dark:text-cyan-600">
+                  Profile
+                </span>
+              </h1>
               <div className="flex flex-row justify-around items-center mt-2">
                 <button
                   className="w-full h-full active:underline rounded-sm"
@@ -105,11 +109,14 @@ const DocProfile = ({ doctor }) => {
               </div>
             </div>
             <div className="p-8 pb-0 flex justify-center">
-              {info === "Basic" && <BasicInfo doctor={doctor} image={image} />}
-              {info === "More" && <MoreInfo doctor={doctor} />}
+              {info === "Basic" ? (
+                <BasicInformation doctor={doctor} image={image} />
+              ) : (
+                <MoreInformation doctor={doctor} />
+              )}
             </div>
-          </div>
-        </div>
+          </section>
+        </main>
       </MainLayout>
       <ToastContainer />
     </>

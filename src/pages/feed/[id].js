@@ -6,6 +6,7 @@ import dbConnect from "@/dbconnect";
 import FeedPosts from "@/models/feedModel";
 import Users from "@/models/userModel";
 import getTimeElapsed from "@/components/function/getTimeElapsed";
+import { ToastContainer } from "react-toastify";
 
 export async function getServerSideProps({ req, params }) {
   const session = await getSession({ req });
@@ -36,11 +37,14 @@ export async function getServerSideProps({ req, params }) {
 const PostPage = ({ post, user }) => {
   return (
     <MainLayout>
-      <div className=" bg-lightMode-background justify-center flex dark:bg-darkMode-background md:flex-row lg:flex-row overflow-scroll scrollbar-hide w-full h-full flex-col">
-        <div className="max-w-2xl w-full flex flex-col p-4 md:p-0 lg:p-0">
+      <main className=" bg-lightMode-background justify-center flex dark:bg-darkMode-background md:flex-row lg:flex-row overflow-scroll scrollbar-hide w-full h-full flex-col">
+        {/* Post Section */}
+        <section className="max-w-2xl w-full flex flex-col p-4 md:p-0 lg:p-0">
           <Post pdata={post} user={user} />
-        </div>
-        <div className="p-5 w-full md:w-[30%] lg:[30%] h-2/3 bg-lightMode-component overflow-scroll scrollbar-hide dark:bg-darkMode-component mt-5 rounded-lg shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt mx-5 ">
+        </section>
+
+        {/* Comment Section */}
+        <section className="p-5 w-full md:w-[30%] lg:[30%] h-5/6 bg-lightMode-component overflow-scroll scrollbar-hide dark:bg-darkMode-component mt-5 rounded-lg shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt mx-5 ">
           <h1 className="font-semibold text-md mx-8 md:mx-0 lg:mx-0">
             Comments
           </h1>
@@ -65,8 +69,9 @@ const PostPage = ({ post, user }) => {
               </div>
             );
           })}
-        </div>
-      </div>
+        </section>
+      </main>
+      <ToastContainer />
     </MainLayout>
   );
 };

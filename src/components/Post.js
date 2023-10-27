@@ -66,7 +66,7 @@ const Post = ({ pdata, user }) => {
   });
 
   return (
-    <div className="flex flex-col">
+    <article className="flex flex-col">
       <div className="p-5 bg-lightMode-component dark:bg-darkMode-component mt-5 rounded-t-lg shadow-sm flex flex-col text-lightMode-txt dark:text-darkMode-txt">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row ">
@@ -157,7 +157,7 @@ const Post = ({ pdata, user }) => {
           </div>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 

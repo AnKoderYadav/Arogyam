@@ -3,7 +3,7 @@ import axios from "axios";
 import dbConnect from "@/dbconnect";
 import Consultations from "@/models/consultModel";
 import MainLayout from "@/layouts/MainLayout";
-import OfferBox from "@/components/OfferBox";
+import OfferBox from "@/components/ConsultationOffer";
 import { getSession } from "next-auth/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

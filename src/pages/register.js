@@ -4,8 +4,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { toastOptions } from "@/lib/lib";
+import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/Loader";
 
 const Register = () => {

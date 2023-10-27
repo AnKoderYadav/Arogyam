@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 
-const EmailBox = ({ consultation, doctor }) => {
+const EmailForm = ({ consultation, doctor }) => {
   function handleEmail(e) {
     e.preventDefault();
     emailjs
@@ -108,4 +108,4 @@ const EmailBox = ({ consultation, doctor }) => {
   );
 };
 
-export default EmailBox;
+export default EmailForm;

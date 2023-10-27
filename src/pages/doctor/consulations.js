@@ -1,18 +1,18 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
+import dbConnect from "@/dbconnect";
+import Doctors from "@/models/doctorModel";
+import Consultations from "@/models/consultModel";
 import { getSession } from "next-auth/react";
 import MainLayout from "@/layouts/MainLayout";
-import { useRouter } from "next/router";
+import EmailForm from "@/components/EmailForm";
+import getTimeElapsed from "@/components/function/getTimeElapsed";
 import {
   FcMediumPriority,
   FcHighPriority,
   FcLowPriority,
 } from "react-icons/fc";
-import dbConnect from "@/dbconnect";
-import Doctors from "@/models/doctorModel";
-import Consultations from "@/models/consultModel";
-import EmailBox from "@/components/EmailBox";
-import getTimeElapsed from "@/components/function/getTimeElapsed";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -57,7 +57,7 @@ export async function getServerSideProps({ req }) {
   };
 }
 
-const Consult = ({ doctor, consultations }) => {
+const Consultations = ({ doctor, consultations }) => {
   const router = useRouter();
 
   const refreshData = () => {
@@ -67,11 +67,12 @@ const Consult = ({ doctor, consultations }) => {
   const [openId, setOpenId] = useState("");
   return (
     <MainLayout>
-      <div className="h-full flex overflow-y-scroll scrollbar-thin p-4 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt justify-center items-start w-full">
-        <div className="max-w-7xl min-w-[60%] ">
+      <main className="h-full flex overflow-y-scroll scrollbar-thin p-4 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt justify-center items-start w-full">
+        <section className="max-w-7xl min-w-[60%] ">
           <h1 className="m-2 text-2xl tracking-tight font-sans border-b-[1px] border-neutral-400  pb-1 mb-8">
             Your Consultations
           </h1>
+
           <div className="gap-4 px-2 flex flex-wrap lg:justify-start md:justify-start justify-center">
             {consultations.map((consultation) => {
               const timeElapsed =
@@ -94,7 +95,7 @@ const Consult = ({ doctor, consultations }) => {
 
               return (
                 <>
-                  <div className="w-[25rem] h-fit flex justify-between items-center bg-lightMode-component dark:bg-darkMode-component shadow-md flex-col rounded-lg">
+                  <article className="w-[25rem] h-fit flex justify-between items-center bg-lightMode-component dark:bg-darkMode-component shadow-md flex-col rounded-lg">
                     <div className="w-full h-[21rem] flex flex-col justify-between gap-2">
                       <div className="w-full h-fit flex bg-neutral-300 dark:bg-neutral-800 py-2 rounded-t-lg px-4 content-center items-center">
                         <div className="w-full content-center  items-center flex flex-row">
@@ -192,21 +193,21 @@ const Consult = ({ doctor, consultations }) => {
                       </div>
                     </div>
                     {openId === consultation._id && (
-                      <EmailBox
+                      <EmailForm
                         doctor={doctor}
                         consultation={consultation}
                         key={1}
                       />
                     )}
-                  </div>
+                  </article>
                 </>
               );
             })}
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </MainLayout>
   );
 };
 
-export default Consult;
+export default Consultations;

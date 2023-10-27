@@ -4,10 +4,10 @@ import MainLayout from "@/layouts/MainLayout";
 import { getSession } from "next-auth/react";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
+import { toastOptions } from "@/lib/lib";
 import "react-toastify/dist/ReactToastify.css";
 import Users from "@/models/userModel";
 import dbConnect from "@/dbconnect";
-import { toastOptions } from "@/lib/lib";
 import Loader from "@/components/Loader";
 
 export async function getServerSideProps({ req }) {
@@ -104,8 +104,8 @@ const Profile = ({ user }) => {
   return (
     <>
       <MainLayout>
-        <div className=" h-full bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row  items-start p-5 justify-center font-sans text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
-          <div className="flex flex-col mt-8 lg:w-[15rem] w-[20rem] md:w-[15rem] m-4">
+        <main className=" h-full bg-lightMode-background dark:bg-darkMode-background flex flex-wrap flex-row  items-start p-5 justify-center font-sans text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
+          <section className="flex flex-col mt-8 lg:w-[15rem] w-[20rem] md:w-[15rem] m-4">
             <div className=" p-5 mb-0 bg-lightMode-componentHead pl-5  rounded-t-md pb-1 w-auto  dark:bg-neutral-800">
               <h1 className="font-bold text-2xl">
                 Your{" "}
@@ -135,9 +135,9 @@ const Profile = ({ user }) => {
                 Upload New Photo
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className="m-8 mb-0 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-[100%] md:h-[95%] lg:h-[95%] overflow-y-scroll scrollbar-hide">
+          <section className="m-8 mb-0 rounded-md bg-lightMode-component dark:bg-darkMode-component dark:text-darkMode-txt text-lightMode-txt w-1/3 min-w-[20rem] h-[100%] md:h-[95%] lg:h-[95%] overflow-y-scroll scrollbar-hide">
             <div className="p-5 bg-lightMode-componentHead dark:bg-neutral-800 rounded-t-md pb-1">
               <h1 className="font-bold text-2xl">
                 Edit{" "}
@@ -226,8 +226,8 @@ const Profile = ({ user }) => {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+          </section>
+        </main>
       </MainLayout>
       <ToastContainer />
     </>

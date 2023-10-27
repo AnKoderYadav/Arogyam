@@ -1,15 +1,15 @@
-import TrendingBox from "@/components/TrendingBox";
-import MainLayout from "@/layouts/MainLayout";
-import RequestBox from "@/components/RequestBox";
 import React, { useState } from "react";
-import dbConnect from "@/dbconnect";
 import Link from "next/link";
-import { getSession } from "next-auth/react";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import dbConnect from "@/dbconnect";
 import Posts from "@/models/postModel";
 import Doctors from "@/models/doctorModel";
 import Consultations from "@/models/consultModel";
+import TrendingBox from "@/components/TrendingBox";
+import MainLayout from "@/layouts/MainLayout";
+import PatientQuery from "@/components/PatientQuery";
+import { getSession } from "next-auth/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -63,8 +63,8 @@ const Home = ({ doctor, posts, consultations }) => {
   return (
     <>
       <MainLayout>
-        <div className="w-full h-full flex justify-center gap-8 md:p-8 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
-          <div
+        <main className="w-full h-full flex justify-center gap-8 md:p-8 bg-lightMode-background dark:bg-darkMode-background text-lightMode-txt dark:text-darkMode-txt overflow-scroll">
+          <article
             id="doctorProfileBox"
             className="sticky top-0 h-fit w-[15%] justify-center flex flex-col shadow-xl bg-lightMode-component text-lightMode-txt dark:bg-darkMode-component  dark:text-darkMode-txt py-6 rounded-lg"
           >
@@ -99,16 +99,23 @@ const Home = ({ doctor, posts, consultations }) => {
                 </button>
               </Link>
             </div>
-          </div>
-          <div id="requestBox" className="w-[50%] h-full flex flex-col gap-8">
+          </article>
+
+          <section
+            id="requestBox"
+            className="w-[50%] h-full flex flex-col gap-8"
+          >
             {posts.map((post) => {
-              return <RequestBox key={post._id} post={post} doctor={doctor} />;
+              return (
+                <PatientQuery key={post._id} post={post} doctor={doctor} />
+              );
             })}
-          </div>
-          <div className="sticky top-0" id="Trending">
+          </section>
+
+          <aside className="sticky top-0" id="Trending">
             <TrendingBox />
-          </div>
-        </div>
+          </aside>
+        </main>
       </MainLayout>
       <ToastContainer />
     </>

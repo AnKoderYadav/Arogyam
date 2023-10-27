@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { toastOptions } from "@/lib/lib";
 import Loader from "./Loader";
 
-const BasicInfo = ({ doctor, image }) => {
+const BasicInformation = ({ doctor, image }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleValidation = () => {
@@ -64,6 +64,7 @@ const BasicInfo = ({ doctor, image }) => {
     },
     onSubmit,
   });
+
   return (
     <form className="w-full max-w-lg " onSubmit={formik.handleSubmit}>
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -144,27 +145,6 @@ const BasicInfo = ({ doctor, image }) => {
         </div>
       </div>
 
-      {/* <div className="flex flex-wrap -mx-3">
-        <div className="w-full px-3">
-          <label
-            className="block uppercase tracking-wide text-xs font-semibold mb-2"
-            htmlFor="grid-password"
-          >
-            Password
-          </label>
-          <input
-            className="appearance-none block w-full bg-neutral-200 mb-3 dark:bg-neutral-800 rounded py-3 px-4 leading-tight placeholder:text-neutral-500 focus:outline-none focus:bg-neutral-300 focus:text-black dark:focus:bg-neutral-800 dark:focus:text-white"
-            id="grid-password"
-            type="password"
-            placeholder="******************"
-            {...formik.getFieldProps("password")}
-          />
-          <p className="text-red-500 text-xs italic">
-            Please fill out this field.
-          </p>
-        </div>
-      </div> */}
-
       <div className="flex flex-row mx-7 justify-center">
         <button
           type="submit"
@@ -176,4 +156,4 @@ const BasicInfo = ({ doctor, image }) => {
     </form>
   );
 };
-export default BasicInfo;
+export default BasicInformation;
