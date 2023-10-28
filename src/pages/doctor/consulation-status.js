@@ -57,7 +57,7 @@ export async function getServerSideProps({ req }) {
   };
 }
 
-const Consultations = ({ doctor, consultations }) => {
+const ConsultationStatus = ({ doctor, consultations }) => {
   const router = useRouter();
 
   const refreshData = () => {
@@ -210,4 +210,4 @@ const Consultations = ({ doctor, consultations }) => {
   );
 };
 
-export default Consultations;
+export default ConsultationStatus;
