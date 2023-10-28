@@ -51,7 +51,7 @@ const Navbar = ({ isDoctor }) => {
             {isDoctor ? (
               <>
                 <li className="md:px-2 md:py-2 text-white dark:text-white dark:hover:text-slate-400 hover:text-neutral-700">
-                  <Link href="/doctor/consult">Consult</Link>
+                  <Link href="/doctor/consultation-status">Consult</Link>
                 </li>
               </>
             ) : (
