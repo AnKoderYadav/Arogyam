@@ -66,7 +66,7 @@ const DocProfile = ({ doctor }) => {
                 />
               </div>
               <div className="font-bold m-4 mt-0 text-2xl">
-                {doctor.fullname}
+                {`Dr. ${doctor.fullname}`}
               </div>
 
               <div>

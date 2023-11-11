@@ -90,7 +90,7 @@ const Post = ({ pdata, user }) => {
           </Link>
         </div>
 
-        <p className="mt-2">{pdata.description}</p>
+        <pre className="mt-2">{pdata.description}</pre>
       </div>
       <div className=" flex justify-center align-center md-h-96 bg-zinc-300 dark:bg-neutral-800">
         <img src={pdata.image} className="object-contain max-h-[17rem]" />
