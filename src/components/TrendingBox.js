@@ -22,7 +22,7 @@ const TrendingBox = () => {
                 {index + 1}
               </span>
               <span key={index} className=" border-neutral-500">
-                {`Dr. ${doctor.doctorName}`}
+                {doctor.doctorName}
               </span>
             </div>
           );

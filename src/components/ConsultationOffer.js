@@ -14,7 +14,7 @@ const ConsultationOffer = ({ consultation, hide }) => {
                 alt="img"
               />
               <span className=" text-xl flex items-center text-cyan-500">
-                {`Dr. ${consultation.doctorName}`}
+                {consultation.doctorName}
               </span>
             </div>
             <div className="border-t-[1px] ml-2 px-2 py-2 flex w-full justify-start items-start">

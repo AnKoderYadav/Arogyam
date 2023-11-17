@@ -6,13 +6,10 @@ const EmailForm = ({ consultation, doctor }) => {
     e.preventDefault();
     emailjs
       .sendForm(
-        "service_js0osnq",
-        // process.env.SERVICE_KEY_ID,
-        "template_rxsxcuf",
-        // process.env.TEMPLATE_KEY_ID,
+        process.env.NEXT_PUBLIC_SERVICE_KEY_ID,
+        process.env.NEXT_PUBLIC_TEMPLATE_KEY_ID,
         e.target,
-        // process.env.MAIL_SERVICE_ID,
-        "_VBxc4nEfA5rz_PNP"
+        process.env.NEXT_PUBLIC_MAIL_SERVICE_ID
       )
       .then(
         (result) => {

@@ -13,21 +13,27 @@ export default async function handler(req, res) {
     if (emailCheck) return res.status(201).json({ msg: "Email already used" });
 
     const hashedPassword = await hash(password, 10);
-    const user = await Users.create({
-      fullname,
-      email,
-      password: hashedPassword,
-      isDoctor,
-    });
-
     if (isDoctor) {
-      const doctor = await Doctors.create({
+      const user = await Users.create({
+        fullname: "Dr. " + fullname,
+        email,
+        password: hashedPassword,
+        isDoctor,
+      });
+
+      await Doctors.create({
         doctorId: user._id.toString(),
+      });
+    } else {
+      await Users.create({
+        fullname,
+        email,
+        password: hashedPassword,
+        isDoctor,
       });
     }
 
-    delete user.password;
-    return res.status(200).json({ user });
+    return res.status(200).json({ msg: "Account Created" });
   } else {
     res.status(500).json({ msg: "Only Post Request is Allowed" });
   }

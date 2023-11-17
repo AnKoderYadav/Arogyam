@@ -75,7 +75,7 @@ const Home = ({ doctor, posts, consultations }) => {
                 alt="pic"
               />
               <span className="text-lg font-medium ">
-                {`Dr. ${doctor.doctorId.fullname}`}
+                {doctor.doctorId.fullname}
               </span>
             </div>
             <div className="py-2 gap-2 w-[70%] mx-9 flex  items-center flex-col border-y-[1px] border-black dark:border-white">

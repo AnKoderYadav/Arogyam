@@ -23,6 +23,7 @@ export default async function handler(req, res) {
         {
           $sort: {
             count: -1, // Sort by count in descending order
+            doctorName: 1,
           },
         },
       ]);
